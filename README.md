@@ -1,8 +1,36 @@
-# Corretude, eficiência e recuperação de contexto para IA generativa
+# Regulamentos acadêmicos e manuais públicos
 
-Tema: regulamentos acadêmicos e manuais públicos.
+Corretude, eficiência e recuperação de contexto para IA generativa
 
 Este README é o manual operacional do repositório. O relatório técnico concentra a fundamentação, as provas, a análise detalhada, os experimentos e a discussão; esta página será atualizada à medida que esses artefatos forem produzidos.
+
+## Apresentações
+
+- [Checkpoint — 10/09/2026](https://docs.google.com/presentation/d/1RHaAl9oXhdnzkjwhi0gLFhiCCBeQxHgZQSAyOLu0M_M/edit)
+- [Apresentação final — 24/09/2026](https://docs.google.com/presentation/d/1oCvhlEqzGFUmxv-1XzmbMLjySthox-GRHUXjkgRtdVs/edit)
+
+As apresentações estão em desenvolvimento e serão atualizadas com os resultados finais.
+
+## Relatório técnico
+
+- [Relatório em desenvolvimento](https://docs.google.com/document/d/1RLEssVnXO0mOw0kx70mevGKRufop8sq1oqN-WQzNv2I/edit?usp=sharing)
+  
+**A PRODUZIR:** adicionar o PDF final do relatório nesta seção quando ele estiver concluído.
+
+## Vídeo da atividade
+
+**URL pública:** **A PRODUZIR**.
+
+## Status dos entregáveis
+
+Os itens ainda não implementados ou não definidos estão marcados como **A PRODUZIR** e serão atualizados no decorrer do projeto.
+
+## Estrutura do repositório
+
+- `Corpus/`: PDFs utilizados no corpus.
+- `README.md`: dependências, ambiente, comandos, parâmetros e reprodução.
+- `.gitignore`: arquivos de apoio e artefatos que não devem ser versionados.
+- **A PRODUZIR:** código-fonte, scripts, testes, dados brutos, tabelas e gráficos.
 
 ## Dependências
 
@@ -53,28 +81,6 @@ Corpus normativo e orientativo público do PROCC/UFS e normas correlatas. Uso ex
 | Resolução nº 04/2021/CONEPE — Normas Acadêmicas da Pós-Graduação | [SIGAA](https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=2737960&key=1861aeae080b4f6318206935e3b17414) |
 | Resolução nº 29/2022/CONEPE — Regimento Interno do PROCC | [SIGAA](https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4218408&key=0f7e24ac2195143e5735697d19cb43ac) |
 
-## Estrutura do repositório
 
-- `Corpus/`: PDFs utilizados no corpus.
-- `README.md`: dependências, ambiente, comandos, parâmetros e reprodução.
-- `.gitignore`: arquivos de apoio e artefatos que não devem ser versionados.
-- **A PRODUZIR:** código-fonte, scripts, testes, dados brutos, tabelas e gráficos.
 
-## Apresentações
 
-- [Checkpoint — 10/09/2026](https://docs.google.com/presentation/d/1RHaAl9oXhdnzkjwhi0gLFhiCCBeQxHgZQSAyOLu0M_M/edit)
-- [Apresentação final — 24/09/2026](https://docs.google.com/presentation/d/1oCvhlEqzGFUmxv-1XzmbMLjySthox-GRHUXjkgRtdVs/edit)
-
-As apresentações estão em desenvolvimento e serão atualizadas com os resultados finais.
-
-## Relatório técnico
-
-**A PRODUZIR:** adicionar o PDF final do relatório nesta seção quando ele estiver concluído.
-
-## Vídeo da atividade
-
-**URL pública:** **A PRODUZIR**.
-
-## Status dos entregáveis
-
-Os itens ainda não implementados ou não definidos estão marcados como **A PRODUZIR** e serão atualizados no decorrer do projeto.
