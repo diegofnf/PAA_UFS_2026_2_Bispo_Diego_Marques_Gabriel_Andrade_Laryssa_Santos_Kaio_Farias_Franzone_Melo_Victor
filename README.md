@@ -17,6 +17,10 @@ Este README é o manual operacional do repositório. O relatório técnico conce
 
 As apresentações estão em desenvolvimento e serão atualizadas com os resultados finais.
 
+## Orquestrador no Google Colab
+
+- [Abrir `orquestrador_pipeline.ipynb` no Google Colab](https://colab.research.google.com/github/diegofnf/PAA_UFS_2026_2_Bispo_Diego_Marques_Gabriel_Andrade_Laryssa_Santos_Kaio_Farias_Franzone_Melo_Victor/blob/main/orquestrador_pipeline.ipynb)
+
 ## Vídeo da atividade
 
 **URL pública:** **A PRODUZIR**.
@@ -27,11 +31,16 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 
 ## Estrutura do repositório
 
-- `Corpus/`: PDFs utilizados no corpus.
+- `2_corpus/`: PDFs utilizados no corpus.
 - `README.md`: dependências, ambiente, comandos, parâmetros e reprodução.
 - `.gitignore`: arquivos de apoio e artefatos que não devem ser versionados.
-- `scripts/processar_documentos.py`: inventário, extração, normalização e validação.
-- `dados/`: JSONs gerados pelo pipeline.
+- `1_scripts/1_processar_documentos.py`: inventário, extração, normalização e validação.
+- `3_dados/`: JSONs gerados pelo pipeline.
+- `4_chunks/`: chunks; **A PRODUZIR**.
+- `5_indice_invertido/`: índice invertido; **A PRODUZIR**.
+- `6_busca_lexical/`: resultados da busca lexical e Top-k; **A PRODUZIR**.
+- `7_resultados/`: tabelas, gráficos e demais resultados; **A PRODUZIR**.
+- `orquestrador_pipeline.ipynb`: execução integrada no Google Colab.
 
 ## Dependências
 
@@ -50,21 +59,21 @@ python -m pip install pypdf
 ## Execução
 
 ```bash
-python scripts/processar_documentos.py
+python 1_scripts/1_processar_documentos.py
 ```
 
 ## Parâmetros
 
-O script aceita `--corpus` e `--saida`. Por padrão, utiliza `Corpus/` e grava em `dados/`. Busca, `k` e chunking pertencem às etapas posteriores.
+O script aceita `--corpus` e `--saida`. Por padrão, utiliza `2_corpus/` e grava em `3_dados/`. Busca, `k` e chunking pertencem às etapas posteriores.
 
 ## Reprodução
 
-1. Obter ou utilizar os PDFs do diretório `Corpus/`.
+1. Obter ou utilizar os PDFs do diretório `2_corpus/`.
 2. Preparar o ambiente conforme as seções acima.
 3. Executar os comandos do pipeline e dos experimentos.
 4. Conferir os resultados, tabelas, gráficos e dados brutos gerados.
 
-Os PDFs da atividade e do blueprint são arquivos de apoio e permanecem fora do versionamento por meio do `.gitignore`; o corpus usado pelo projeto está em `Corpus/`.
+Os PDFs da atividade e do blueprint são arquivos de apoio e permanecem fora do versionamento por meio do `.gitignore`; o corpus usado pelo projeto está em `2_corpus/`.
 
 ## Corpus
 

@@ -11,13 +11,13 @@ from pypdf import PdfReader
 
 
 FONTES = {
-    "Crite769rios_para_credenciamento_recredenciamento_de_docentes_e_nu769mero_.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=5025297&key=2d84693e082547f2c3b9e5a7211baf63",
-    "destinao_de_recursos.docx.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=5040212&key=bd7f4126e48c0ff0c3f3ecd020bea2af",
-    "Edital_14_2023_PRAPG-1.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4214078&key=9a30771aef926507ec26e66ff5da6260",
-    "ESTRUTURA_CURRICULAR___MESTRADO_2023.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4024039&key=3935a3b7b0d57462398d13c8fa68def5",
-    "IN 01_2024 - PROCC - Bolsa do PROCC.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4357246&key=807372ebd6adf4d3ad63cd51277fec38",
-    "informativo_29_2022 - Regimento Interno.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4218408&key=0f7e24ac2195143e5735697d19cb43ac",
-    "RESOLU��O 004_2021-mesclado (1) (2).pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=2737960&key=1861aeae080b4f6318206935e3b17414",
+    "IN_01_2026_PROCC_Credenciamento_Recredenciamento_Vagas.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=5025297&key=2d84693e082547f2c3b9e5a7211baf63",
+    "IN_02_2026_PROCC_Destinacao_Recursos.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=5040212&key=bd7f4126e48c0ff0c3f3ecd020bea2af",
+    "Edital_CAPES_14_2023_PRAPG.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4214078&key=9a30771aef926507ec26e66ff5da6260",
+    "IN_01_2023_PROCC_Estrutura_Curricular_Mestrado.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4024039&key=3935a3b7b0d57462398d13c8fa68def5",
+    "IN_01_2024_PROCC_Criterios_Bolsas.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4357246&key=807372ebd6adf4d3ad63cd51277fec38",
+    "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4218408&key=0f7e24ac2195143e5735697d19cb43ac",
+    "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=2737960&key=1861aeae080b4f6318206935e3b17414",
 }
 
 
@@ -88,12 +88,10 @@ def construir_saida(corpus):
             paginas_normalizadas.append(normalizada)
         tamanho = caminho.stat().st_size
         fonte_url = FONTES.get(caminho.name)
-        if fonte_url is None and caminho.name.startswith("RESOLU"):
-            fonte_url = "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=2737960&key=1861aeae080b4f6318206935e3b17414"
         catalogo.append({
             "id_documento": document_id,
             "nome_arquivo": caminho.name,
-            "caminho_relativo": f"Corpus/{caminho.name}",
+            "caminho_relativo": f"2_corpus/{caminho.name}",
             "tamanho_bytes": tamanho,
             "hash_sha256": sha256(caminho),
             "quantidade_paginas": len(extraido["paginas"]),
@@ -114,8 +112,8 @@ def salvar(caminho, dados):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--corpus", type=Path, default=Path("Corpus"))
-    parser.add_argument("--saida", type=Path, default=Path("dados"))
+    parser.add_argument("--corpus", type=Path, default=Path("2_corpus"))
+    parser.add_argument("--saida", type=Path, default=Path("3_dados"))
     args = parser.parse_args()
     arquivos = sorted(args.corpus.glob("*.pdf"))
     if not arquivos:
