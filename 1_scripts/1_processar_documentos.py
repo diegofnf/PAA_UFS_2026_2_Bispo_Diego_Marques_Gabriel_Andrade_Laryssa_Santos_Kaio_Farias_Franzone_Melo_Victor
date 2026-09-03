@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import re
+import time
 import unicodedata
 from pathlib import Path
 
@@ -119,6 +120,7 @@ def main():
     if not arquivos:
         raise SystemExit(f"Nenhum PDF encontrado em {args.corpus}")
     args.saida.mkdir(parents=True, exist_ok=True)
+    inicio = time.perf_counter()
     catalogo, extraidos, normalizados, total_paginas, avisos = construir_saida(args.corpus)
     salvar(args.saida / "catalogo_documentos.json", {"documentos": catalogo})
     salvar(args.saida / "documentos_extraidos.json", {"documentos": extraidos})
@@ -128,6 +130,7 @@ def main():
         "quantidade_documentos": len(catalogo),
         "quantidade_paginas": total_paginas,
         "quantidade_paginas_vazias": sum(len(item["paginas_vazias"]) for item in avisos),
+        "tempo_processamento_segundos": round(time.perf_counter() - inicio, 6),
         "avisos": avisos,
         "regras_normalizacao": [
             "Unicode NFC",
