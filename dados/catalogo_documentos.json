@@ -1,0 +1,74 @@
+{
+  "documentos": [
+    {
+      "id_documento": "doc_001",
+      "nome_arquivo": "Crite769rios_para_credenciamento_recredenciamento_de_docentes_e_nu769mero_.pdf",
+      "caminho_relativo": "Corpus/Crite769rios_para_credenciamento_recredenciamento_de_docentes_e_nu769mero_.pdf",
+      "tamanho_bytes": 228996,
+      "hash_sha256": "4f0c402bfc4e879dc769790e49b90f80ae1b3a316349d9b1fc1f923fc9ace8c5",
+      "quantidade_paginas": 3,
+      "fonte_url": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=5025297&key=2d84693e082547f2c3b9e5a7211baf63",
+      "status_processamento": "processado"
+    },
+    {
+      "id_documento": "doc_002",
+      "nome_arquivo": "destinao_de_recursos.docx.pdf",
+      "caminho_relativo": "Corpus/destinao_de_recursos.docx.pdf",
+      "tamanho_bytes": 155717,
+      "hash_sha256": "b598fc4792c322c6132626de6f1d4cba444b6a5856f6c8ab50038d78264dec24",
+      "quantidade_paginas": 2,
+      "fonte_url": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=5040212&key=bd7f4126e48c0ff0c3f3ecd020bea2af",
+      "status_processamento": "processado"
+    },
+    {
+      "id_documento": "doc_003",
+      "nome_arquivo": "Edital_14_2023_PRAPG-1.pdf",
+      "caminho_relativo": "Corpus/Edital_14_2023_PRAPG-1.pdf",
+      "tamanho_bytes": 308359,
+      "hash_sha256": "526565d62479af23aee5a5f4014a818f2cbfc3be43ec92acd2ba7c87460c80d4",
+      "quantidade_paginas": 13,
+      "fonte_url": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4214078&key=9a30771aef926507ec26e66ff5da6260",
+      "status_processamento": "processado"
+    },
+    {
+      "id_documento": "doc_004",
+      "nome_arquivo": "ESTRUTURA_CURRICULAR___MESTRADO_2023.pdf",
+      "caminho_relativo": "Corpus/ESTRUTURA_CURRICULAR___MESTRADO_2023.pdf",
+      "tamanho_bytes": 562302,
+      "hash_sha256": "5a95a6f1eb5a58ef29d5b690cd008bc8b81112c70f8316245c5e1b45e24479c8",
+      "quantidade_paginas": 22,
+      "fonte_url": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4024039&key=3935a3b7b0d57462398d13c8fa68def5",
+      "status_processamento": "processado"
+    },
+    {
+      "id_documento": "doc_005",
+      "nome_arquivo": "IN 01_2024 - PROCC - Bolsa do PROCC.pdf",
+      "caminho_relativo": "Corpus/IN 01_2024 - PROCC - Bolsa do PROCC.pdf",
+      "tamanho_bytes": 303411,
+      "hash_sha256": "2c6dc4f95ed7ef6a452eee6505396b5c2e3731753b44eaeef49789f82ed5faee",
+      "quantidade_paginas": 3,
+      "fonte_url": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4357246&key=807372ebd6adf4d3ad63cd51277fec38",
+      "status_processamento": "processado"
+    },
+    {
+      "id_documento": "doc_006",
+      "nome_arquivo": "informativo_29_2022 - Regimento Interno.pdf",
+      "caminho_relativo": "Corpus/informativo_29_2022 - Regimento Interno.pdf",
+      "tamanho_bytes": 1760134,
+      "hash_sha256": "5abd6ac3a98201baadb937b3c3f1255310a5889d677313dda58595896eb4aa2f",
+      "quantidade_paginas": 10,
+      "fonte_url": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=4218408&key=0f7e24ac2195143e5735697d19cb43ac",
+      "status_processamento": "processado"
+    },
+    {
+      "id_documento": "doc_007",
+      "nome_arquivo": "RESOLUÇÃO 004_2021-mesclado (1) (2).pdf",
+      "caminho_relativo": "Corpus/RESOLUÇÃO 004_2021-mesclado (1) (2).pdf",
+      "tamanho_bytes": 1403659,
+      "hash_sha256": "60bf740a3701e000ba1632b0020c88450f059eeea65779663a114868f2b9df3c",
+      "quantidade_paginas": 30,
+      "fonte_url": "https://www.sigaa.ufs.br/sigaa/verProducao?idProducao=2737960&key=1861aeae080b4f6318206935e3b17414",
+      "status_processamento": "processado"
+    }
+  ]
+}

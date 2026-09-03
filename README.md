@@ -30,27 +30,32 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 - `Corpus/`: PDFs utilizados no corpus.
 - `README.md`: dependências, ambiente, comandos, parâmetros e reprodução.
 - `.gitignore`: arquivos de apoio e artefatos que não devem ser versionados.
-- **A PRODUZIR:** código-fonte, scripts, testes, dados brutos, tabelas e gráficos.
+- `scripts/processar_documentos.py`: inventário, extração, normalização e validação.
+- `dados/`: JSONs gerados pelo pipeline.
 
 ## Dependências
 
-**A PRODUZIR:** registrar a linguagem de programação, a versão utilizada e as bibliotecas necessárias após a implementação.
+Python 3 e `pypdf`.
 
 ## Ambiente
 
-**A PRODUZIR:** registrar sistema operacional, versão da linguagem, hardware e demais características relevantes para a reprodução.
+Execução validada em Windows com Python 3. O script usa caminhos relativos ao repositório.
 
 ## Instalação
 
-**A PRODUZIR:** informar os comandos para instalar dependências e preparar o ambiente.
+```bash
+python -m pip install pypdf
+```
 
 ## Execução
 
-**A PRODUZIR:** informar os comandos para executar a extração, a normalização, a indexação, a busca e os experimentos.
+```bash
+python scripts/processar_documentos.py
+```
 
 ## Parâmetros
 
-**A PRODUZIR:** documentar a consulta, o valor de `k`, as configurações de busca, os tamanhos de entrada, o chunking e demais parâmetros usados na execução.
+O script aceita `--corpus` e `--saida`. Por padrão, utiliza `Corpus/` e grava em `dados/`. Busca, `k` e chunking pertencem às etapas posteriores.
 
 ## Reprodução
 
@@ -59,7 +64,7 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 3. Executar os comandos do pipeline e dos experimentos.
 4. Conferir os resultados, tabelas, gráficos e dados brutos gerados.
 
-Os comandos completos e os parâmetros finais serão adicionados após a implementação. Os PDFs da atividade e do blueprint são arquivos de apoio e permanecem fora do versionamento por meio do `.gitignore`; o corpus usado pelo projeto está em `Corpus/`.
+Os PDFs da atividade e do blueprint são arquivos de apoio e permanecem fora do versionamento por meio do `.gitignore`; o corpus usado pelo projeto está em `Corpus/`.
 
 ## Corpus
 
@@ -69,7 +74,8 @@ Corpus normativo e orientativo público do PROCC/UFS e normas correlatas. Uso ex
 - **Quantidade:** 7 documentos, 83 páginas e aproximadamente 4,50 MB.
 - **Idioma/formato:** português brasileiro; arquivos PDF.
 - **Dados removidos ou anonimizados:** nenhum.
-- **Limpeza, normalização e chunking:** ainda serão definidos. Sugestão inicial: chunks de 200 palavras com overlap de 30 palavras.
+- **Limpeza e normalização:** Unicode NFC, quebras de linha, espaços repetidos e hifenização entre linhas; texto original preservado.
+- **Chunking:** ainda será definido. Sugestão inicial: chunks de 200 palavras com overlap de 30 palavras.
 
 | Documento | URL oficial |
 |---|---|
