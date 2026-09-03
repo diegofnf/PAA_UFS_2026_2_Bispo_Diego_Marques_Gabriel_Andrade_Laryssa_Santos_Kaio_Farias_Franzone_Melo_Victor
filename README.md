@@ -1,8 +1,14 @@
 # Regulamentos acadêmicos e manuais públicos
 
-Corretude, eficiência e recuperação de contexto para IA generativa
+Corretude, eficiência e recuperação de contexto para IA generativa.
 
 Este README é o manual operacional do repositório. O relatório técnico concentra a fundamentação, as provas, a análise detalhada, os experimentos e a discussão; esta página será atualizada à medida que esses artefatos forem produzidos.
+
+## Relatório técnico
+
+- [Relatório em desenvolvimento](https://docs.google.com/document/d/1RLEssVnXO0mOw0kx70mevGKRufop8sq1oqN-WQzNv2I/edit?usp=sharing)
+  
+**A PRODUZIR:** adicionar o PDF final do relatório nesta seção quando ele estiver concluído.
 
 ## Apresentações
 
@@ -10,12 +16,6 @@ Este README é o manual operacional do repositório. O relatório técnico conce
 - [Apresentação final — 24/09/2026](https://docs.google.com/presentation/d/1oCvhlEqzGFUmxv-1XzmbMLjySthox-GRHUXjkgRtdVs/edit)
 
 As apresentações estão em desenvolvimento e serão atualizadas com os resultados finais.
-
-## Relatório técnico
-
-- [Relatório em desenvolvimento](https://docs.google.com/document/d/1RLEssVnXO0mOw0kx70mevGKRufop8sq1oqN-WQzNv2I/edit?usp=sharing)
-  
-**A PRODUZIR:** adicionar o PDF final do relatório nesta seção quando ele estiver concluído.
 
 ## Vídeo da atividade
 
