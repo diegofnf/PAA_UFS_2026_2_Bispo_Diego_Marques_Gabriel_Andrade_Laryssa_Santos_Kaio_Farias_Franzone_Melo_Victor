@@ -1,6 +1,8 @@
 # PAA_UFS_2026_2_Bispo_Diego_Marques_Gabriel_Andrade_Laryssa_Santos_Kaio_Farias_Franzone_Melo_Victor
 Corretude, eficiência e recuperação de contexto para IA generativa
 
+Tema: Regulamentos acadêmicos e manuais públicos
+
 ## Ficha do corpus
 
 ### Nome, fonte e URLs
