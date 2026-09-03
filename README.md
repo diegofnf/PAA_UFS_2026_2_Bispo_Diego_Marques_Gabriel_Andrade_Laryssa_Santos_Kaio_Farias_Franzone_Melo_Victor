@@ -1,3 +1,5 @@
+[![Open in Colab](https://img.shields.io/badge/Open%20in-Colab-F9AB00?logo=googlecolab&logoColor=white)](https://colab.research.google.com/github/diegofnf/PAA_UFS_2026_2_Bispo_Diego_Marques_Gabriel_Andrade_Laryssa_Santos_Kaio_Farias_Franzone_Melo_Victor/blob/main/orquestrador_pipeline.ipynb)
+
 # Regulamentos acadêmicos e manuais públicos
 
 Corretude, eficiência e recuperação de contexto para IA generativa.
