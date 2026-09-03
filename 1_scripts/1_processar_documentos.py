@@ -23,6 +23,7 @@ FONTES = {
 
 
 def sha256(caminho):
+    """Calcula a impressão digital do arquivo para identificação."""
     digest = hashlib.sha256()
     with caminho.open("rb") as arquivo:
         for bloco in iter(lambda: arquivo.read(1024 * 1024), b""):
@@ -31,12 +32,14 @@ def sha256(caminho):
 
 
 def motivo_pagina_vazia(pagina):
+    """Classifica por que uma página não apresentou texto extraível."""
     if len(getattr(pagina, "images", [])):
         return "imagem_presente_sem_camada_textual"
     return "sem_texto_e_sem_imagem_detectavel"
 
 
 def extrair_documento(caminho, document_id):
+    """Extrai o texto página a página e registra o status da extração."""
     leitor = PdfReader(str(caminho))
     paginas = []
     for numero, pagina in enumerate(leitor.pages, start=1):
@@ -58,6 +61,7 @@ def extrair_documento(caminho, document_id):
 
 
 def normalizar_texto(texto):
+    """Padroniza Unicode, quebras, espaços e hifenização do texto."""
     texto = unicodedata.normalize("NFC", texto)
     texto = texto.replace("\r\n", "\n").replace("\r", "\n")
     texto = re.sub(r"(?<=\w)-\n(?=\w)", "", texto)
@@ -66,6 +70,7 @@ def normalizar_texto(texto):
 
 
 def construir_saida(corpus):
+    """Processa o corpus e monta catálogo, textos e avisos do pipeline."""
     catalogo = []
     extraidos = []
     normalizados = []
@@ -108,10 +113,12 @@ def construir_saida(corpus):
 
 
 def salvar(caminho, dados):
+    """Grava um artefato estruturado em JSON UTF-8."""
     caminho.write_text(json.dumps(dados, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def main():
+    """Executa a etapa Documentos → Extração → Normalização."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--corpus", type=Path, default=Path("2_corpus"))
     parser.add_argument("--saida", type=Path, default=Path("3_dados"))
@@ -120,8 +127,11 @@ def main():
     if not arquivos:
         raise SystemExit(f"Nenhum PDF encontrado em {args.corpus}")
     args.saida.mkdir(parents=True, exist_ok=True)
+    # Mede o tempo total do processamento do corpus.
     inicio = time.perf_counter()
+    # Lê os PDFs e prepara os três artefatos principais.
     catalogo, extraidos, normalizados, total_paginas, avisos = construir_saida(args.corpus)
+    # Persiste os resultados para as próximas etapas do pipeline.
     salvar(args.saida / "catalogo_documentos.json", {"documentos": catalogo})
     salvar(args.saida / "documentos_extraidos.json", {"documentos": extraidos})
     salvar(args.saida / "documentos_normalizados.json", {"documentos": normalizados})
