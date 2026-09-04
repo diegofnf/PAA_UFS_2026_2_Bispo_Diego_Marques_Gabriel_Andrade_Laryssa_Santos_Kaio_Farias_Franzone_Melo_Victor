@@ -37,7 +37,7 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 - `1_scripts/1_processar_documentos.py`: inventário, extração, normalização e validação.
 - `2_corpus/`: PDFs utilizados no corpus.
 - `3_dados/`: JSONs gerados pelo pipeline com extração PyMuPDF e normalização.
-- `4_chunks/`: chunks; **A PRODUZIR**.
+- `4_chunks/`: segmentação de texto com janelamento deslizante e sobreposição. chunks prontos para indexação (`chunks.json`).
 - `5_indexacao/`: indexação e índice invertido; **A PRODUZIR**.
 - `6_busca_lexical/`: resultados da busca lexical e Top-k; **A PRODUZIR**.
 - `7_resultados/`: tabelas, gráficos e demais resultados; **A PRODUZIR**.
@@ -59,13 +59,28 @@ python -m pip install PyMuPDF
 
 ## Execução
 
+Etapa 1 — Processar documentos (extração e normalização):
 ```bash
 python 1_scripts/1_processar_documentos.py
 ```
 
+Etapa 2 — Geração de chunks:
+```bash
+python 1_scripts/2_gerar_chunks.py
+```
+
 ## Parâmetros
 
-O script aceita `--corpus` e `--saida`. Por padrão, utiliza `2_corpus/` e grava em `3_dados/`. Busca, `k` e chunking pertencem às etapas posteriores.
+- `1_scripts/1_processar_documentos.py`:
+  - `--corpus`: diretório dos PDFs de entrada (padrão: `2_corpus`).
+  - `--saida`: diretório para gravação dos JSONs de extração e catálogo (padrão: `3_dados`).
+
+- `1_scripts/2_gerar_chunks.py`:
+  - `--entrada`: caminho do arquivo de documentos normalizados (padrão: `3_dados/documentos_normalizados.json`).
+  - `--saida`: caminho para gravação dos chunks (padrão: `4_chunks/chunks.json`).
+  - `--relatorio`: caminho para o relatório estatístico da etapa (padrão: `4_chunks/relatorio_chunking.json`).
+  - `--tamanho-chunk`: quantidade de palavras por chunk (padrão: `200`).
+  - `--overlap`: quantidade de palavras de sobreposição entre chunks consecutivos (padrão: `30`).
 
 ## Reprodução
 
@@ -83,7 +98,7 @@ Corpus normativo e orientativo público do PROCC/UFS e normas correlatas. Uso ex
 - **Idioma/formato:** português brasileiro; arquivos PDF.
 - **Dados removidos ou anonimizados:** nenhum.
 - **Limpeza e normalização:** Unicode NFC, quebras de linha, espaços repetidos e hifenização entre linhas; texto original preservado.
-- **Chunking:** ainda será definido. Sugestão inicial: chunks de 200 palavras com overlap de 30 palavras.
+- **Chunking:** implementado com janelamento deslizante contínuo de 200 palavras por documento com overlap de 30 palavras entre páginas (passo de 170 palavras). Total de 182 chunks com alta densidade textual (média de 196,85 palavras/chunk).
 
 | Documento | URL oficial |
 |---|---|
