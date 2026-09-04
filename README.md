@@ -38,7 +38,7 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 - `2_corpus/`: PDFs utilizados no corpus.
 - `3_dados/`: JSONs gerados pelo pipeline com extração PyMuPDF e normalização.
 - `4_chunks/`: segmentação de texto com janelamento deslizante e sobreposição. chunks prontos para indexação (`chunks.json`).
-- `5_indexacao/`: indexação e índice invertido; **A PRODUZIR**.
+- `5_indexacao/`: índice invertido e relatório da indexação.
 - `6_busca_lexical/`: resultados da busca lexical e Top-k; **A PRODUZIR**.
 - `7_resultados/`: tabelas, gráficos e demais resultados; **A PRODUZIR**.
 
@@ -69,6 +69,11 @@ Etapa 2 — Geração de chunks:
 python 1_scripts/2_gerar_chunks.py
 ```
 
+Etapa 3 — Construção do índice invertido:
+```bash
+python 1_scripts/3_construir_indice_invertido.py
+```
+
 ## Parâmetros
 
 - `1_scripts/1_processar_documentos.py`:
@@ -81,6 +86,11 @@ python 1_scripts/2_gerar_chunks.py
   - `--relatorio`: caminho para o relatório estatístico da etapa (padrão: `4_chunks/relatorio_chunking.json`).
   - `--tamanho-chunk`: quantidade de palavras por chunk (padrão: `200`).
   - `--overlap`: quantidade de palavras de sobreposição entre chunks consecutivos (padrão: `30`).
+
+- `1_scripts/3_construir_indice_invertido.py`:
+  - `--entrada`: arquivo de chunks de entrada (padrão: `4_chunks/chunks.json`).
+  - `--saida`: arquivo do índice invertido (padrão: `5_indexacao/indice_invertido.json`).
+  - `--relatorio`: relatório da indexação (padrão: `5_indexacao/relatorio_indexacao.json`).
 
 ## Reprodução
 
