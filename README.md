@@ -37,7 +37,7 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 - `README.md`: dependências, ambiente, comandos, parâmetros e reprodução.
 - `.gitignore`: arquivos de apoio e artefatos que não devem ser versionados.
 - `1_scripts/1_processar_documentos.py`: inventário, extração, normalização e validação.
-- `3_dados/`: JSONs gerados pelo pipeline.
+- `3_dados/`: JSONs gerados pelo pipeline com extração PyMuPDF e normalização.
 - `4_chunks/`: chunks; **A PRODUZIR**.
 - `5_indexacao/`: indexação e índice invertido; **A PRODUZIR**.
 - `6_busca_lexical/`: resultados da busca lexical e Top-k; **A PRODUZIR**.
@@ -46,7 +46,7 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 
 ## Dependências
 
-Python 3 e `pypdf`.
+Python 3 e `PyMuPDF`.
 
 ## Ambiente
 
@@ -55,7 +55,7 @@ Execução validada em Windows com Python 3. O script usa caminhos relativos ao 
 ## Instalação
 
 ```bash
-python -m pip install pypdf
+python -m pip install PyMuPDF
 ```
 
 ## Execução

@@ -2,8 +2,8 @@
   "status_pipeline": "concluido",
   "quantidade_documentos": 7,
   "quantidade_paginas": 83,
-  "quantidade_paginas_vazias": 2,
-  "tempo_processamento_segundos": 2.974112,
+  "quantidade_paginas_vazias": 1,
+  "tempo_processamento_segundos": 0.23563,
   "avisos": [
     {
       "id_documento": "doc_006",
@@ -12,10 +12,6 @@
         {
           "numero_pagina": 1,
           "motivo_status": "imagem_presente_sem_camada_textual"
-        },
-        {
-          "numero_pagina": 2,
-          "motivo_status": "sem_texto_e_sem_imagem_detectavel"
         }
       ]
     }
