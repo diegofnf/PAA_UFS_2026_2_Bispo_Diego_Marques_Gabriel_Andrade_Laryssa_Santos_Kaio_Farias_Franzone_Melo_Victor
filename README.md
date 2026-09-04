@@ -33,21 +33,19 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 
 ## Estrutura do repositório
 
-- `2_corpus/`: PDFs utilizados no corpus.
-- `README.md`: dependências, ambiente, comandos, parâmetros e reprodução.
-- `.gitignore`: arquivos de apoio e artefatos que não devem ser versionados.
+- `orquestrador_pipeline.ipynb`: execução integrada no Google Colab.
 - `1_scripts/1_processar_documentos.py`: inventário, extração, normalização e validação.
-- `1_scripts/2_gerar_chunks.py`: segmentação de texto com janelamento deslizante e sobreposição.
-- `3_dados/`: JSONs gerados pelo pipeline.
-- `4_chunks/`: chunks prontos para indexação (`chunks.json` e `relatorio_chunking.json`).
+- `2_corpus/`: PDFs utilizados no corpus.
+- `3_dados/`: JSONs gerados pelo pipeline com extração PyMuPDF e normalização.
+- `4_chunks/`: segmentação de texto com janelamento deslizante e sobreposição. chunks prontos para indexação (`chunks.json`).
 - `5_indexacao/`: indexação e índice invertido; **A PRODUZIR**.
 - `6_busca_lexical/`: resultados da busca lexical e Top-k; **A PRODUZIR**.
 - `7_resultados/`: tabelas, gráficos e demais resultados; **A PRODUZIR**.
-- `orquestrador_pipeline.ipynb`: execução integrada no Google Colab.
+
 
 ## Dependências
 
-Python 3 e `pypdf`.
+Python 3 e `PyMuPDF`.
 
 ## Ambiente
 
@@ -56,7 +54,7 @@ Execução validada em Windows com Python 3. O script usa caminhos relativos ao 
 ## Instalação
 
 ```bash
-python -m pip install pypdf
+python -m pip install PyMuPDF
 ```
 
 ## Execução
@@ -90,8 +88,6 @@ python 1_scripts/2_gerar_chunks.py
 2. Preparar o ambiente conforme as seções acima.
 3. Executar os comandos do pipeline e dos experimentos.
 4. Conferir os resultados, tabelas, gráficos e dados brutos gerados.
-
-Os PDFs da atividade e do blueprint são arquivos de apoio e permanecem fora do versionamento por meio do `.gitignore`; o corpus usado pelo projeto está em `2_corpus/`.
 
 ## Corpus
 

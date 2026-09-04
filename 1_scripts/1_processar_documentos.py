@@ -8,7 +8,7 @@ import time
 import unicodedata
 from pathlib import Path
 
-from pypdf import PdfReader
+import pymupdf
 
 
 FONTES = {
@@ -33,17 +33,17 @@ def sha256(caminho):
 
 def motivo_pagina_vazia(pagina):
     """Classifica por que uma página não apresentou texto extraível."""
-    if len(getattr(pagina, "images", [])):
+    if pagina.get_images(full=True):
         return "imagem_presente_sem_camada_textual"
     return "sem_texto_e_sem_imagem_detectavel"
 
 
 def extrair_documento(caminho, document_id):
     """Extrai o texto página a página e registra o status da extração."""
-    leitor = PdfReader(str(caminho))
+    leitor = pymupdf.open(str(caminho))
     paginas = []
-    for numero, pagina in enumerate(leitor.pages, start=1):
-        texto = pagina.extract_text() or ""
+    for numero, pagina in enumerate(leitor, start=1):
+        texto = pagina.get_text("text") or ""
         texto_limpo = texto.strip()
         registro = {
             "numero_pagina": numero,
@@ -63,6 +63,7 @@ def extrair_documento(caminho, document_id):
 def normalizar_texto(texto):
     """Padroniza Unicode, quebras, espaços e hifenização do texto."""
     texto = unicodedata.normalize("NFC", texto)
+    texto = texto.replace("\u200b", " ")
     texto = texto.replace("\r\n", "\n").replace("\r", "\n")
     texto = re.sub(r"(?<=\w)-\n(?=\w)", "", texto)
     texto = "\n".join(re.sub(r"[ \t]+", " ", linha).strip() for linha in texto.split("\n"))
