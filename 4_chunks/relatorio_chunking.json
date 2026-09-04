@@ -15,7 +15,7 @@
     "maximo": 200,
     "total_palavras_acumuladas": 35826
   },
-  "tempo_execucao_segundos": 0.140794,
+  "tempo_execucao_segundos": 0.060183,
   "documentos": [
     {
       "id_documento": "doc_001",
