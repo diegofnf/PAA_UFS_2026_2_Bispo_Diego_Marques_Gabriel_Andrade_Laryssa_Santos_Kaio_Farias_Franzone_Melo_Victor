@@ -74,8 +74,6 @@ O script aceita `--corpus` e `--saida`. Por padrão, utiliza `2_corpus/` e grava
 3. Executar os comandos do pipeline e dos experimentos.
 4. Conferir os resultados, tabelas, gráficos e dados brutos gerados.
 
-Os PDFs da atividade e do blueprint são arquivos de apoio e permanecem fora do versionamento por meio do `.gitignore`; o corpus usado pelo projeto está em `2_corpus/`.
-
 ## Corpus
 
 Corpus normativo e orientativo público do PROCC/UFS e normas correlatas. Uso exclusivamente acadêmico.
