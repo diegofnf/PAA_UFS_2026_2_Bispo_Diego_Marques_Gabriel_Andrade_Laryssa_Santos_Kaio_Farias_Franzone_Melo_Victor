@@ -33,16 +33,15 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 
 ## Estrutura do repositório
 
-- `2_corpus/`: PDFs utilizados no corpus.
-- `README.md`: dependências, ambiente, comandos, parâmetros e reprodução.
-- `.gitignore`: arquivos de apoio e artefatos que não devem ser versionados.
+- `orquestrador_pipeline.ipynb`: execução integrada no Google Colab.
 - `1_scripts/1_processar_documentos.py`: inventário, extração, normalização e validação.
+- `2_corpus/`: PDFs utilizados no corpus.
 - `3_dados/`: JSONs gerados pelo pipeline com extração PyMuPDF e normalização.
 - `4_chunks/`: chunks; **A PRODUZIR**.
 - `5_indexacao/`: indexação e índice invertido; **A PRODUZIR**.
 - `6_busca_lexical/`: resultados da busca lexical e Top-k; **A PRODUZIR**.
 - `7_resultados/`: tabelas, gráficos e demais resultados; **A PRODUZIR**.
-- `orquestrador_pipeline.ipynb`: execução integrada no Google Colab.
+
 
 ## Dependências
 
