@@ -39,13 +39,13 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 - `3_dados/`: JSONs gerados pelo pipeline com extração PyMuPDF e normalização.
 - `4_chunks/`: segmentação de texto com janelamento deslizante e sobreposição. chunks prontos para indexação (`chunks.json`).
 - `5_indexacao/`: índice invertido e relatório da indexação.
-- `6_busca_lexical/`: resultados da busca lexical e Top-k; **A PRODUZIR**.
+- `6_busca_lexical/`: candidatos com scores gerados (`candidatos_busca.json`).  Métricas da busca (`relatorio_busca.json`) e resultados Top-k pós-Merge Sort **A PRODUZIR**.
 - `7_resultados/`: tabelas, gráficos e demais resultados; **A PRODUZIR**.
 
 
 ## Dependências
 
-Python 3 e `PyMuPDF`.
+Python 3, `PyMuPDF` e `nltk`.
 
 ## Ambiente
 
@@ -54,7 +54,8 @@ Execução validada em Windows com Python 3. O script usa caminhos relativos ao 
 ## Instalação
 
 ```bash
-python -m pip install PyMuPDF
+python -m pip install PyMuPDF nltk
+python -c "import nltk; nltk.download('stopwords')"
 ```
 
 ## Execução
@@ -74,6 +75,16 @@ Etapa 3 — Construção do índice invertido:
 python 1_scripts/3_construir_indice_invertido.py
 ```
 
+Etapa 4 — Busca lexical e geração de candidatos:
+```bash
+# Executa ambas as buscas e gera os arquivos para comparação:
+python 1_scripts/4_buscar_e_ordenar.py --consulta "critérios para atribuição de bolsas" --k 5 --modo ambos
+
+# Ou execute especificamente um dos modos:
+python 1_scripts/4_buscar_e_ordenar.py --modo linear
+python 1_scripts/4_buscar_e_ordenar.py --modo indexada
+```
+
 ## Parâmetros
 
 - `1_scripts/1_processar_documentos.py`:
@@ -91,6 +102,15 @@ python 1_scripts/3_construir_indice_invertido.py
   - `--entrada`: arquivo de chunks de entrada (padrão: `4_chunks/chunks.json`).
   - `--saida`: arquivo do índice invertido (padrão: `5_indexacao/indice_invertido.json`).
   - `--relatorio`: relatório da indexação (padrão: `5_indexacao/relatorio_indexacao.json`).
+
+- `1_scripts/4_buscar_e_ordenar.py`:
+  - `--consulta`: consulta textual a pesquisar (padrão: `"critérios para atribuição de bolsas"`).
+  - `--k`: quantidade de resultados desejados no Top-k (padrão: `5`).
+  - `--modo`: estratégia de recuperação: `linear`, `indexada` ou `ambos` (padrão: `indexada`).
+  - `--chunks`: caminho dos chunks de entrada (padrão: `4_chunks/chunks.json`).
+  - `--indice`: caminho do índice invertido (padrão: `5_indexacao/indice_invertido.json`).
+  - `--saida-candidatos`: caminho customizado para o arquivo de candidatos (se omitido, gera `6_busca_lexical/candidatos_linear.json` e/ou `6_busca_lexical/candidatos_indexada.json`).
+  - `--relatorio`: caminho customizado para o relatório de métricas (se omitido, gera `6_busca_lexical/relatorio_busca_linear.json` e/ou `6_busca_lexical/relatorio_busca_indexada.json`).
 
 ## Reprodução
 

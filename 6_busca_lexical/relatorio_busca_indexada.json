@@ -1,0 +1,32 @@
+{
+  "status_etapa": "concluido",
+  "arquivo_candidatos_gerado": "6_busca_lexical\\candidatos_indexada.json",
+  "consulta": "critérios para atribuição de bolsas",
+  "k": 5,
+  "configuracao": "indexada",
+  "total_termos_vocabulario": 4061,
+  "tokens_consulta": [
+    "critérios",
+    "para",
+    "atribuição",
+    "de",
+    "bolsas"
+  ],
+  "stopwords_removidas": [
+    "para",
+    "de"
+  ],
+  "termos_apos_filtro_stopwords": [
+    "critérios",
+    "atribuição",
+    "bolsas"
+  ],
+  "termos_distintos_consulta": [
+    "critérios",
+    "atribuição",
+    "bolsas"
+  ],
+  "total_candidatos": 54,
+  "total_postings_consultadas": 61,
+  "tempo_busca_segundos": 0.00272
+}
