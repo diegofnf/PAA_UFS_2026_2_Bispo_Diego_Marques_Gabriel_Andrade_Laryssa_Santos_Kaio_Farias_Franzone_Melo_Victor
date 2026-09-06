@@ -1,23 +1,29 @@
-"""Etapa 4 — Busca Lexical, Score e Estrutura para Merge Sort e Top-k.
+"""Etapa 4 — Busca Lexical, Score (BM25 / Simples) e Estrutura para Merge Sort e Top-k.
 
 Este script implementa:
-1. busca lexical e geração de candidatos:
-   - Tokenização padronizada da consulta (idêntica ao índice invertido);
-   - Função explícita e determinística de score lexical;
-   - Busca linear sobre todos os N chunks com contagem de comparações;
-   - Busca indexada sobre o índice invertido (configuração alternativa para comparação);
-   - Tratamento completo dos casos de borda da busca;
-   - Geração do artefato JSON intermediário ('candidatos_busca.json') para continuidade da etapa.
+1. Busca lexical e geração de candidatos:
+   - Tokenização padronizada da consulta (idêntica ao índice invertido: Unicode NFC + casefold);
+   - Remoção de stopwords em língua portuguesa via biblioteca NLTK;
+   - Cálculo modular de métricas de relevância:
+     a) Okapi BM25 (padrão): TF com saturação assintótica, IDF de Robertson-Spärck Jones
+        e normalização pelo comprimento médio dos chunks (avgdl);
+     b) Pontuação Simples: soma das frequências brutas dos termos filtrados;
+   - Seleção dinâmica da métrica via linha de comando (--metrica) ou chamada funcional;
+   - Busca linear sobre todos os N chunks com contagem exata de comparações;
+   - Busca indexada sobre o índice invertido (recuperação otimizada por postings lists);
+   - Tratamento formal de casos de borda (consultas vazias, termos inexistentes, apenas stopwords);
+   - Geração de artefatos JSON ('candidatos_linear.json' e 'candidatos_indexada.json').
 
-2. Algoritmo de ordenação e seleção Top-k (a ser implementado:
-   - Leitura de 'candidatos_busca.json' (ou recebimento da lista de candidatos);
-   - Algoritmo Merge Sort manual (recorrência T(N) = 2T(N/2) + Θ(N));
-   - Desempate determinístico (maior score, menor id_chunk);
-   - Seleção dos Top-k e gravação de 'resultados_busca.json'.
+2. Algoritmo de ordenação e seleção Top-k (pontos de extensão para continuidade):
+   - Leitura dos arquivos de candidatos;
+   - Procedimento de ordenação Merge Sort manual (recorrência T(N) = 2T(N/2) + Θ(N));
+   - Desempate determinístico (maior score decrescente, menor id_chunk crescente);
+   - Seleção dos Top-k e geração de resultados finais.
 """
 
 import argparse
 import json
+import math
 import re
 import time
 import unicodedata
@@ -85,69 +91,164 @@ def processar_consulta(consulta: str) -> tuple[list[str], list[str], list[str], 
 
 
 # ==============================================================================
-# 2. SCORE LEXICAL DETERMINÍSTICO
+# 2. MÉTRICAS DE RELEVÂNCIA: PONTUAÇÃO SIMPLES E OKAPI BM25
 # ==============================================================================
 
-def calcular_score_chunk(tokens_chunk: list[str], termos_distintos_consulta: list[str]) -> tuple[int, dict[str, int], int]:
-    """Calcula o score lexical de um chunk em relação aos termos da consulta.
-    
-    Fórmula:
-        score(chunk, consulta) = soma das frequências dos termos distintos
-                                 da consulta dentro do chunk.
+def calcular_estatisticas_corpus(chunks: list[dict] | dict[str, dict]) -> tuple[int, float, dict[str, int]]:
+    """Extrai estatísticas globais do corpus necessárias para cálculo do Okapi BM25.
     
     Retorna:
-        - score: pontuação total (inteiro >= 0);
-        - frequencias_termos: detalhamento das ocorrências por termo consultado;
-        - comparacoes: quantidade de verificações de termos executadas.
+        - N: total de documentos (chunks) no corpus;
+        - avgdl: comprimento médio em número de tokens (média de |D|);
+        - comprimentos_doc: dicionário mapeando id_chunk -> comprimento em tokens (|D|).
     """
-    if not tokens_chunk or not termos_distintos_consulta:
-        return 0, {}, 0
+    lista_chunks = chunks if isinstance(chunks, list) else list(chunks.values())
+    N = len(lista_chunks)
+    comprimentos_doc = {}
+    total_tokens = 0
 
-    contagens = Counter(tokens_chunk)
-    score = 0
-    frequencias_termos = {}
-    comparacoes = len(termos_distintos_consulta)
+    for c in lista_chunks:
+        cid = c.get("id_chunk", "")
+        texto = c.get("texto", "")
+        tokens = tokenizar(texto)
+        tamanho = len(tokens)
+        comprimentos_doc[cid] = tamanho
+        total_tokens += tamanho
 
-    for termo in termos_distintos_consulta:
-        freq = contagens.get(termo, 0)
-        if freq > 0:
-            score += freq
-            frequencias_termos[termo] = freq
+    avgdl = (total_tokens / N) if N > 0 else 0.0
+    return N, avgdl, comprimentos_doc
 
-    return score, frequencias_termos, comparacoes
+
+def calcular_idf_bm25(total_documentos: int, doc_freq: int) -> float:
+    """Calcula o Inverse Document Frequency (IDF) com suavização probabilística Robertson-Spärck Jones.
+    
+    Fórmula:
+        IDF(t) = ln(1 + (N - DF(t) + 0.5) / (DF(t) + 0.5))
+    
+    Propriedades Teóricas:
+        - Termos raros no corpus (DF baixo) recebem IDF alto (alto poder discriminador);
+        - Termos frequentes no corpus (DF alto) recebem IDF baixo;
+        - A adição de +1 dentro do logaritmo (suavização de Lucene/BM25 standard)
+          garante que o IDF permaneça sempre não negativo (>= 0), evitando scores negativos.
+    
+    Complexidade Temporal: O(1).
+    """
+    if total_documentos <= 0 or doc_freq <= 0:
+        return 0.0
+    return math.log(1.0 + (total_documentos - doc_freq + 0.5) / (doc_freq + 0.5))
+
+
+def calcular_tf_bm25(
+    freq: int,
+    doc_len: int,
+    avgdl: float,
+    k1: float = 1.5,
+    b: float = 0.75,
+) -> float:
+    """Calcula o componente TF com saturação e normalização de comprimento do Okapi BM25.
+    
+    Fórmula:
+        TF_BM25(t, D) = (freq * (k1 + 1)) / (freq + k1 * (1 - b + b * (|D| / avgdl)))
+    
+    Justificativa das Constantes e Comportamento:
+        - k1 (padrão 1.5): Controla a saturação da frequência do termo.
+          À medida que freq -> infinito, TF_BM25 assintotiza em (k1 + 1), impedindo
+          que repetições exaustivas de um mesmo termo superem a presença de outros termos da consulta.
+        - b (padrão 0.75): Controla a penalização pelo comprimento do documento (|D| / avgdl).
+          Documentos muito extensos que contêm o termo por mero acaso são penalizados,
+          enquanto documentos curtos e densos são valorizados.
+    
+    Complexidade Temporal: O(1).
+    """
+    if freq <= 0:
+        return 0.0
+    ajuste_tamanho = 1.0 - b + (b * (doc_len / avgdl) if avgdl > 0 else 0.0)
+    denominador = freq + k1 * ajuste_tamanho
+    if denominador <= 0:
+        return 0.0
+    return (freq * (k1 + 1.0)) / denominador
+
+
+def calcular_score_simples(frequencias_termos: dict[str, int]) -> int:
+    """Calcula a pontuação linear simples: soma das frequências brutas dos termos filtrados.
+    
+    Fórmula:
+        score_simples(D, q) = sum_{t in q} freq(t, D)
+    
+    Complexidade Temporal: O(m), onde m é o número de termos distintos da consulta.
+    """
+    return sum(frequencias_termos.values())
+
+
+def calcular_score_bm25(
+    frequencias_termos: dict[str, int],
+    doc_len: int,
+    avgdl: float,
+    idfs: dict[str, float],
+    k1: float = 1.5,
+    b: float = 0.75,
+) -> float:
+    """Calcula a pontuação Okapi BM25 acumulando o produto TF_BM25 * IDF de cada termo consultado.
+    
+    Fórmula:
+        score_bm25(D, q) = sum_{t in q} IDF(t) * TF_BM25(t, D)
+    
+    Complexidade Temporal: O(m), onde m é o número de termos distintos da consulta.
+    """
+    score = 0.0
+    for termo, freq in frequencias_termos.items():
+        idf = idfs.get(termo, 0.0)
+        tf = calcular_tf_bm25(freq, doc_len, avgdl, k1, b)
+        score += idf * tf
+    return score
 
 
 # ==============================================================================
 # 3. MECANISMO DE BUSCA LINEAR
 # ==============================================================================
 
-def buscar_linear(chunks: list[dict], consulta: str) -> tuple[list[dict], dict]:
+def buscar_linear(
+    chunks: list[dict],
+    consulta: str,
+    metrica: str = "bm25",
+    k1: float = 1.5,
+    b: float = 0.75,
+    estatisticas_corpus: tuple[int, float, dict[str, int]] | None = None,
+) -> tuple[list[dict], dict]:
     """Executa a busca linear varrendo todos os N chunks do corpus.
     
-    Complexidade:
-        N = número total de chunks (182)
-        m = número de termos distintos da consulta
-        L = tamanho médio do chunk em tokens
-        Custo: O(N * (L + m))
+    Suporta as métricas de relevância:
+        - 'bm25' (Okapi BM25 com saturação, IDF e normalização avgdl);
+        - 'simples' (contagem linear de frequências).
+    
+    Complexidade Assintótica:
+        N = total de chunks no corpus (182)
+        m = total de termos distintos da consulta após filtro de stopwords
+        L = tamanho médio do chunk em tokens (~204,77)
+        Custo Temporal: O(N * (L + m))
+        Custo Espacial: O(N) para armazenamento dos candidatos
     
     Retorna:
         - candidatos: lista de chunks cujo score > 0 (não ordenados);
-        - metricas: dicionário com estatísticas da varredura linear.
+        - metricas: dicionário com metadados e estatísticas da varredura linear.
     """
     inicio = time.perf_counter()
     tokens_consulta, stopwords_removidas, termos_apos_filtro, termos_distintos = processar_consulta(consulta)
 
-    candidatos = []
-    total_comparacoes = 0
-    total_tokens_examinados = 0
+    # Obtenção ou reutilização das estatísticas globais do corpus
+    if estatisticas_corpus is not None:
+        N, avgdl, doc_lengths = estatisticas_corpus
+    else:
+        N, avgdl, doc_lengths = calcular_estatisticas_corpus(chunks)
 
     # Caso de borda: consulta vazia ou sem termos válidos após filtro de stopwords
     if not termos_distintos:
         tempo = round(time.perf_counter() - inicio, 6)
         metricas = {
             "configuracao": "linear",
-            "total_chunks_corpus": len(chunks),
-            "chunks_examinados": len(chunks),
+            "metrica_score": metrica,
+            "total_chunks_corpus": N,
+            "chunks_examinados": N,
             "tokens_consulta": tokens_consulta,
             "stopwords_removidas": stopwords_removidas,
             "termos_apos_filtro_stopwords": termos_apos_filtro,
@@ -158,36 +259,77 @@ def buscar_linear(chunks: list[dict], consulta: str) -> tuple[list[dict], dict]:
             "tempo_busca_segundos": tempo,
             "aviso": "Consulta vazia ou composta exclusivamente por stopwords / caracteres não alfanuméricos.",
         }
-        return candidatos, metricas
+        return [], metricas
+
+    total_comparacoes = 0
+    total_tokens_examinados = 0
+    chunks_com_matches = {}
 
     for chunk in chunks:
+        cid = chunk["id_chunk"]
         texto_chunk = chunk.get("texto", "")
         tokens_chunk = tokenizar(texto_chunk)
         total_tokens_examinados += len(tokens_chunk)
+        doc_len = doc_lengths.get(cid, len(tokens_chunk))
 
-        score, freq_termos, comps = calcular_score_chunk(tokens_chunk, termos_distintos)
-        total_comparacoes += comps
+        contagens = Counter(tokens_chunk)
+        total_comparacoes += len(termos_distintos)
 
-        if score > 0:
+        freqs = {}
+        for termo in termos_distintos:
+            f = contagens.get(termo, 0)
+            if f > 0:
+                freqs[termo] = f
+
+        if freqs:
+            chunks_com_matches[cid] = (chunk, freqs, doc_len)
+
+    # Cálculo da frequência no documento (DF) para os termos da consulta
+    df_map = {
+        termo: sum(1 for _, freqs, _ in chunks_com_matches.values() if termo in freqs)
+        for termo in termos_distintos
+    }
+
+    # Pré-cálculo de IDF se BM25 for a métrica selecionada
+    idf_map = {}
+    if metrica == "bm25":
+        idf_map = {termo: calcular_idf_bm25(N, df_map[termo]) for termo in termos_distintos}
+
+    candidatos = []
+    for cid, (chunk, freqs, doc_len) in chunks_com_matches.items():
+        if metrica == "bm25":
+            score_calculado = calcular_score_bm25(freqs, doc_len, avgdl, idf_map, k1, b)
+            score_final = round(score_calculado, 4)
+        else:
+            score_final = calcular_score_simples(freqs)
+
+        if score_final > 0:
             candidatos.append({
                 "id_chunk": chunk["id_chunk"],
                 "id_documento": chunk.get("id_documento", ""),
                 "nome_arquivo": chunk.get("nome_arquivo", ""),
                 "paginas": chunk.get("paginas", []),
-                "score": score,
-                "frequencias_termos": freq_termos,
-                "texto": texto_chunk,
+                "score": score_final,
+                "frequencias_termos": freqs,
+                "texto": chunk.get("texto", ""),
             })
 
     tempo = round(time.perf_counter() - inicio, 6)
     metricas = {
         "configuracao": "linear",
-        "total_chunks_corpus": len(chunks),
-        "chunks_examinados": len(chunks),
+        "metrica_score": metrica,
+        "parametros_metrica": {
+            "metrica": metrica,
+            **({"k1": k1, "b": b, "avgdl": round(avgdl, 4), "total_documentos_N": N} if metrica == "bm25" else {}),
+        },
+        "total_chunks_corpus": N,
+        "chunks_examinados": N,
         "tokens_consulta": tokens_consulta,
         "stopwords_removidas": stopwords_removidas,
         "termos_apos_filtro_stopwords": termos_apos_filtro,
         "termos_distintos_consulta": termos_distintos,
+        "document_frequencies": df_map,
+        **({"inverse_document_frequencies": {t: round(v, 4) for t, v in idf_map.items()}} if metrica == "bm25" else {}),
         "total_candidatos": len(candidatos),
         "total_comparacoes_termos": total_comparacoes,
         "total_tokens_examinados": total_tokens_examinados,
@@ -200,22 +342,44 @@ def buscar_linear(chunks: list[dict], consulta: str) -> tuple[list[dict], dict]:
 # 4. MECANISMO DE BUSCA INDEXADA
 # ==============================================================================
 
-def buscar_indexada(indice_invertido: dict, chunks_map: dict[str, dict], consulta: str) -> tuple[list[dict], dict]:
+def buscar_indexada(
+    indice_invertido: dict,
+    chunks_map: dict[str, dict],
+    consulta: str,
+    metrica: str = "bm25",
+    k1: float = 1.5,
+    b: float = 0.75,
+    estatisticas_corpus: tuple[int, float, dict[str, int]] | None = None,
+) -> tuple[list[dict], dict]:
     """Executa a busca utilizando o índice invertido da Etapa 3.
     
-    Recupera apenas as posting lists dos termos da consulta e acumula as
-    frequências diretamente por chunk, sem percorrer os N chunks do corpus.
+    Recupera diretamente as posting lists dos termos consultados.
+    Obtém DF(t) em tempo O(1) a partir do tamanho da posting list e
+    acumula as pontuações sem inspecionar documentos não relacionados.
+    
+    Complexidade Assintótica:
+        m = total de termos distintos da consulta
+        Custo Temporal: O(sum_{t in q} |Posting(t)|) << O(N * L)
+        Custo Espacial: O(|Candidatos|)
+    
+    Retorna:
+        - candidatos: lista de chunks cujo score > 0 (não ordenados);
+        - metricas: dicionário com metadados e estatísticas da busca indexada.
     """
     inicio = time.perf_counter()
     tokens_consulta, stopwords_removidas, termos_apos_filtro, termos_distintos = processar_consulta(consulta)
 
-    candidatos_map: dict[str, dict] = {}
-    total_postings_consultadas = 0
+    # Obtenção ou reutilização das estatísticas globais do corpus
+    if estatisticas_corpus is not None:
+        N, avgdl, doc_lengths = estatisticas_corpus
+    else:
+        N, avgdl, doc_lengths = calcular_estatisticas_corpus(chunks_map)
 
     if not termos_distintos:
         tempo = round(time.perf_counter() - inicio, 6)
         metricas = {
             "configuracao": "indexada",
+            "metrica_score": metrica,
             "total_termos_vocabulario": len(indice_invertido),
             "tokens_consulta": tokens_consulta,
             "stopwords_removidas": stopwords_removidas,
@@ -228,13 +392,19 @@ def buscar_indexada(indice_invertido: dict, chunks_map: dict[str, dict], consult
         }
         return [], metricas
 
+    candidatos_map: dict[str, dict] = {}
+    total_postings_consultadas = 0
+    df_map = {}
+
     for termo in termos_distintos:
         entrada_termo = indice_invertido.get(termo)
         if not entrada_termo:
+            df_map[termo] = 0
             continue
 
         postings = entrada_termo.get("chunks", [])
         total_postings_consultadas += len(postings)
+        df_map[termo] = len(postings)
 
         for posting in postings:
             cid = posting["id_chunk"]
@@ -251,18 +421,43 @@ def buscar_indexada(indice_invertido: dict, chunks_map: dict[str, dict], consult
                     "frequencias_termos": {},
                     "texto": chunk_info.get("texto", ""),
                 }
-            candidatos_map[cid]["score"] += freq
             candidatos_map[cid]["frequencias_termos"][termo] = freq
 
-    candidatos = list(candidatos_map.values())
+    # Pré-cálculo de IDF se BM25 for a métrica selecionada
+    idf_map = {}
+    if metrica == "bm25":
+        idf_map = {termo: calcular_idf_bm25(N, df_map[termo]) for termo in termos_distintos}
+
+    # Atribuição da pontuação de acordo com a métrica selecionada
+    for cid, cand in candidatos_map.items():
+        doc_len = doc_lengths.get(cid)
+        if doc_len is None:
+            doc_len = len(tokenizar(cand.get("texto", "")))
+
+        freqs = cand["frequencias_termos"]
+        if metrica == "bm25":
+            score_calculado = calcular_score_bm25(freqs, doc_len, avgdl, idf_map, k1, b)
+            cand["score"] = round(score_calculado, 4)
+        else:
+            cand["score"] = calcular_score_simples(freqs)
+
+    candidatos = [c for c in candidatos_map.values() if c["score"] > 0]
     tempo = round(time.perf_counter() - inicio, 6)
+
     metricas = {
         "configuracao": "indexada",
+        "metrica_score": metrica,
+        "parametros_metrica": {
+            "metrica": metrica,
+            **({"k1": k1, "b": b, "avgdl": round(avgdl, 4), "total_documentos_N": N} if metrica == "bm25" else {}),
+        },
         "total_termos_vocabulario": len(indice_invertido),
         "tokens_consulta": tokens_consulta,
         "stopwords_removidas": stopwords_removidas,
         "termos_apos_filtro_stopwords": termos_apos_filtro,
         "termos_distintos_consulta": termos_distintos,
+        "document_frequencies": df_map,
+        **({"inverse_document_frequencies": {t: round(v, 4) for t, v in idf_map.items()}} if metrica == "bm25" else {}),
         "total_candidatos": len(candidatos),
         "total_postings_consultadas": total_postings_consultadas,
         "tempo_busca_segundos": tempo,
@@ -271,11 +466,11 @@ def buscar_indexada(indice_invertido: dict, chunks_map: dict[str, dict], consult
 
 
 # ==============================================================================
-# 5. CONTRATOS E PONTOS DE EXTENSÃO — A PRODUZIR
+# 5. CONTRATOS E PONTOS DE EXTENSÃO — MERGE SORT E TOP-K
 # ==============================================================================
 
 def merge(esquerda: list[dict], direita: list[dict]) -> list[dict]:
-    """A PRODUZIR: Procedimento de intercalação do Merge Sort.
+    """Procedimento de intercalação do Merge Sort.
     
     Critério determinístico obrigatório:
         1. Maior score primeiro (ordem decrescente de score);
@@ -287,7 +482,7 @@ def merge(esquerda: list[dict], direita: list[dict]) -> list[dict]:
 
 
 def merge_sort(candidatos: list[dict]) -> list[dict]:
-    """A PRODUZIR: Ordenação dos candidatos via Merge Sort manual.
+    """Ordenação dos candidatos via Merge Sort manual.
     
     Especificações teóricas:
         - Recorrência: T(N) = 2T(N/2) + Θ(N)
@@ -301,7 +496,7 @@ def merge_sort(candidatos: list[dict]) -> list[dict]:
 
 
 def selecionar_topk(candidatos_ordenados: list[dict], k: int) -> list[dict]:
-    """A PRODUZIR: Seleciona os k melhores resultados a partir dos candidatos ordenados.
+    """Seleciona os k melhores resultados a partir dos candidatos ordenados.
     
     Se k > len(candidatos_ordenados), deve retornar todos os candidatos disponíveis.
     """
@@ -340,12 +535,36 @@ def executar_busca_modo(
     chunks_map: dict[str, dict],
     caminho_candidatos: Path,
     caminho_relatorio: Path,
+    metrica: str = "bm25",
+    k1: float = 1.5,
+    b: float = 0.75,
+    estatisticas_corpus: tuple[int, float, dict[str, int]] | None = None,
 ) -> tuple[list[dict], dict]:
-    """Executa a busca (linear ou indexada) e grava os artefatos correspondentes."""
+    """Executa a busca (linear ou indexada) com a métrica configurada e grava os artefatos."""
     if modo == "linear":
-        candidatos, metricas = buscar_linear(chunks, consulta)
+        candidatos, metricas = buscar_linear(
+            chunks,
+            consulta,
+            metrica=metrica,
+            k1=k1,
+            b=b,
+            estatisticas_corpus=estatisticas_corpus,
+        )
     else:
-        candidatos, metricas = buscar_indexada(indice_invertido, chunks_map, consulta)
+        candidatos, metricas = buscar_indexada(
+            indice_invertido,
+            chunks_map,
+            consulta,
+            metrica=metrica,
+            k1=k1,
+            b=b,
+            estatisticas_corpus=estatisticas_corpus,
+        )
+
+    if metrica == "bm25":
+        desc_criterio = f"Okapi BM25 com saturacao de TF e ponderacao por IDF (k1={k1}, b={b})"
+    else:
+        desc_criterio = "soma das frequencias dos termos distintos da consulta (apos remocao de stopwords NLTK) no chunk"
 
     saida_candidatos = {
         "metadados": {
@@ -354,7 +573,8 @@ def executar_busca_modo(
             "consulta": consulta,
             "k_solicitado": k,
             "configuracao": modo,
-            "criterio_score": "soma das frequencias dos termos distintos da consulta (apos remocao de stopwords NLTK) no chunk",
+            "metrica_score": metrica,
+            "criterio_score": desc_criterio,
             "criterio_desempate_esperado": "maior score decrescente, menor id_chunk crescente",
             **metricas,
         },
@@ -367,6 +587,7 @@ def executar_busca_modo(
         "consulta": consulta,
         "k": k,
         "configuracao": modo,
+        "metrica_score": metrica,
         **metricas,
     }
 
@@ -374,10 +595,13 @@ def executar_busca_modo(
     salvar_artefato(caminho_relatorio, relatorio)
 
     print("-" * 70)
-    print(f"Configuração: {modo.upper()}")
+    print(f"Configuração: {modo.upper()} | Métrica: {metrica.upper()}")
     print(f"Chunks no corpus: {len(chunks)}")
     print(f"Stopwords removidas (NLTK): {metricas.get('stopwords_removidas', [])}")
     print(f"Termos após filtro de stopwords: {metricas.get('termos_distintos_consulta', [])}")
+    if metrica == "bm25":
+        print(f"Parâmetros BM25: k1={k1}, b={b}, avgdl={metricas['parametros_metrica']['avgdl']}")
+        print(f"IDFs calculados: {metricas.get('inverse_document_frequencies', {})}")
     print(f"Candidatos com score > 0: {len(candidatos)}")
     print(f"Tempo de busca: {metricas['tempo_busca_segundos']:.6f}s")
     if "total_comparacoes_termos" in metricas:
@@ -396,7 +620,7 @@ def executar_busca_modo(
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Etapa 4 — Busca Lexical e Geração de Candidatos para Merge Sort e Top-k."
+        description="Etapa 4 — Busca Lexical, Score (BM25 / Simples) e Geração de Candidatos."
     )
     parser.add_argument(
         "--consulta",
@@ -412,9 +636,27 @@ def main():
     )
     parser.add_argument(
         "--modo",
-        choices=["linear", "indexada", "ambos"],
-        default="ambos",
-        help="Estratégia de busca a ser utilizada: 'linear', 'indexada' ou 'ambos' (padrão: indexada).",
+        choices=["indexada", "linear", "ambos"],
+        default="indexada",
+        help="Estratégia de busca a ser utilizada: 'indexada', 'linear' ou 'ambos' (padrão: indexada).",
+    )
+    parser.add_argument(
+        "--metrica",
+        choices=["bm25", "simples"],
+        default="bm25",
+        help="Métrica de pontuação de relevância: 'bm25' (Okapi BM25) ou 'simples' (contagem linear) (padrão: bm25).",
+    )
+    parser.add_argument(
+        "--k1",
+        type=float,
+        default=1.5,
+        help="Parâmetro k1 do BM25 (controla a saturação do TF; padrão: 1.5).",
+    )
+    parser.add_argument(
+        "--b",
+        type=float,
+        default=0.75,
+        help="Parâmetro b do BM25 (controla a normalização pelo tamanho do chunk; padrão: 0.75).",
     )
     parser.add_argument(
         "--chunks",
@@ -445,6 +687,10 @@ def main():
     # Validação dos parâmetros de entrada e casos de borda
     if args.k < 1:
         raise ValueError(f"O parâmetro k deve ser maior ou igual a 1. Valor recebido: {args.k}")
+    if args.k1 < 0:
+        raise ValueError(f"O hiperparâmetro k1 do BM25 deve ser >= 0. Valor recebido: {args.k1}")
+    if not (0.0 <= args.b <= 1.0):
+        raise ValueError(f"O hiperparâmetro b do BM25 deve estar no intervalo [0, 1]. Valor recebido: {args.b}")
 
     if not args.chunks.exists():
         raise FileNotFoundError(f"Arquivo de chunks não encontrado: {args.chunks}")
@@ -463,13 +709,37 @@ def main():
         dados_indice = json.loads(args.indice.read_text(encoding="utf-8"))
         indice_invertido = dados_indice.get("indice_invertido", {})
 
+    # Estatísticas globais do corpus computadas uma única vez
+    estatisticas_corpus = calcular_estatisticas_corpus(chunks)
+
     print("=" * 70)
     print("ETAPA 4 — BUSCA LEXICAL E GERAÇÃO DE CANDIDATOS")
     print("=" * 70)
     print(f"Consulta: '{args.consulta}'")
     print(f"Valor de k: {args.k}")
+    print(f"Métrica de Relevância: {args.metrica.upper()}")
+    if args.metrica == "bm25":
+        print(f"Hiperparâmetros BM25: k1={args.k1}, b={args.b}")
 
-    if args.modo in ("linear", "ambos"):
+    if args.modo == "indexada":
+        caminho_cand = args.saida_candidatos or Path("6_busca_lexical/candidatos_busca.json")
+        caminho_rel = args.relatorio or Path("6_busca_lexical/relatorio_busca.json")
+        executar_busca_modo(
+            "indexada",
+            args.consulta,
+            args.k,
+            chunks,
+            indice_invertido,
+            chunks_map,
+            caminho_cand,
+            caminho_rel,
+            metrica=args.metrica,
+            k1=args.k1,
+            b=args.b,
+            estatisticas_corpus=estatisticas_corpus,
+        )
+
+    elif args.modo == "linear":
         caminho_cand = args.saida_candidatos or Path("6_busca_lexical/candidatos_linear.json")
         caminho_rel = args.relatorio or Path("6_busca_lexical/relatorio_busca_linear.json")
         executar_busca_modo(
@@ -481,11 +751,31 @@ def main():
             chunks_map,
             caminho_cand,
             caminho_rel,
+            metrica=args.metrica,
+            k1=args.k1,
+            b=args.b,
+            estatisticas_corpus=estatisticas_corpus,
         )
 
-    if args.modo in ("indexada", "ambos"):
-        caminho_cand = args.saida_candidatos or Path("6_busca_lexical/candidatos_indexada.json")
-        caminho_rel = args.relatorio or Path("6_busca_lexical/relatorio_busca_indexada.json")
+    elif args.modo == "ambos":
+        caminho_cand_lin = Path("6_busca_lexical/candidatos_linear.json")
+        caminho_rel_lin = Path("6_busca_lexical/relatorio_busca_linear.json")
+        caminho_cand_idx = Path("6_busca_lexical/candidatos_indexada.json")
+        caminho_rel_idx = Path("6_busca_lexical/relatorio_busca_indexada.json")
+        executar_busca_modo(
+            "linear",
+            args.consulta,
+            args.k,
+            chunks,
+            indice_invertido,
+            chunks_map,
+            caminho_cand_lin,
+            caminho_rel_lin,
+            metrica=args.metrica,
+            k1=args.k1,
+            b=args.b,
+            estatisticas_corpus=estatisticas_corpus,
+        )
         executar_busca_modo(
             "indexada",
             args.consulta,
@@ -493,16 +783,19 @@ def main():
             chunks,
             indice_invertido,
             chunks_map,
-            caminho_cand,
-            caminho_rel,
+            caminho_cand_idx,
+            caminho_rel_idx,
+            metrica=args.metrica,
+            k1=args.k1,
+            b=args.b,
+            estatisticas_corpus=estatisticas_corpus,
         )
 
     print("=" * 70)
-    print("Pronto para leitura dos arquivos de candidatos ('candidatos_linear.json'")
-    print("ou 'candidatos_indexada.json'), aplicação do Merge Sort manual e geração dos Top-k.")
+    print("Pronto para leitura do arquivo de candidatos ('candidatos_busca.json'),")
+    print("aplicação do Merge Sort manual e geração dos Top-k.")
     print("=" * 70)
 
 
 if __name__ == "__main__":
     main()
-

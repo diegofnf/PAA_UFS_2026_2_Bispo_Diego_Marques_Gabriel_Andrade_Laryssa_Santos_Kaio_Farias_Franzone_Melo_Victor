@@ -75,14 +75,23 @@ Etapa 3 — Construção do índice invertido:
 python 1_scripts/3_construir_indice_invertido.py
 ```
 
-Etapa 4 — Busca lexical e geração de candidatos:
+Etapa 4 — Busca lexical e geração de candidatos (Okapi BM25 ou Simples):
 ```bash
-# Executa ambas as buscas e gera os arquivos para comparação:
-python 1_scripts/4_buscar_e_ordenar.py --consulta "critérios para atribuição de bolsas" --k 5 --modo ambos
+# Execução padrão (busca indexada com Okapi BM25, gera arquivo candidatos_busca.json):
+python 1_scripts/4_buscar_e_ordenar.py
 
-# Ou execute especificamente um dos modos:
+# Personalizando a consulta e k:
+python 1_scripts/4_buscar_e_ordenar.py --consulta "critérios para atribuição de bolsas" --k 5
+
+# Ajuste fino de hiperparâmetros BM25 (k1 e b):
+python 1_scripts/4_buscar_e_ordenar.py --metrica bm25 --k1 1.2 --b 0.75
+
+# Indicando nome de arquivo customizado de saída:
+python 1_scripts/4_buscar_e_ordenar.py --saida-candidatos 6_busca_lexical/minha_busca.json --relatorio 6_busca_lexical/meu_relatorio.json
+
+# Execuções alternativas para comparação/benchmarking (gerando linear ou ambos):
 python 1_scripts/4_buscar_e_ordenar.py --modo linear
-python 1_scripts/4_buscar_e_ordenar.py --modo indexada
+python 1_scripts/4_buscar_e_ordenar.py --modo ambos
 ```
 
 ## Parâmetros
@@ -106,11 +115,14 @@ python 1_scripts/4_buscar_e_ordenar.py --modo indexada
 - `1_scripts/4_buscar_e_ordenar.py`:
   - `--consulta`: consulta textual a pesquisar (padrão: `"critérios para atribuição de bolsas"`).
   - `--k`: quantidade de resultados desejados no Top-k (padrão: `5`).
-  - `--modo`: estratégia de recuperação: `linear`, `indexada` ou `ambos` (padrão: `indexada`).
+  - `--modo`: estratégia de recuperação: `indexada`, `linear` ou `ambos` (padrão: `indexada`).
+  - `--metrica`: função de pontuação de relevância: `bm25` (Okapi BM25) ou `simples` (contagem de frequências) (padrão: `bm25`).
+  - `--k1`: parâmetro $k_1$ do BM25 que calibra a saturação do TF (padrão: `1.5`).
+  - `--b`: parâmetro $b$ do BM25 que calibra a penalização pelo tamanho do documento (padrão: `0.75`).
   - `--chunks`: caminho dos chunks de entrada (padrão: `4_chunks/chunks.json`).
   - `--indice`: caminho do índice invertido (padrão: `5_indexacao/indice_invertido.json`).
-  - `--saida-candidatos`: caminho customizado para o arquivo de candidatos (se omitido, gera `6_busca_lexical/candidatos_linear.json` e/ou `6_busca_lexical/candidatos_indexada.json`).
-  - `--relatorio`: caminho customizado para o relatório de métricas (se omitido, gera `6_busca_lexical/relatorio_busca_linear.json` e/ou `6_busca_lexical/relatorio_busca_indexada.json`).
+  - `--saida-candidatos`: caminho customizado para o arquivo de candidatos (padrão na busca indexada: `6_busca_lexical/candidatos_busca.json`).
+  - `--relatorio`: caminho customizado para o relatório de métricas (padrão na busca indexada: `6_busca_lexical/relatorio_busca.json`).
 
 ## Reprodução
 

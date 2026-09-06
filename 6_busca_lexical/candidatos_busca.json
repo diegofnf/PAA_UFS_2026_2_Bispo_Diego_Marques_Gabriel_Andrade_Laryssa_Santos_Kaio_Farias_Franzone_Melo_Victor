@@ -4,11 +4,18 @@
     "proxima_acao": "Merge Sort manual e Top-k",
     "consulta": "critérios para atribuição de bolsas",
     "k_solicitado": 5,
-    "configuracao": "linear",
-    "criterio_score": "soma das frequencias dos termos distintos da consulta (apos remocao de stopwords NLTK) no chunk",
+    "configuracao": "indexada",
+    "metrica_score": "bm25",
+    "criterio_score": "Okapi BM25 com saturacao de TF e ponderacao por IDF (k1=1.5, b=0.75)",
     "criterio_desempate_esperado": "maior score decrescente, menor id_chunk crescente",
-    "total_chunks_corpus": 182,
-    "chunks_examinados": 182,
+    "parametros_metrica": {
+      "metrica": "bm25",
+      "k1": 1.5,
+      "b": 0.75,
+      "avgdl": 204.7747,
+      "total_documentos_N": 182
+    },
+    "total_termos_vocabulario": 4061,
     "tokens_consulta": [
       "critérios",
       "para",
@@ -30,29 +37,27 @@
       "atribuição",
       "bolsas"
     ],
+    "document_frequencies": {
+      "critérios": 36,
+      "atribuição": 3,
+      "bolsas": 22
+    },
+    "inverse_document_frequencies": {
+      "critérios": 1.6122,
+      "atribuição": 3.9567,
+      "bolsas": 2.096
+    },
     "total_candidatos": 54,
-    "total_comparacoes_termos": 546,
-    "total_tokens_examinados": 37269,
-    "tempo_busca_segundos": 0.050065
+    "total_postings_consultadas": 61,
+    "tempo_busca_segundos": 0.010931
   },
   "candidatos": [
-    {
-      "id_chunk": "chunk_0001",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [1],
-      "score": 1,
-      "frequencias_termos": {
-        "bolsas": 1
-      },
-      "texto": "19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_si… 1/13\n\nCOORDENAÇÃO DE APERFEIÇOAMENTO DE PESSOAL DE NÍVEL SUPERIOR - CAPES\nPROGRAMA DE REDUÇÃO DE ASSIMETRIAS NA PÓS-GRADUAÇÃO (PRAPG)\nEDITAL Nº 14/2023\nPROCESSO Nº 23038.003836/2023-39\nA PRESIDENTE DA COORDENAÇÃO DE APERFEIÇOAMENTO DE PESSOAL DE NÍVEL SUPERIOR - CAPES, no\nuso das atribuições conferidas pelo Estatuto aprovado pelo Decreto nº 11.238, de 18 de outubro de\n2022, e nos termos do Processo 23038.003836/2023-39, juntamente com a Diretoria de Programas e\nBolsas no País (DPB), Diretoria de Relações Internacionais (DRI) e Diretoria de Avaliação (DAV), por se\ntratar de um programa estratégico com vistas à redução das assimetrias iden\u0000ﬁcadas no Sistema\nNacional da Pós-Graduação e por atender ao disposto no inciso II, do art. 4º da Portaria nº 34, de 9 de\nmarço de 2020, torna público o Edital nº 14/2023 - Programa de Redução de Assimetrias na PósGraduação (PRAPG), o qual passa a convocar Ins\u0000tuições de Ensino Superior (IES), por meio de seus PróReitores de Pós-Graduação e Pesquisa e Coordenadores de Programas de Pós-Graduação stricto sensu\nacadêmicos, a apresentarem propostas, conforme legislação vigente e as condições estabelecidas a\nseguir:\n1. DO OBJETIVO GERAL\n1.1. Contribuir para o aperfeiçoamento do Sistema Nacional de Pós-Graduação"
-    },
     {
       "id_chunk": "chunk_0012",
       "id_documento": "doc_001",
       "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
       "paginas": [5],
-      "score": 2,
+      "score": 3.6111,
       "frequencias_termos": {
         "critérios": 1,
         "bolsas": 1
@@ -64,7 +69,7 @@
       "id_documento": "doc_001",
       "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
       "paginas": [5],
-      "score": 3,
+      "score": 4.438,
       "frequencias_termos": {
         "critérios": 1,
         "bolsas": 2
@@ -76,7 +81,7 @@
       "id_documento": "doc_001",
       "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
       "paginas": [5, 6],
-      "score": 1,
+      "score": 1.4434,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -87,161 +92,29 @@
       "id_documento": "doc_001",
       "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
       "paginas": [6],
-      "score": 2,
+      "score": 2.212,
       "frequencias_termos": {
         "critérios": 2
       },
       "texto": "disponíveis para visualização na plataforma\neletrônica SICAPES, acessando o link h\u0000ps://inscricao.capes.gov.br/.\n13.3. Os recursos deverão ser enviados exclusivamente por meio da plataforma eletrônica SICAPES,\nacessando o link h\u0000ps://inscricao.capes.gov.br/.\n13.4. É vedada a alteração ou complementação da documentação no momento da apresentação do\nrecurso.\n13.5. O ranqueamento ﬁnal das propostas será deﬁnido após apreciação dos recursos interpostos contra\na análise de mérito.\n14. DO RANQUEAMENTO DO RESULTADO FINAL\n14.1.O ranqueamento, sob a responsabilidade da DPB/CAPES, consiste na classiﬁcação das propostas,\napós a etapa de recurso da Análise de Mérito, de acordo com a nota ob\u0000da no certame e os critérios\nelencados no item 11.2.\n14.2.Em caso de empate, serão considerados, sucessivamente, os parâmetros abaixo para determinação\ndo desempate:\nI. Será considerada prioritária a proposta que ob\u0000ver a maior nota, sucessivamente, nos critérios 1,\n2 e 3 do item 11.2;\n14.3.O ranqueamento das propostas subme\u0000das pelos proponentes será realizado por região.\n14.4. O número de propostas apoiadas atenderá as proporções da Tabela abaixo:\nRegião Nº de propostas apoiadas\n(até)\nNORDESTE 50\nSUDESTE 15\nSUL 7\nCENTRO-OESTE 15\nNORTE 13\nTotal Geral 100\n14.4.1. Caso o número de propostas por Região não a\u0000nja o teto estabelecido no item 14.4, será\nselecionada a proposta"
     },
     {
-      "id_chunk": "chunk_0016",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [6, 7],
-      "score": 1,
-      "frequencias_termos": {
-        "bolsas": 1
-      },
-      "texto": "15\nSUL 7\nCENTRO-OESTE 15\nNORTE 13\nTotal Geral 100\n14.4.1. Caso o número de propostas por Região não a\u0000nja o teto estabelecido no item 14.4, será\nselecionada a proposta recomendada com maior nota até o máximo de 100 propostas, conforme previsto\nno item 7.2 deste edital.\n15. DA HOMOLOGAÇÃO DO RESULTADO FINAL\n15.1. A lista das propostas aprovadas e classiﬁcadas será subme\u0000da à apreciação da Presidência da CAPES\npara homologação.\n15.2. O resultado ﬁnal do edital será publicado no DOU, conforme cronograma previsto no item 5 desta\nchamada.\n15.3. Informações oﬁciais e resultados serão divulgados exclusivamente por meio eletrônico.\n16. DO ORÇAMENTO DA CAPES\n16.1. As propostas aprovadas serão apoiadas no valor global es\u0000mado de R$ 131.910.645,40 (cento e\ntrinta e um milhões, novecentos e dez mil, seiscentos e quarenta e cinco reais e quarenta centavos)\noriundos do orçamento da CAPES.\n16.2. Os aportes dos recursos es\u0000mados referem-se ao valor dos recursos de custeio, capital e das\nbolsas.\n16.2.1. Os recursos serão divididos da seguinte maneira para cada proposta aprovada:\nRecursos Previstos por Projeto\nTipo Valor Previsto\nRecurso de Custeio Até R$ 40.000,00 (quarenta mil reais)\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_si… 7/13\nRecurso de Capital Até"
-    },
-    {
-      "id_chunk": "chunk_0017",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [6, 7],
-      "score": 6,
-      "frequencias_termos": {
-        "bolsas": 6
-      },
-      "texto": "aprovada:\nRecursos Previstos por Projeto\nTipo Valor Previsto\nRecurso de Custeio Até R$ 40.000,00 (quarenta mil reais)\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_si… 7/13\nRecurso de Capital Até R$ 40.000,00 (quarenta mil reais)\nNúmero de Bolsas Previstas por Projeto\nMestrado no país Até 4\nDoutorado (Pró-Doutoral) no país 1\nPós-Doutorado no país Até 2\nProfessor Visitante Sênior no país 1\nProfessor Visitante Sênior no exterior 1\nProfessor Visitante Júnior no exterior 1\nProfessor Visitante Estrangeiro 1\n\n17. DA CONCESSÃO DAS BOLSAS\n17.1. Os bene\u0000cios des\u0000nados às Coordenações de PPG deverão ser u\u0000lizados em estrita concordância\ncom o planejamento estratégico da Pró-Reitoria de Pós-Graduação e Pesquisa e, também, do PPG que,\npor sua vez, deverá apresentar as ações de melhorias propostas pela CAPES em suas ﬁchas de avaliação\nemi\u0000das, especialmente, no úl\u0000mo ciclo avalia\u0000vo coordenado pela CAPES (2021).\n17.2. A duração das bolsas não deverá ultrapassar o prazo de execução do projeto.\n17.3. As cotas de bolsas deverão ser implementadas, conforme calendário a ser divulgado pela CAPES em\no\u0000cio de concessão que, por sua vez, será enviado ao Coordenador de PPG, via sistema Linha Direta.\n17.4. As bolsas deverão ser implementadas no Sistema de Concessão de Bolsas e Auxílios"
-    },
-    {
-      "id_chunk": "chunk_0018",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [7],
-      "score": 8,
-      "frequencias_termos": {
-        "bolsas": 8
-      },
-      "texto": "de concessão que, por sua vez, será enviado ao Coordenador de PPG, via sistema Linha Direta.\n17.4. As bolsas deverão ser implementadas no Sistema de Concessão de Bolsas e Auxílios (SCBA) pelo\nCoordenador de PPG, dentro dos prazos a serem informados.\n17.5. O valor das bolsas no país são deﬁnidos pela Portaria CAPES nº 33, de 16 de fevereiro de 2023 ou\noutra que venha a subs\u0000tuí-la. O valor das bolsas no exterior, por sua vez, é regido pela Portaria CAPES nº\n1, de 3 de janeiro de 2020.\n17.6. Das bolsas de Mestrado e Doutorado\n17.6.1. Mestrado - As concessões e implementações das bolsas deverão observar o norma\u0000vo da CAPES\nque regula a modalidade (Portaria CAPES nº 76/2010), no que couber.\nI. As cotas de bolsas de mestrado, com vigência máxima de 24 (vinte e quatro) meses, deverão ser\nimplementadas de maneira escalonada, sendo que a primeira metade das bolsas deve ser\nimplementada a par\u0000r do início do projeto e a segunda metade no primeiro semestre de 2024, em\ncalendário a ser informado pela CAPES.\n17.6.1.1. O candidato à bolsa de mestrado deverá atender os seguintes requisitos:\nI. Comprovar desempenho acadêmico sa\u0000sfatório, consoante às normas deﬁnidas pelo PPG;\nII."
-    },
-    {
-      "id_chunk": "chunk_0020",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [7, 8],
-      "score": 1,
-      "frequencias_termos": {
-        "bolsas": 1
-      },
-      "texto": "PPG stricto sensu com nota igual ou superior a 5 (cinco),\npromovido por outra Ins\u0000tuição de Ensino Superior;\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_si… 8/13\nIV. Ter mais de 8 anos para o tempo para aposentadoria;\nV. Não acumular a percepção de bolsa com qualquer modalidade de auxílio ou bolsa de outro\nprograma com a mesma ﬁnalidade e caracterís\u0000ca; e\nVI. Apresentar Plano de A\u0000vidade a ser desenvolvido durante o período de usufruto da bolsa de\ndoutorado.\n17.6.2.2. A concessão e implementação das bolsas de doutorado pela CAPES ocorrerá da seguinte\nmaneira:\nI. A bolsa de doutorado terá a duração inicial de 12 meses, podendo ser prorrogada, anualmente,\naté a vigência máxima de 48 meses;\nII. No caso do bolsista haver recebido bolsa de doutorado de outra agência de fomento, o período de\nbolsa usufruído será contabilizado para o cálculo de vigência total da bolsa;\nIII. As Pró-Reitorias receberão e processarão as demandas dos docentes/pesquisadores\ncontemplados, observando os prazos deﬁnidos neste edital; e\nIV. Para o cadastramento da bolsa no SCBA, o coordenador de projeto deverá anexar no sistema os\nseguintes documentos:\n1.Cópia da Portaria de Afastamento do bolsista\n2. Cronograma de A\u0000vidades a serem desenvolvidas durante o"
-    },
-    {
-      "id_chunk": "chunk_0022",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [8],
-      "score": 2,
-      "frequencias_termos": {
-        "bolsas": 2
-      },
-      "texto": "da bolsa original, e limite-se ao ﬁm da vigência original da bolsa concedida de modo\na não prejudicar o andamento do projeto;\nIII. A implementação da nova bolsa advinda da subs\u0000tuição deverá ocorrer no mês subsequente ao\ndesligamento do bolsista original.\nIV. O pedido de subs\u0000tuição deverá ser formalizado, por meio de O\u0000cio, o qual apresentará as\ndevidas jus\u0000ﬁca\u0000vas para o cancelamento da bolsa, assim como a informação da nova bolsa.\n17.7. Das bolsas de Pós-Doutorado e Professor Visitante Sênior no país\n17.7.1. Pós-Doutorado- A concessão de bolsa na modalidade terá vigência máxima de 24 (vinte e\nquatro) meses e deverá observar o norma\u0000vo da CAPES que regula a modalidade (Portaria CAPES nº\n86/2013), no que couber.\n17.7.1.1. O candidato à bolsa de pós-doutorado deve atender os seguintes requisitos:\nI. Ser jovem doutor, \u0000tulado a no máximo 5 anos, a contar da data da implementação da bolsa; e\nII. Se servidor público, deverá ser apresentado o comprovante de afastamento do exercício do cargo\npor igual período da bolsa.\n17.7.1.2. É vedada a concessão de bolsas de pós-doutorado para docentes doutores que integram a\nestrutura da mesma Ins\u0000tuição de Ensino Superior responsável pela submissão do projeto, exceto para o\ncaso explicitado"
-    },
-    {
-      "id_chunk": "chunk_0023",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [8, 9],
-      "score": 2,
-      "frequencias_termos": {
-        "bolsas": 2
-      },
-      "texto": "vedada a concessão de bolsas de pós-doutorado para docentes doutores que integram a\nestrutura da mesma Ins\u0000tuição de Ensino Superior responsável pela submissão do projeto, exceto para o\ncaso explicitado no item 17.6.2.3.\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_si… 9/13\n17.7.1.3. Com vistas a contribuir para a consolidação dos PPGs, os beneﬁciários das bolsas de pósdoutorado deverão indicar, em seus respec\u0000vos planos de a\u0000vidades, as linhas de pesquisa em que\natuarão durante o período de usufruto da bolsa.\n17.7.1.4. Para cadastramento da bolsa de pós-doutorado no SCBA, o coordenador do projeto deverá\nanexar no sistema os seguintes documentos:\n1. Cópia da Portaria de Afastamento do bolsista;\n2. Diploma de Doutorado ou Ata de Defesa da Tese; e,\n3. Cronograma de A\u0000vidades, com a iden\u0000ﬁcação das linhas de pesquisa de atuação do pósdoutor, a serem desenvolvidas durante o usufruto da bolsa.\n17.7.2. Professor Visitante Sênior no país: A concessão terá vigência máxima total de 24 (vinte e quatro)\nmeses, as quais poderão ser usufruídas durante a vigência do projeto, publicado no DOU, em intervalos\ntemporais deﬁnidos pela pró-reitoria.\n17.7.2.1. O candidato a bolsa de professor visitante sênior deve possuir o seguinte perﬁl:\nI. Comprome\u0000mento com a Área de Avaliação"
-    },
-    {
-      "id_chunk": "chunk_0024",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [9],
-      "score": 2,
-      "frequencias_termos": {
-        "bolsas": 2
-      },
-      "texto": "publicado no DOU, em intervalos\ntemporais deﬁnidos pela pró-reitoria.\n17.7.2.1. O candidato a bolsa de professor visitante sênior deve possuir o seguinte perﬁl:\nI. Comprome\u0000mento com a Área de Avaliação / Área de Conhecimento;\nII. Experiência com projetos de consolidação de PPG e de grupos de pesquisa;\nIII. Carreira acadêmico com comprovada produção cien\u0000ﬁca;\n17.7.2.2. Os beneﬁciários das bolsas de professor visitante sênior no país deverão ser doutores há pelo\nmenos dez anos, licenciados (exceto por invalidez) para par\u0000cipar do programa, com reconhecida\ncompetência em sua área de atuação, podendo estar aposentados.\n17.7.2.3. Para cadastramento da bolsa no SCBA, o coordenador do projeto deverá anexar no sistema o\nseguinte documento:\n1. Cópia da Portaria de Afastamento do bolsista ou o comprovante de aposentadoria emi\u0000do pelo\nIns\u0000tuto Nacional de Seguro Social (INSS), quando for o caso;\n2. Diploma de Doutorado; e,\n3. Cronograma de A\u0000vidades, com a iden\u0000ﬁcação das linhas de pesquisa de atuação, a serem\ndesenvolvidas durante o usufruto da bolsa.\n17.7.3. As Bolsas no exterior seguirão as normas con\u0000das nas Portarias nº 289, de 28 de dezembro de\n2018, nº 1 de 03 de janeiro de 2020, nº 202, de 16 de outubro de 2017, e posteriores que as"
-    },
-    {
-      "id_chunk": "chunk_0026",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [9, 10],
-      "score": 3,
-      "frequencias_termos": {
-        "bolsas": 3
-      },
-      "texto": "18. DA CONCESSÃO DE RECURSOS FINANCEIROS\n18.1. A concessão dos recursos ﬁnanceiros (custeio e capital) será realizada diretamente aos\ncoordenadores de PPGs vinculados a ins\u0000tuições públicas ou privadas sem ﬁns lucra\u0000vos e dar-se-á\nmediante a assinatura do Termo de Solicitação e Concessão de Apoio Financeiro a Projeto Educacional ou\nde Pesquisa – AUXPE/Anexo III disponível no Sistema de Controle de Bolsas e Auxílios – SCBA) pelo\nproponente, com anuência do representante legal da ins\u0000tuição, respeitadas às normas previstas na\nPortaria CAPES nº 59/2013, ou outra que venha a lhe subs\u0000tuir.\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_… 10/13\n18.2. O pe\u0000cionamento do AUXPE/Anexo III no SCBA, devidamente preenchido e assinado, é fator\ncondicionante para a liberação dos recursos (custeio e capital) e da implementação das cotas de bolsas\nno país.\n18.3. O prazo para realizar o pe\u0000cionamento do AUXPE/Anexo III é de até 60 dias após a no\u0000ﬁcação de\naprovação ﬁnal do projeto, conforme instruções a serem enviadas aos beneﬁciários. O não cumprimento\ndesse prazo poderá implicar o cancelamento da concessão.\n18.4. A implementação das bolsas estará condicionada ao devido e correto pe\u0000cionamento do\nAUXPE/Anexo III, via SCBA, pelo proponente.\n18.5. O repasse dos recursos ﬁnanceiros será realizado por"
-    },
-    {
-      "id_chunk": "chunk_0027",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [10],
-      "score": 1,
-      "frequencias_termos": {
-        "bolsas": 1
-      },
-      "texto": "da concessão.\n18.4. A implementação das bolsas estará condicionada ao devido e correto pe\u0000cionamento do\nAUXPE/Anexo III, via SCBA, pelo proponente.\n18.5. O repasse dos recursos ﬁnanceiros será realizado por meio do Cartão Pesquisador.\n18.6. A existência de alguma inadimplência do proponente com a CAPES ou com qualquer órgão da\nAdministração Pública Federal, direta ou indireta, cons\u0000tuirá fator impedi\u0000vo para o repasse do recurso\nﬁnanceiro.\n18.7. Os recursos de custeio e capital a serem repassados aos Coordenadores de projeto por meio de\nAUXPE têm a seguinte previsão:\nRecurso Financeiro Previsão dos repasses Total2023 2024\nCusteio R$ 20.000,00 R$ 20.000,00 R$ 40.000,00\nCapital R$ 40.000,00 - R$ 40.000,00\nTotal Geral R$ 60.000,00 R$ 20.000,00 R$ 80.000,00\n19. DA UTILIZAÇÃO DOS RECURSOS FINANCEIROS\n19.1. A u\u0000lização dos recursos ﬁnanceiros deverá ocorrer no período de vigência do auxílio, cuja duração\nserá de 60 (sessenta) meses, constante no extrato de concessão publicado no DOU.\n19.2. São consideradas despesas de custeio, como por exemplo:\nI. Material de consumo e Serviços de terceiros (pessoa \u0000sica e jurídica):\na) Serviços de terceiros – pagamento integral ou parcial de contratos de manutenção e\nserviços de terceiros, pessoa \u0000sica ou jurídica, de caráter eventual;\nb) Material de consumo, componentes"
-    },
-    {
-      "id_chunk": "chunk_0030",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [11],
-      "score": 1,
-      "frequencias_termos": {
-        "bolsas": 1
-      },
-      "texto": "PROJETOS\n20.1. As ações de monitoramento e avaliação terão caráter preven\u0000vo e saneador, obje\u0000vando a gestão\nadequada dos projetos.\n20.2. O Coordenador de Projeto deverá:\nI - Assegurar-se de executar o planejamento apresentado no projeto selecionado em conformidade\ncom os seus obje\u0000vos;\nII - Facilitar o acompanhamento longitudinal do processo de internacionalização;\nIII - Acompanhar as a\u0000vidades acadêmicas realizadas pelos beneﬁciários de bolsa;\nIV - Pe\u0000cionar e assinar o AUXPE/Anexo III da Portaria CAPES nº 59/2013;\nV - Prestar contas dos recursos de custeio recebidos, conforme os termos da Portaria CAPES nº\n59/2013;\nVI - Cumprir a legislação per\u0000nente à concessão de bolsas es\u0000pulada pela Portaria CAPES nº\n86/2013 e 76/2010;\nVII - Realizar a apresentação dos resultados do projeto nos seminários. Em caso de impossibilidade\nde comparecimento, o coordenador de projeto deverá jus\u0000ﬁcar o mo\u0000vo da ausência e indicar um\nmembro da equipe para realizar a apresentação;\nVIII- Apresentar relatórios anuais com a descrição das a\u0000vidades e do cumprimento dos objetos\npropostos, conforme previsto na Portaria nº 59/2013.\n20.3.Serão realizados dois Seminários de Acompanhamento e Avaliação, que deverão estar no\ncronograma das a\u0000vidades previstas no projeto:\nI. O primeiro seminário ocorrerá ao ﬁnal do primeiro ano de execução das"
-    },
-    {
       "id_chunk": "chunk_0031",
       "id_documento": "doc_001",
       "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
       "paginas": [11],
-      "score": 1,
+      "score": 1.5973,
       "frequencias_termos": {
         "critérios": 1
       },
       "texto": "realizados dois Seminários de Acompanhamento e Avaliação, que deverão estar no\ncronograma das a\u0000vidades previstas no projeto:\nI. O primeiro seminário ocorrerá ao ﬁnal do primeiro ano de execução das a\u0000vidades; e\nII. O segundo seminário, após o terceiro ano, para a apresentação dos resultados ﬁnais.\n20.4. O acompanhamento dos projetos, inclusive do processo de internacionalização, se dará por\nintermédio da análise de Relatório de Acompanhamento do Projeto a serem encaminhados à CAPES pelo\nCoordenador de Projeto em períodos especíﬁcos: 12, 30, 42 e 54 meses.\n21. DA AVALIAÇÃO DE RESULTADOS\n21.1. Os critérios estabelecidos na etapa da Análise de Mérito servirão de parâmetro para a avaliação ao\nlongo da vigência do projeto.\n21.2. Ao ﬁnal da vigência, os projetos serão avaliados considerando:\nI. O aumento da eﬁcácia do PPG quanto à formação de recursos humanos de alto nível, aumento\nqualita\u0000vo e quan\u0000ta\u0000vo da produção técnica, patentes e outras produções consideradas relevantes\nao PPG;\nII. A consolidação dos PPGs por meio da ampliação da produção do conhecimento, da produção\ncien\u0000ﬁca ou da adoção de tecnologias, conforme os parâmetros da área em que está inserido;\nIII. As evidências de integração e cooperação com outros programas e centros de pesquisa e\ndesenvolvimento"
     },
     {
-      "id_chunk": "chunk_0033",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [12],
-      "score": 1,
-      "frequencias_termos": {
-        "bolsas": 1
-      },
-      "texto": "e Diretrizes de Internacionalização no Plano de Desenvolvimento\nIns\u0000tucional;\nII. Diagnós\u0000co das Competências centrais da ins\u0000tuição;\nIII. Estratégia de ar\u0000culação interna para inserção das Polí\u0000cas e Diretrizes de Internacionalização no\nPlano de Desenvolvimento Ins\u0000tucional;\nIV. Plano Estratégico Ins\u0000tucional de Internacionalização (PEI);\nV. Mapeamento das parcerias estratégicas entre as ins\u0000tuições brasileiras par\u0000cipantes do programa\ne as ins\u0000tuições estrangeiras.\nVI. Implementação de meios, de instrumentos e de processos de infraestrutura, básicos para o apoio\nà internacionalização.\n21.4. Adicionalmente, aos itens elencados acima, no formulário de inscrição o proponente deverá indicar,\nem campo especíﬁco, os resultados esperados de maneira circunstanciada e descri\u0000va, observando o\ncaráter singular de seu projeto em contraste às respostas que serão dadas aos problemas iden\u0000ﬁcados na\nFicha de Avaliação referente ao úl\u0000mo ciclo avalia\u0000vo da CAPES (2021).\n22. PRESTAÇÃO DE CONTAS\n22.1. É obrigatória a prestação de contas das despesas realizadas, observadas as normas que disciplinam\na u\u0000lização do AUXPE, em especial, o disposto no Manual de Prestação de Contas online do Sistema\nInforma\u0000zado de Prestação de Contas - SIPREC da CAPES (Anexo II da Portaria CAPES nº 59/2013).\n22.2.Todos os documentos, manuais e orientações acerca da prestação de contas encontram-se no site da\nCAPES (h\u0000ps://www.gov.br/capes/pt-br/acesso-a-informacao/acoes-eprogramas/bolsas/prestacao-decontas/auxilios-a-pesquisa).\n22.3. A prestação"
-    },
-    {
-      "id_chunk": "chunk_0034",
-      "id_documento": "doc_001",
-      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
-      "paginas": [12, 13],
-      "score": 1,
-      "frequencias_termos": {
-        "bolsas": 1
-      },
-      "texto": "SIPREC da CAPES (Anexo II da Portaria CAPES nº 59/2013).\n22.2.Todos os documentos, manuais e orientações acerca da prestação de contas encontram-se no site da\nCAPES (h\u0000ps://www.gov.br/capes/pt-br/acesso-a-informacao/acoes-eprogramas/bolsas/prestacao-decontas/auxilios-a-pesquisa).\n22.3. A prestação de contas ﬁnal deverá ser realizada no SIPREC em até 60 (sessenta) dias após o término\nda vigência do auxílio.\n22.4.Para informações referentes à prestação de contas, entrar em contato com a Coordenação-Geral de\nPrestação de Contas e Cobrança Administra\u0000va, por meio do e-mail: cgpca@capes.gov.br.\n23. PUBLICAÇÕES\n23.1. As publicações cien\u0000ﬁcas, quando o caso, e qualquer outro meio de divulgação ou promoção de\neventos ou de projetos de pesquisa apoiados pela presente Chamada deverão citar, obrigatoriamente, o\napoio da CAPES.\n23.2. As ações publicitárias a\u0000nentes a projetos realizados com recursos deste Edital deverão observar\nrigorosamente as disposições que regulam à matéria.\n24. DISPOSIÇÕES GERAIS\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_… 13/13\n24.1. O presente edital poderá ser revogado ou anulado a qualquer tempo, no todo ou em parte, por\nmo\u0000vo de interesse público, exigência legal ou indisponibilidade orçamentária e ﬁnanceira da CAPES, sem\nque isso implique direito à indenização ou reclamação de qualquer natureza por parte dos beneﬁciários.\n24.2. A existência de alguma inadimplência do proponente com a"
-    },
-    {
       "id_chunk": "chunk_0035",
       "id_documento": "doc_001",
       "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
       "paginas": [13],
-      "score": 2,
+      "score": 3.5957,
       "frequencias_termos": {
         "critérios": 1,
         "bolsas": 1
@@ -253,7 +126,7 @@
       "id_documento": "doc_002",
       "nome_arquivo": "IN_01_2023_PROCC_Estrutura_Curricular_Mestrado.pdf",
       "paginas": [3],
-      "score": 1,
+      "score": 1.6185,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -264,7 +137,7 @@
       "id_documento": "doc_002",
       "nome_arquivo": "IN_01_2023_PROCC_Estrutura_Curricular_Mestrado.pdf",
       "paginas": [14],
-      "score": 1,
+      "score": 1.655,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -275,7 +148,7 @@
       "id_documento": "doc_002",
       "nome_arquivo": "IN_01_2023_PROCC_Estrutura_Curricular_Mestrado.pdf",
       "paginas": [14, 15],
-      "score": 1,
+      "score": 1.6439,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -286,7 +159,7 @@
       "id_documento": "doc_002",
       "nome_arquivo": "IN_01_2023_PROCC_Estrutura_Curricular_Mestrado.pdf",
       "paginas": [15],
-      "score": 2,
+      "score": 2.3205,
       "frequencias_termos": {
         "critérios": 2
       },
@@ -297,7 +170,7 @@
       "id_documento": "doc_002",
       "nome_arquivo": "IN_01_2023_PROCC_Estrutura_Curricular_Mestrado.pdf",
       "paginas": [15, 16],
-      "score": 1,
+      "score": 1.6402,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -308,7 +181,7 @@
       "id_documento": "doc_002",
       "nome_arquivo": "IN_01_2023_PROCC_Estrutura_Curricular_Mestrado.pdf",
       "paginas": [16],
-      "score": 1,
+      "score": 1.6293,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -319,7 +192,7 @@
       "id_documento": "doc_002",
       "nome_arquivo": "IN_01_2023_PROCC_Estrutura_Curricular_Mestrado.pdf",
       "paginas": [16, 17],
-      "score": 3,
+      "score": 2.6667,
       "frequencias_termos": {
         "critérios": 3
       },
@@ -330,7 +203,7 @@
       "id_documento": "doc_002",
       "nome_arquivo": "IN_01_2023_PROCC_Estrutura_Curricular_Mestrado.pdf",
       "paginas": [17, 18],
-      "score": 1,
+      "score": 1.6149,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -341,7 +214,7 @@
       "id_documento": "doc_003",
       "nome_arquivo": "IN_01_2024_PROCC_Criterios_Bolsas.pdf",
       "paginas": [3],
-      "score": 1,
+      "score": 1.6439,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -352,29 +225,18 @@
       "id_documento": "doc_004",
       "nome_arquivo": "IN_01_2026_PROCC_Credenciamento_Recredenciamento_Vagas.pdf",
       "paginas": [1, 2],
-      "score": 1,
+      "score": 1.6221,
       "frequencias_termos": {
         "critérios": 1
       },
       "texto": "°\n31 de dezembro de cada ano.\n§1º Somente serão coletados e considerados os artigos publicados em periódicos e em anais de eventos que\nestejam classificados nos estratos superiores conforme o documento de área em Ciência da Computação da\nCAPES. Os estratos superiores (A1, A2, A3, A4) são estabelecidos da seguinte maneira: no caso de\nperiódicos, percentil acima de 50%; no caso de eventos, H5 (google scholar) >= 15.\n§2º Para eventos nacionais, serão considerados os critérios de indução, em que o Comitê de CC da CAPES\nclassifica os principais eventos nacionais promovidos pela SBC, conforme o estabelecido no Documento de\nÁrea em CC da CAPES. Nesse caso, os eventos nacionais serão classificados de acordo com a planilha de\nclassificação de eventos utilizada pelo comitê de CC da CAPES no último quadriênio passado.\n§3º Somente serão considerados os artigos que estejam cadastrados no currículo Lattes do docente no\nmomento da coleta.\nCidade Universitária “Prof. José Aloísio de Campos” – Av. Mal. Rondon, s/n – Jardim Rosa Elze\nCEP 49.100-000 – São Cristóvão-SE – Fone: (079) 2105-6678\n\nSERVIÇO PÚBLICO FEDERAL\nMINISTÉRIO DA EDUCAÇÃO E CULTURA\nUNIVERSIDADE FEDERAL DE SERGIPE\nPró-Reitoria de Pós-Graduação e Pesquisa (POSGRAP)\nPrograma de Pós-Graduação em Ciência da"
     },
     {
-      "id_chunk": "chunk_0078",
-      "id_documento": "doc_004",
-      "nome_arquivo": "IN_01_2026_PROCC_Credenciamento_Recredenciamento_Vagas.pdf",
-      "paginas": [2],
-      "score": 1,
-      "frequencias_termos": {
-        "atribuição": 1
-      },
-      "texto": "– Grupo PPS: docentes permanentes com mais de 60 anos de idade. Docentes desse\ngrupo poderão ter até 6 vagas de orientação de mestrado.\n§1º O docente que não foi classificado em nenhum dos grupos não poderá receber novos discentes enquanto\nperdurar tal situação.\n§2º O docente poderá solicitar à CAD a reanálise de sua classificação nos grupos descritos sempre que\nobtiver publicação ou aceitação de um novo artigo que lhe permita reverter a situação descrita neste artigo ou\nque lhe permita mudar de grupo.\nArt.3 A CAD realizará uma coleta de artigos publicados para posterior classificação de docentes sempre que\nhouver necessidade da realização de um processo de credenciamento/recredenciamento ou de atribuição de\nvagas por orientador, obedecendo o que está disposto nos artigos 1 e 2.\nArt. 4 O processo de credenciamento ocorrerá sempre que houver necessidade do Programa e é realizado via\nedital público disponibilizado na página web do Programa\n§1º A CAD deverá analisar as solicitações de credenciamento de novos docentes e elaborar um parecer de\naprovação, caso o candidato seja aceito como novo docente.\n§2º O resultado final do processo de credenciamento deve ser homologado pelo colegiado do PROCC.\n§3º O credenciamento de docentes no último"
-    },
-    {
       "id_chunk": "chunk_0081",
       "id_documento": "doc_004",
       "nome_arquivo": "IN_01_2026_PROCC_Credenciamento_Recredenciamento_Vagas.pdf",
       "paginas": [3],
-      "score": 2,
+      "score": 3.7392,
       "frequencias_termos": {
         "critérios": 1,
         "bolsas": 1
@@ -386,40 +248,18 @@
       "id_documento": "doc_005",
       "nome_arquivo": "IN_02_2026_PROCC_Destinacao_Recursos.pdf",
       "paginas": [1],
-      "score": 1,
+      "score": 1.6365,
       "frequencias_termos": {
         "critérios": 1
       },
       "texto": "interna dos demais financiamentos para programas de\npós-graduação\n\n(ex:\n\nPROEF/FAPITEC)\n\nseguirão\n\no\n\nque\n\nconsta\n\ncomo\n\nitens\n\nfinanciáveis\n\nno\n\nedital\n\nde\n\nconcessão\n\nde\n\nrecursos\n\ndo\n\nprojeto\n\naprovado.\nArt. 2\no\n– Somente serão liberados recursos por meio de solicitações de docentes credenciados na\ncategoria\n\npermanente\n\ndo\n\nPROCC\n\ne\n\ntambém\n\npor\n\ndiscentes\n\ndesde\n\nque\n\nautorizados\n\npor\n\nseus\n\norientadores\n\n(docentes\n\npermanentes\n\ndo\n\nPrograma).\nArt. 3\no\n– Os recursos financeiros deverão ser utilizados prioritariamente para pagamentos de\ninscrição\n\nem\n\nconferências\n\ne\n\ntambém\n\npara\n\ndespesas\n\ncom\n\npublicações\n\nem\n\nperiódicos.\n§ 1\no\n– Os veículos de publicação que trata este artigo devem estar classificados nos estratos\nsuperiores\n\nconforme\n\no\n\ndocumento\n\nde\n\nárea\n\nem\n\nCiência\n\nda\n\nComputação\n\nda\n\nCAPES.\n\nOs\n\nestratos\n\nsuperiores\n\n(A1,\n\nA2,\n\nA3,\n\nA4)\n\nsão\n\nestabelecidos\n\nda\n\nseguinte\n\nmaneira:\nno caso de periódicos, percentil acima de\n50%;\n\nno\n\ncaso\n\nde\n\neventos,\n\nH5\n\n(google\n\nscholar)\n\n>=\n\n15.\n§ 2\no\n– Para eventos e periódicos nacionais, serão considerados os critérios de indução, em que o CC da\nCAPES\n\nclassifica\n\nos\n\nprincipais\n\neventos/periódicos\n\nnacionais\n\npromovidos\n\npela\n\nSBC,\n\nconforme\n\no\n\nestabelecido\n\nno\n\nDocumento\n\nde\n\nÁrea\n\nem\n\nCC\n\nda\n\nCAPES.\n\nNesse\n\ncaso,\n\nos\n\neventos/periódicos\n\nnacionais\n\nserão\n\nclassificados\n\nde\n\nacordo\n\ncom\n\na\n\nclassificação\n\nde\n\neventos/periódicos\n\nutilizada\n\npela\n\nCAPES"
     },
     {
-      "id_chunk": "chunk_0102",
-      "id_documento": "doc_006",
-      "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
-      "paginas": [8],
-      "score": 2,
-      "frequencias_termos": {
-        "bolsas": 2
-      },
-      "texto": "para a sucessão.\n\n§ 6º A periodicidade das reuniões do colegiado deverá ser mensal.\n\n§ 7º O colegiado deverá definir nos meses de novembro e de maio de cada ano um calendário\nsemestral de reuniões ordinárias e publicá-lo no site do programa.\n\n§ 8º As atas das reuniões do colegiado deverão ser publicadas no site do programa.\n\nArt. 37. São atribuições do colegiado:\nI. deliberar sobre assuntos de ordem acadêmica no âmbito do programa;\nII. opinar sobre assuntos de ordem administrativa apresentados pelo coordenador;\nIII. exercer a supervisão didática dos cursos que compõem o programa, bem como propor\nmedidas e providências visando à melhoria da formação oferecida;\nIV. designar e alterar os membros das comissões internas;\nV. analisar e homologar a proposta de plano estratégico do programa elaborada pela Comissão\nde Planejamento;\nVI. analisar e homologar a proposta de edital do processo seletivo elaborada pela Comissão de\nSeleção;\nVII. analisar e homologar a proposta de distribuição de bolsas de estudo elaborada pela Comissão\nde Bolsas;\nVIII. designar e alterar os orientadores e coorientadores de cada discente regular;\nIX. aprovar a oferta semestral de disciplinas e respectivos ministrantes;\nX. aprovar nomes dos membros das bancas de qualificaçã o e de defesa"
-    },
-    {
-      "id_chunk": "chunk_0104",
-      "id_documento": "doc_006",
-      "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
-      "paginas": [9],
-      "score": 2,
-      "frequencias_termos": {
-        "bolsas": 2
-      },
-      "texto": "como por acompanhar o\npreenchimento da plataforma sucupira;\nII. Comissão de Supervisão Discente, responsável por deliberar so bre os requerimentos de\naproveitamento de estudos, de trancamento de vínculo , de prorrogação de prazo de\nconclusão e de outros requerimentos dos discentes e por elaborar um relatório anual sobre o\ndesempenho científico do corpo discentes;\nIII. Comissão de Avali ação Docente, responsável por elaborar um relatório anual sobre o\ndesempenho científico do corpo docente e por organizar o processo de credenciamento,\ndescredenciamento e recredenciamento;\nIV. Comissão de Bolsas, responsável pela distribuição de bolsas do programa, conforme normas\nvigentes das agências de fomento e regimento interno do programa;\nV. Comissão de Seleção, responsável p elo processo seletivo de ingresso de discentes no\nprograma, e,\nVI. Comissão de Reconhecimento, responsável pela análise acadêmica e em issão de parecer\nreferentes aos processos de reconhecimento de diplomas estrangeiros.\n\n§1º As comissões descritas nos itens I e IV serão permanentes, enquanto que as comissões\ndescritas nos itens II, III, V e VI serão constituídas mediante demanda do Programa.\n\n§2º O quantitativo, a forma de escolha, a composição e o tempo de mandato das comissões serão\nestabelecidos pelo regimento interno do programa, devendo ter, no mínimo, três"
-    },
-    {
       "id_chunk": "chunk_0110",
       "id_documento": "doc_006",
       "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
       "paginas": [11],
-      "score": 2,
+      "score": 2.3279,
       "frequencias_termos": {
         "critérios": 2
       },
@@ -430,7 +270,7 @@
       "id_documento": "doc_006",
       "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
       "paginas": [12],
-      "score": 1,
+      "score": 1.6221,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -441,7 +281,7 @@
       "id_documento": "doc_006",
       "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
       "paginas": [16, 17],
-      "score": 2,
+      "score": 2.3132,
       "frequencias_termos": {
         "critérios": 2
       },
@@ -452,7 +292,7 @@
       "id_documento": "doc_006",
       "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
       "paginas": [19],
-      "score": 4,
+      "score": 2.9218,
       "frequencias_termos": {
         "critérios": 4
       },
@@ -463,7 +303,7 @@
       "id_documento": "doc_006",
       "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
       "paginas": [19],
-      "score": 5,
+      "score": 6.9204,
       "frequencias_termos": {
         "critérios": 4,
         "atribuição": 1
@@ -471,22 +311,11 @@
       "texto": "Elaboração de Pesquisa e os critérios\nde avaliação de desempenho do discente;\nIV. o formato do trabalho a ser entregue pelo discente à banca examinadora, os critérios de\ncomposição da banca e o prazo máximo para a realização, tanto do Exame de Qualificaç ão,\nquanto da Defesa de Dissertação/Tese, e,\nV. o prazo para que o discente entregue o relatório com comprovantes dos Estudos\nExtracurriculares, sua obrigatoriedade, a carga horária mínima e os critérios de aceitação.\n\n§1º Para a Defesa de Dissertação/Tese, o discente deverá ter aprovação no exame de qualificação\ne ter cumprido todos os demais requisitos das normas do programa.\n\n§2º Apenas as atividades acadêmicas de Elaboração de Pesquisa e de Estudos Extracurriculares\nterão carga de créditos, que serão refer entes, respectivamente, ao tempo que deve ser dedicado pelo\ndiscente para a execução do seu projeto de pesquisa, e à carga horária das atividades extracurriculares.\n\n§3º Caberá ao docente orientador supervisionar o cumprimento da carga horária da atividade\nacadêmica “Elaboração de Pesquisa”, considerando esse como um dos critérios para a atribuição do\nconceito final.\n\n§4º No caso das atividades acadêmicas de cursos ofertados por programas integrantes de redes\nnacionais, que possuam normatizações próprias e diferentes das dispostas nesta"
     },
     {
-      "id_chunk": "chunk_0132",
-      "id_documento": "doc_006",
-      "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
-      "paginas": [19, 20],
-      "score": 1,
-      "frequencias_termos": {
-        "atribuição": 1
-      },
-      "texto": "para a atribuição do\nconceito final.\n\n§4º No caso das atividades acadêmicas de cursos ofertados por programas integrantes de redes\nnacionais, que possuam normatizações próprias e diferentes das dispostas nesta seção, prevalecerão as\nnormas da rede.\n\nSeção II\nDa Avaliação da Aprendizagem e da Assiduidade\n\nArt. 101. A avaliação da aprendizagem e da assiduidade será expressa por meio de um conceito\nindividual para cada disciplina de acordo com as seguintes classificações:\nI. conceito A: aprendizagem excelente (equivalente a notas de 9,0 a 10,0);\nII. conceito B: aprendizagem boa (equivalente a notas de 8,0 a 8,9);\nIII. conceito C: aprendizagem suficiente (equivalente a notas de 7,0 a 7,9);\nIV. conceito D: aprendizagem insuficiente (equivalente a notas inferiores a 7,0), e,\nV. conceito E: frequência insuficiente (conforme estabelecido para cada modalidade).\n\nParágrafo único . Será considerado aprovado o discente que, necessariamente, apresentar\nfrequência igual ou superior a setenta e cinco por cento (75%) das atividades desenvolvidas e conceito\nigual ou superior a “C”.\n\n18\nArt. 102. A todas as disciplinas e à atividade acadêmica “Elaboração de Pesquisa” será atribuído\num dos conceitos mencionados no artigo ant erior, enquanto que as demais atividades acadêmicas não\nterão conceito atribuído, sendo finalizadas apenas com resultado"
-    },
-    {
       "id_chunk": "chunk_0139",
       "id_documento": "doc_006",
       "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
       "paginas": [22],
-      "score": 1,
+      "score": 1.6221,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -497,7 +326,7 @@
       "id_documento": "doc_006",
       "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
       "paginas": [23],
-      "score": 1,
+      "score": 1.6365,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -508,7 +337,7 @@
       "id_documento": "doc_006",
       "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
       "paginas": [26, 27],
-      "score": 1,
+      "score": 1.6257,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -519,7 +348,7 @@
       "id_documento": "doc_006",
       "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
       "paginas": [27],
-      "score": 1,
+      "score": 1.6257,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -530,7 +359,7 @@
       "id_documento": "doc_007",
       "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
       "paginas": [5],
-      "score": 2,
+      "score": 2.3132,
       "frequencias_termos": {
         "critérios": 2
       },
@@ -541,7 +370,7 @@
       "id_documento": "doc_007",
       "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
       "paginas": [5],
-      "score": 3,
+      "score": 4.4303,
       "frequencias_termos": {
         "critérios": 2,
         "bolsas": 1
@@ -549,22 +378,11 @@
       "texto": "para credenciamento e recredenciamento de docentes do programa;\nIII. homologar ementas, carga horária e programas das disciplinas de pós-graduação;\nIV. estabelecer os critérios e procedimentos para seleção de novos discentes;\nV. estabelecer os critérios e procedimentos para seleção de bolsistas;\nVI. atribuir ou revalidar créditos obtidos em cursos de pós -graduação equivalentes em outros\nprogramas, e,\nVII. criar grupos de trabalho para execução de atividades específicas e transitórias distintas\ndaquelas exercidas pelas comissões internas.\n\nArt. 12. O Colegiado do PROCC possui as seguintes comissões internas:\nI. Comissão de Autoavaliação e Planejamento Estratégico, responsável por elaborar a\nautoavaliação e o planejamento estratégico do programa, bem como por acompanhar o\npreenchimento da plataforma sucupira;\nII. Comissão de Bolsas, responsável pela distribuição de bo lsas do programa, conforme normas\nvigentes das agências de fomento e regimento interno do programa;\nIII. Comissão de Supervisão Discente, responsável por deliberar sobre os requerimentos de\naproveitamento de estudos, de trancamento de vínculo, de prorrogação de prazo de conclusão\ne de outros requerimentos dos discentes e por elaborar um relatório anual sobre o desempenho\ncientífico do corpo discentes;\nIV. Comissão de Avaliação Docente, responsável por elaborar um relatório anual sobre o\ndesempenho científico do corp o docente e"
     },
     {
-      "id_chunk": "chunk_0172",
-      "id_documento": "doc_007",
-      "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
-      "paginas": [6],
-      "score": 2,
-      "frequencias_termos": {
-        "bolsas": 2
-      },
-      "texto": "As atribuições do coordenador adjunto estão definidas nas Normas Acadêmicas\nda Pós-Graduação stricto sensu da UFS.\n\nSeção III\nDa Secretaria\n\nArt. 15. A secretaria do PROCC é o órgão de apoio da coordenação, responsável pelo controle e\nregistro das atividades acadêmicas e administrativas do programa.\n\nArt. 16. São atribuições da secretaria, em acréscimo àquelas estabelecidas nas Normas\nAcadêmicas da Pós-Graduação stricto sensu da UFS:\nI. auxiliar o Coordenador e o Colegiado do PR OCC na administração e gerenciamento dos\nCursos do Programa;\nII. auxiliar a Comissão de Bolsas em todos os aspectos referentes à solicitação, concessão e\nrenovação de bolsas de pós-graduação;\nIII. apoiar o Coordenador e Coordenador adjunto do Programa na utilização dos sistemas de\ninformação, inclusive na recuperação de informações, extração de relatórios e realização de\npesquisas diversas em sistemas externos ao programa por meio de páginas Web ou sistemas\nlegados de outras instituições, e,\nIV. manter atualizada a cole ção de leis, decretos, portarias, circulares e resoluções que\nregulamentam os Cursos de Pós-Graduação.\n\nCAPÍTULO III\nDO CORPO DOCENTE\n\nArt. 17. Constituem categorias docentes do PROCC:\nI. Permanentes;\nII. Colaboradores, e,\nIII. Visitantes.\n\nParágrafo único. Os docentes colaboradores, visitantes e permanentes que não fazem parte do\nColegiado do"
-    },
-    {
       "id_chunk": "chunk_0173",
       "id_documento": "doc_007",
       "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
       "paginas": [6, 7],
-      "score": 1,
+      "score": 1.6221,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -575,7 +393,7 @@
       "id_documento": "doc_007",
       "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
       "paginas": [7],
-      "score": 1,
+      "score": 1.6257,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -586,7 +404,7 @@
       "id_documento": "doc_007",
       "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
       "paginas": [7, 8],
-      "score": 2,
+      "score": 3.7475,
       "frequencias_termos": {
         "critérios": 1,
         "bolsas": 1
@@ -598,7 +416,7 @@
       "id_documento": "doc_007",
       "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
       "paginas": [8],
-      "score": 2,
+      "score": 2.3132,
       "frequencias_termos": {
         "critérios": 2
       },
@@ -609,7 +427,7 @@
       "id_documento": "doc_007",
       "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
       "paginas": [8, 9],
-      "score": 2,
+      "score": 2.3205,
       "frequencias_termos": {
         "critérios": 2
       },
@@ -620,7 +438,7 @@
       "id_documento": "doc_007",
       "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
       "paginas": [8, 9],
-      "score": 1,
+      "score": 1.6221,
       "frequencias_termos": {
         "critérios": 1
       },
@@ -631,11 +449,209 @@
       "id_documento": "doc_007",
       "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
       "paginas": [9, 10],
-      "score": 2,
+      "score": 2.4361,
       "frequencias_termos": {
         "critérios": 2
       },
       "texto": "Doutorado serão\nestabelecidos pelo Colegiado do PROCC na forma de Instrução Normativa.\n\nArt. 40. O discente regular matriculado em curso de mestrado poderá requerer progressão\npara o doutorado, sem a necessidade de submeter -se a processo seletivo, desde que atenda os seguintes\ncritérios:\n\n8\nI. a defesa da dissertação deve ser realizada entre o décimo segundo e décimo oitavo mês de\nduração do curso de mestrado;\nII. ter publicado pelo menos um artigo em conferência com qualis restrito da CAPES;\nIII. ter publicado pelo menos um artigo em periódico com qualis restrito da CAPES, e,\nIV. ter obtido conceito A em todas as disciplinas cursadas no mestrado.\n\nParágrafo único. O atendimento a estes critérios não dispensa o cumprimento do exigido nas\nNormas Acadêmicas da Pós-Graduação da UFS.\n\nArt. 41. O grau conferido pelo PROCC será o de Mestre em Ciência da Computação para o curso\nde Mestrado acadêmico e de Doutor em Ciência da Computação para o curso de Doutorado acadêmico.\n\nSala das Sessões, 20 de junho de 2022.\n___________________"
+    },
+    {
+      "id_chunk": "chunk_0078",
+      "id_documento": "doc_004",
+      "nome_arquivo": "IN_01_2026_PROCC_Credenciamento_Recredenciamento_Vagas.pdf",
+      "paginas": [2],
+      "score": 3.9898,
+      "frequencias_termos": {
+        "atribuição": 1
+      },
+      "texto": "– Grupo PPS: docentes permanentes com mais de 60 anos de idade. Docentes desse\ngrupo poderão ter até 6 vagas de orientação de mestrado.\n§1º O docente que não foi classificado em nenhum dos grupos não poderá receber novos discentes enquanto\nperdurar tal situação.\n§2º O docente poderá solicitar à CAD a reanálise de sua classificação nos grupos descritos sempre que\nobtiver publicação ou aceitação de um novo artigo que lhe permita reverter a situação descrita neste artigo ou\nque lhe permita mudar de grupo.\nArt.3 A CAD realizará uma coleta de artigos publicados para posterior classificação de docentes sempre que\nhouver necessidade da realização de um processo de credenciamento/recredenciamento ou de atribuição de\nvagas por orientador, obedecendo o que está disposto nos artigos 1 e 2.\nArt. 4 O processo de credenciamento ocorrerá sempre que houver necessidade do Programa e é realizado via\nedital público disponibilizado na página web do Programa\n§1º A CAD deverá analisar as solicitações de credenciamento de novos docentes e elaborar um parecer de\naprovação, caso o candidato seja aceito como novo docente.\n§2º O resultado final do processo de credenciamento deve ser homologado pelo colegiado do PROCC.\n§3º O credenciamento de docentes no último"
+    },
+    {
+      "id_chunk": "chunk_0132",
+      "id_documento": "doc_006",
+      "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
+      "paginas": [19, 20],
+      "score": 3.9461,
+      "frequencias_termos": {
+        "atribuição": 1
+      },
+      "texto": "para a atribuição do\nconceito final.\n\n§4º No caso das atividades acadêmicas de cursos ofertados por programas integrantes de redes\nnacionais, que possuam normatizações próprias e diferentes das dispostas nesta seção, prevalecerão as\nnormas da rede.\n\nSeção II\nDa Avaliação da Aprendizagem e da Assiduidade\n\nArt. 101. A avaliação da aprendizagem e da assiduidade será expressa por meio de um conceito\nindividual para cada disciplina de acordo com as seguintes classificações:\nI. conceito A: aprendizagem excelente (equivalente a notas de 9,0 a 10,0);\nII. conceito B: aprendizagem boa (equivalente a notas de 8,0 a 8,9);\nIII. conceito C: aprendizagem suficiente (equivalente a notas de 7,0 a 7,9);\nIV. conceito D: aprendizagem insuficiente (equivalente a notas inferiores a 7,0), e,\nV. conceito E: frequência insuficiente (conforme estabelecido para cada modalidade).\n\nParágrafo único . Será considerado aprovado o discente que, necessariamente, apresentar\nfrequência igual ou superior a setenta e cinco por cento (75%) das atividades desenvolvidas e conceito\nigual ou superior a “C”.\n\n18\nArt. 102. A todas as disciplinas e à atividade acadêmica “Elaboração de Pesquisa” será atribuído\num dos conceitos mencionados no artigo ant erior, enquanto que as demais atividades acadêmicas não\nterão conceito atribuído, sendo finalizadas apenas com resultado"
+    },
+    {
+      "id_chunk": "chunk_0001",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [1],
+      "score": 1.9574,
+      "frequencias_termos": {
+        "bolsas": 1
+      },
+      "texto": "19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_si… 1/13\n\nCOORDENAÇÃO DE APERFEIÇOAMENTO DE PESSOAL DE NÍVEL SUPERIOR - CAPES\nPROGRAMA DE REDUÇÃO DE ASSIMETRIAS NA PÓS-GRADUAÇÃO (PRAPG)\nEDITAL Nº 14/2023\nPROCESSO Nº 23038.003836/2023-39\nA PRESIDENTE DA COORDENAÇÃO DE APERFEIÇOAMENTO DE PESSOAL DE NÍVEL SUPERIOR - CAPES, no\nuso das atribuições conferidas pelo Estatuto aprovado pelo Decreto nº 11.238, de 18 de outubro de\n2022, e nos termos do Processo 23038.003836/2023-39, juntamente com a Diretoria de Programas e\nBolsas no País (DPB), Diretoria de Relações Internacionais (DRI) e Diretoria de Avaliação (DAV), por se\ntratar de um programa estratégico com vistas à redução das assimetrias iden\u0000ﬁcadas no Sistema\nNacional da Pós-Graduação e por atender ao disposto no inciso II, do art. 4º da Portaria nº 34, de 9 de\nmarço de 2020, torna público o Edital nº 14/2023 - Programa de Redução de Assimetrias na PósGraduação (PRAPG), o qual passa a convocar Ins\u0000tuições de Ensino Superior (IES), por meio de seus PróReitores de Pós-Graduação e Pesquisa e Coordenadores de Programas de Pós-Graduação stricto sensu\nacadêmicos, a apresentarem propostas, conforme legislação vigente e as condições estabelecidas a\nseguir:\n1. DO OBJETIVO GERAL\n1.1. Contribuir para o aperfeiçoamento do Sistema Nacional de Pós-Graduação"
+    },
+    {
+      "id_chunk": "chunk_0016",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [6, 7],
+      "score": 1.9257,
+      "frequencias_termos": {
+        "bolsas": 1
+      },
+      "texto": "15\nSUL 7\nCENTRO-OESTE 15\nNORTE 13\nTotal Geral 100\n14.4.1. Caso o número de propostas por Região não a\u0000nja o teto estabelecido no item 14.4, será\nselecionada a proposta recomendada com maior nota até o máximo de 100 propostas, conforme previsto\nno item 7.2 deste edital.\n15. DA HOMOLOGAÇÃO DO RESULTADO FINAL\n15.1. A lista das propostas aprovadas e classiﬁcadas será subme\u0000da à apreciação da Presidência da CAPES\npara homologação.\n15.2. O resultado ﬁnal do edital será publicado no DOU, conforme cronograma previsto no item 5 desta\nchamada.\n15.3. Informações oﬁciais e resultados serão divulgados exclusivamente por meio eletrônico.\n16. DO ORÇAMENTO DA CAPES\n16.1. As propostas aprovadas serão apoiadas no valor global es\u0000mado de R$ 131.910.645,40 (cento e\ntrinta e um milhões, novecentos e dez mil, seiscentos e quarenta e cinco reais e quarenta centavos)\noriundos do orçamento da CAPES.\n16.2. Os aportes dos recursos es\u0000mados referem-se ao valor dos recursos de custeio, capital e das\nbolsas.\n16.2.1. Os recursos serão divididos da seguinte maneira para cada proposta aprovada:\nRecursos Previstos por Projeto\nTipo Valor Previsto\nRecurso de Custeio Até R$ 40.000,00 (quarenta mil reais)\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_si… 7/13\nRecurso de Capital Até"
+    },
+    {
+      "id_chunk": "chunk_0017",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [6, 7],
+      "score": 4.0807,
+      "frequencias_termos": {
+        "bolsas": 6
+      },
+      "texto": "aprovada:\nRecursos Previstos por Projeto\nTipo Valor Previsto\nRecurso de Custeio Até R$ 40.000,00 (quarenta mil reais)\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_si… 7/13\nRecurso de Capital Até R$ 40.000,00 (quarenta mil reais)\nNúmero de Bolsas Previstas por Projeto\nMestrado no país Até 4\nDoutorado (Pró-Doutoral) no país 1\nPós-Doutorado no país Até 2\nProfessor Visitante Sênior no país 1\nProfessor Visitante Sênior no exterior 1\nProfessor Visitante Júnior no exterior 1\nProfessor Visitante Estrangeiro 1\n\n17. DA CONCESSÃO DAS BOLSAS\n17.1. Os bene\u0000cios des\u0000nados às Coordenações de PPG deverão ser u\u0000lizados em estrita concordância\ncom o planejamento estratégico da Pró-Reitoria de Pós-Graduação e Pesquisa e, também, do PPG que,\npor sua vez, deverá apresentar as ações de melhorias propostas pela CAPES em suas ﬁchas de avaliação\nemi\u0000das, especialmente, no úl\u0000mo ciclo avalia\u0000vo coordenado pela CAPES (2021).\n17.2. A duração das bolsas não deverá ultrapassar o prazo de execução do projeto.\n17.3. As cotas de bolsas deverão ser implementadas, conforme calendário a ser divulgado pela CAPES em\no\u0000cio de concessão que, por sua vez, será enviado ao Coordenador de PPG, via sistema Linha Direta.\n17.4. As bolsas deverão ser implementadas no Sistema de Concessão de Bolsas e Auxílios"
+    },
+    {
+      "id_chunk": "chunk_0018",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [7],
+      "score": 4.3917,
+      "frequencias_termos": {
+        "bolsas": 8
+      },
+      "texto": "de concessão que, por sua vez, será enviado ao Coordenador de PPG, via sistema Linha Direta.\n17.4. As bolsas deverão ser implementadas no Sistema de Concessão de Bolsas e Auxílios (SCBA) pelo\nCoordenador de PPG, dentro dos prazos a serem informados.\n17.5. O valor das bolsas no país são deﬁnidos pela Portaria CAPES nº 33, de 16 de fevereiro de 2023 ou\noutra que venha a subs\u0000tuí-la. O valor das bolsas no exterior, por sua vez, é regido pela Portaria CAPES nº\n1, de 3 de janeiro de 2020.\n17.6. Das bolsas de Mestrado e Doutorado\n17.6.1. Mestrado - As concessões e implementações das bolsas deverão observar o norma\u0000vo da CAPES\nque regula a modalidade (Portaria CAPES nº 76/2010), no que couber.\nI. As cotas de bolsas de mestrado, com vigência máxima de 24 (vinte e quatro) meses, deverão ser\nimplementadas de maneira escalonada, sendo que a primeira metade das bolsas deve ser\nimplementada a par\u0000r do início do projeto e a segunda metade no primeiro semestre de 2024, em\ncalendário a ser informado pela CAPES.\n17.6.1.1. O candidato à bolsa de mestrado deverá atender os seguintes requisitos:\nI. Comprovar desempenho acadêmico sa\u0000sfatório, consoante às normas deﬁnidas pelo PPG;\nII."
+    },
+    {
+      "id_chunk": "chunk_0020",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [7, 8],
+      "score": 1.9736,
+      "frequencias_termos": {
+        "bolsas": 1
+      },
+      "texto": "PPG stricto sensu com nota igual ou superior a 5 (cinco),\npromovido por outra Ins\u0000tuição de Ensino Superior;\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_si… 8/13\nIV. Ter mais de 8 anos para o tempo para aposentadoria;\nV. Não acumular a percepção de bolsa com qualquer modalidade de auxílio ou bolsa de outro\nprograma com a mesma ﬁnalidade e caracterís\u0000ca; e\nVI. Apresentar Plano de A\u0000vidade a ser desenvolvido durante o período de usufruto da bolsa de\ndoutorado.\n17.6.2.2. A concessão e implementação das bolsas de doutorado pela CAPES ocorrerá da seguinte\nmaneira:\nI. A bolsa de doutorado terá a duração inicial de 12 meses, podendo ser prorrogada, anualmente,\naté a vigência máxima de 48 meses;\nII. No caso do bolsista haver recebido bolsa de doutorado de outra agência de fomento, o período de\nbolsa usufruído será contabilizado para o cálculo de vigência total da bolsa;\nIII. As Pró-Reitorias receberão e processarão as demandas dos docentes/pesquisadores\ncontemplados, observando os prazos deﬁnidos neste edital; e\nIV. Para o cadastramento da bolsa no SCBA, o coordenador de projeto deverá anexar no sistema os\nseguintes documentos:\n1.Cópia da Portaria de Afastamento do bolsista\n2. Cronograma de A\u0000vidades a serem desenvolvidas durante o"
+    },
+    {
+      "id_chunk": "chunk_0022",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [8],
+      "score": 2.9154,
+      "frequencias_termos": {
+        "bolsas": 2
+      },
+      "texto": "da bolsa original, e limite-se ao ﬁm da vigência original da bolsa concedida de modo\na não prejudicar o andamento do projeto;\nIII. A implementação da nova bolsa advinda da subs\u0000tuição deverá ocorrer no mês subsequente ao\ndesligamento do bolsista original.\nIV. O pedido de subs\u0000tuição deverá ser formalizado, por meio de O\u0000cio, o qual apresentará as\ndevidas jus\u0000ﬁca\u0000vas para o cancelamento da bolsa, assim como a informação da nova bolsa.\n17.7. Das bolsas de Pós-Doutorado e Professor Visitante Sênior no país\n17.7.1. Pós-Doutorado- A concessão de bolsa na modalidade terá vigência máxima de 24 (vinte e\nquatro) meses e deverá observar o norma\u0000vo da CAPES que regula a modalidade (Portaria CAPES nº\n86/2013), no que couber.\n17.7.1.1. O candidato à bolsa de pós-doutorado deve atender os seguintes requisitos:\nI. Ser jovem doutor, \u0000tulado a no máximo 5 anos, a contar da data da implementação da bolsa; e\nII. Se servidor público, deverá ser apresentado o comprovante de afastamento do exercício do cargo\npor igual período da bolsa.\n17.7.1.2. É vedada a concessão de bolsas de pós-doutorado para docentes doutores que integram a\nestrutura da mesma Ins\u0000tuição de Ensino Superior responsável pela submissão do projeto, exceto para o\ncaso explicitado"
+    },
+    {
+      "id_chunk": "chunk_0023",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [8, 9],
+      "score": 2.8123,
+      "frequencias_termos": {
+        "bolsas": 2
+      },
+      "texto": "vedada a concessão de bolsas de pós-doutorado para docentes doutores que integram a\nestrutura da mesma Ins\u0000tuição de Ensino Superior responsável pela submissão do projeto, exceto para o\ncaso explicitado no item 17.6.2.3.\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_si… 9/13\n17.7.1.3. Com vistas a contribuir para a consolidação dos PPGs, os beneﬁciários das bolsas de pósdoutorado deverão indicar, em seus respec\u0000vos planos de a\u0000vidades, as linhas de pesquisa em que\natuarão durante o período de usufruto da bolsa.\n17.7.1.4. Para cadastramento da bolsa de pós-doutorado no SCBA, o coordenador do projeto deverá\nanexar no sistema os seguintes documentos:\n1. Cópia da Portaria de Afastamento do bolsista;\n2. Diploma de Doutorado ou Ata de Defesa da Tese; e,\n3. Cronograma de A\u0000vidades, com a iden\u0000ﬁcação das linhas de pesquisa de atuação do pósdoutor, a serem desenvolvidas durante o usufruto da bolsa.\n17.7.2. Professor Visitante Sênior no país: A concessão terá vigência máxima total de 24 (vinte e quatro)\nmeses, as quais poderão ser usufruídas durante a vigência do projeto, publicado no DOU, em intervalos\ntemporais deﬁnidos pela pró-reitoria.\n17.7.2.1. O candidato a bolsa de professor visitante sênior deve possuir o seguinte perﬁl:\nI. Comprome\u0000mento com a Área de Avaliação"
+    },
+    {
+      "id_chunk": "chunk_0024",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [9],
+      "score": 2.9288,
+      "frequencias_termos": {
+        "bolsas": 2
+      },
+      "texto": "publicado no DOU, em intervalos\ntemporais deﬁnidos pela pró-reitoria.\n17.7.2.1. O candidato a bolsa de professor visitante sênior deve possuir o seguinte perﬁl:\nI. Comprome\u0000mento com a Área de Avaliação / Área de Conhecimento;\nII. Experiência com projetos de consolidação de PPG e de grupos de pesquisa;\nIII. Carreira acadêmico com comprovada produção cien\u0000ﬁca;\n17.7.2.2. Os beneﬁciários das bolsas de professor visitante sênior no país deverão ser doutores há pelo\nmenos dez anos, licenciados (exceto por invalidez) para par\u0000cipar do programa, com reconhecida\ncompetência em sua área de atuação, podendo estar aposentados.\n17.7.2.3. Para cadastramento da bolsa no SCBA, o coordenador do projeto deverá anexar no sistema o\nseguinte documento:\n1. Cópia da Portaria de Afastamento do bolsista ou o comprovante de aposentadoria emi\u0000do pelo\nIns\u0000tuto Nacional de Seguro Social (INSS), quando for o caso;\n2. Diploma de Doutorado; e,\n3. Cronograma de A\u0000vidades, com a iden\u0000ﬁcação das linhas de pesquisa de atuação, a serem\ndesenvolvidas durante o usufruto da bolsa.\n17.7.3. As Bolsas no exterior seguirão as normas con\u0000das nas Portarias nº 289, de 28 de dezembro de\n2018, nº 1 de 03 de janeiro de 2020, nº 202, de 16 de outubro de 2017, e posteriores que as"
+    },
+    {
+      "id_chunk": "chunk_0026",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [9, 10],
+      "score": 3.3493,
+      "frequencias_termos": {
+        "bolsas": 3
+      },
+      "texto": "18. DA CONCESSÃO DE RECURSOS FINANCEIROS\n18.1. A concessão dos recursos ﬁnanceiros (custeio e capital) será realizada diretamente aos\ncoordenadores de PPGs vinculados a ins\u0000tuições públicas ou privadas sem ﬁns lucra\u0000vos e dar-se-á\nmediante a assinatura do Termo de Solicitação e Concessão de Apoio Financeiro a Projeto Educacional ou\nde Pesquisa – AUXPE/Anexo III disponível no Sistema de Controle de Bolsas e Auxílios – SCBA) pelo\nproponente, com anuência do representante legal da ins\u0000tuição, respeitadas às normas previstas na\nPortaria CAPES nº 59/2013, ou outra que venha a lhe subs\u0000tuir.\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_… 10/13\n18.2. O pe\u0000cionamento do AUXPE/Anexo III no SCBA, devidamente preenchido e assinado, é fator\ncondicionante para a liberação dos recursos (custeio e capital) e da implementação das cotas de bolsas\nno país.\n18.3. O prazo para realizar o pe\u0000cionamento do AUXPE/Anexo III é de até 60 dias após a no\u0000ﬁcação de\naprovação ﬁnal do projeto, conforme instruções a serem enviadas aos beneﬁciários. O não cumprimento\ndesse prazo poderá implicar o cancelamento da concessão.\n18.4. A implementação das bolsas estará condicionada ao devido e correto pe\u0000cionamento do\nAUXPE/Anexo III, via SCBA, pelo proponente.\n18.5. O repasse dos recursos ﬁnanceiros será realizado por"
+    },
+    {
+      "id_chunk": "chunk_0027",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [10],
+      "score": 2.0068,
+      "frequencias_termos": {
+        "bolsas": 1
+      },
+      "texto": "da concessão.\n18.4. A implementação das bolsas estará condicionada ao devido e correto pe\u0000cionamento do\nAUXPE/Anexo III, via SCBA, pelo proponente.\n18.5. O repasse dos recursos ﬁnanceiros será realizado por meio do Cartão Pesquisador.\n18.6. A existência de alguma inadimplência do proponente com a CAPES ou com qualquer órgão da\nAdministração Pública Federal, direta ou indireta, cons\u0000tuirá fator impedi\u0000vo para o repasse do recurso\nﬁnanceiro.\n18.7. Os recursos de custeio e capital a serem repassados aos Coordenadores de projeto por meio de\nAUXPE têm a seguinte previsão:\nRecurso Financeiro Previsão dos repasses Total2023 2024\nCusteio R$ 20.000,00 R$ 20.000,00 R$ 40.000,00\nCapital R$ 40.000,00 - R$ 40.000,00\nTotal Geral R$ 60.000,00 R$ 20.000,00 R$ 80.000,00\n19. DA UTILIZAÇÃO DOS RECURSOS FINANCEIROS\n19.1. A u\u0000lização dos recursos ﬁnanceiros deverá ocorrer no período de vigência do auxílio, cuja duração\nserá de 60 (sessenta) meses, constante no extrato de concessão publicado no DOU.\n19.2. São consideradas despesas de custeio, como por exemplo:\nI. Material de consumo e Serviços de terceiros (pessoa \u0000sica e jurídica):\na) Serviços de terceiros – pagamento integral ou parcial de contratos de manutenção e\nserviços de terceiros, pessoa \u0000sica ou jurídica, de caráter eventual;\nb) Material de consumo, componentes"
+    },
+    {
+      "id_chunk": "chunk_0030",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [11],
+      "score": 2.0499,
+      "frequencias_termos": {
+        "bolsas": 1
+      },
+      "texto": "PROJETOS\n20.1. As ações de monitoramento e avaliação terão caráter preven\u0000vo e saneador, obje\u0000vando a gestão\nadequada dos projetos.\n20.2. O Coordenador de Projeto deverá:\nI - Assegurar-se de executar o planejamento apresentado no projeto selecionado em conformidade\ncom os seus obje\u0000vos;\nII - Facilitar o acompanhamento longitudinal do processo de internacionalização;\nIII - Acompanhar as a\u0000vidades acadêmicas realizadas pelos beneﬁciários de bolsa;\nIV - Pe\u0000cionar e assinar o AUXPE/Anexo III da Portaria CAPES nº 59/2013;\nV - Prestar contas dos recursos de custeio recebidos, conforme os termos da Portaria CAPES nº\n59/2013;\nVI - Cumprir a legislação per\u0000nente à concessão de bolsas es\u0000pulada pela Portaria CAPES nº\n86/2013 e 76/2010;\nVII - Realizar a apresentação dos resultados do projeto nos seminários. Em caso de impossibilidade\nde comparecimento, o coordenador de projeto deverá jus\u0000ﬁcar o mo\u0000vo da ausência e indicar um\nmembro da equipe para realizar a apresentação;\nVIII- Apresentar relatórios anuais com a descrição das a\u0000vidades e do cumprimento dos objetos\npropostos, conforme previsto na Portaria nº 59/2013.\n20.3.Serão realizados dois Seminários de Acompanhamento e Avaliação, que deverão estar no\ncronograma das a\u0000vidades previstas no projeto:\nI. O primeiro seminário ocorrerá ao ﬁnal do primeiro ano de execução das"
+    },
+    {
+      "id_chunk": "chunk_0033",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [12],
+      "score": 1.9454,
+      "frequencias_termos": {
+        "bolsas": 1
+      },
+      "texto": "e Diretrizes de Internacionalização no Plano de Desenvolvimento\nIns\u0000tucional;\nII. Diagnós\u0000co das Competências centrais da ins\u0000tuição;\nIII. Estratégia de ar\u0000culação interna para inserção das Polí\u0000cas e Diretrizes de Internacionalização no\nPlano de Desenvolvimento Ins\u0000tucional;\nIV. Plano Estratégico Ins\u0000tucional de Internacionalização (PEI);\nV. Mapeamento das parcerias estratégicas entre as ins\u0000tuições brasileiras par\u0000cipantes do programa\ne as ins\u0000tuições estrangeiras.\nVI. Implementação de meios, de instrumentos e de processos de infraestrutura, básicos para o apoio\nà internacionalização.\n21.4. Adicionalmente, aos itens elencados acima, no formulário de inscrição o proponente deverá indicar,\nem campo especíﬁco, os resultados esperados de maneira circunstanciada e descri\u0000va, observando o\ncaráter singular de seu projeto em contraste às respostas que serão dadas aos problemas iden\u0000ﬁcados na\nFicha de Avaliação referente ao úl\u0000mo ciclo avalia\u0000vo da CAPES (2021).\n22. PRESTAÇÃO DE CONTAS\n22.1. É obrigatória a prestação de contas das despesas realizadas, observadas as normas que disciplinam\na u\u0000lização do AUXPE, em especial, o disposto no Manual de Prestação de Contas online do Sistema\nInforma\u0000zado de Prestação de Contas - SIPREC da CAPES (Anexo II da Portaria CAPES nº 59/2013).\n22.2.Todos os documentos, manuais e orientações acerca da prestação de contas encontram-se no site da\nCAPES (h\u0000ps://www.gov.br/capes/pt-br/acesso-a-informacao/acoes-eprogramas/bolsas/prestacao-decontas/auxilios-a-pesquisa).\n22.3. A prestação"
+    },
+    {
+      "id_chunk": "chunk_0034",
+      "id_documento": "doc_001",
+      "nome_arquivo": "Edital_CAPES_14_2023_PRAPG.pdf",
+      "paginas": [12, 13],
+      "score": 1.8691,
+      "frequencias_termos": {
+        "bolsas": 1
+      },
+      "texto": "SIPREC da CAPES (Anexo II da Portaria CAPES nº 59/2013).\n22.2.Todos os documentos, manuais e orientações acerca da prestação de contas encontram-se no site da\nCAPES (h\u0000ps://www.gov.br/capes/pt-br/acesso-a-informacao/acoes-eprogramas/bolsas/prestacao-decontas/auxilios-a-pesquisa).\n22.3. A prestação de contas ﬁnal deverá ser realizada no SIPREC em até 60 (sessenta) dias após o término\nda vigência do auxílio.\n22.4.Para informações referentes à prestação de contas, entrar em contato com a Coordenação-Geral de\nPrestação de Contas e Cobrança Administra\u0000va, por meio do e-mail: cgpca@capes.gov.br.\n23. PUBLICAÇÕES\n23.1. As publicações cien\u0000ﬁcas, quando o caso, e qualquer outro meio de divulgação ou promoção de\neventos ou de projetos de pesquisa apoiados pela presente Chamada deverão citar, obrigatoriamente, o\napoio da CAPES.\n23.2. As ações publicitárias a\u0000nentes a projetos realizados com recursos deste Edital deverão observar\nrigorosamente as disposições que regulam à matéria.\n24. DISPOSIÇÕES GERAIS\n\n19/06/2023, 10:21 SEI/CAPES - 1999996 - Edital\nhttps://sei.capes.gov.br/sei/controlador.php?acao=documento_imprimir_web&acao_origem=arvore_visualizar&id_documento=2173701&infra_… 13/13\n24.1. O presente edital poderá ser revogado ou anulado a qualquer tempo, no todo ou em parte, por\nmo\u0000vo de interesse público, exigência legal ou indisponibilidade orçamentária e ﬁnanceira da CAPES, sem\nque isso implique direito à indenização ou reclamação de qualquer natureza por parte dos beneﬁciários.\n24.2. A existência de alguma inadimplência do proponente com a"
+    },
+    {
+      "id_chunk": "chunk_0102",
+      "id_documento": "doc_006",
+      "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
+      "paginas": [8],
+      "score": 3.0264,
+      "frequencias_termos": {
+        "bolsas": 2
+      },
+      "texto": "para a sucessão.\n\n§ 6º A periodicidade das reuniões do colegiado deverá ser mensal.\n\n§ 7º O colegiado deverá definir nos meses de novembro e de maio de cada ano um calendário\nsemestral de reuniões ordinárias e publicá-lo no site do programa.\n\n§ 8º As atas das reuniões do colegiado deverão ser publicadas no site do programa.\n\nArt. 37. São atribuições do colegiado:\nI. deliberar sobre assuntos de ordem acadêmica no âmbito do programa;\nII. opinar sobre assuntos de ordem administrativa apresentados pelo coordenador;\nIII. exercer a supervisão didática dos cursos que compõem o programa, bem como propor\nmedidas e providências visando à melhoria da formação oferecida;\nIV. designar e alterar os membros das comissões internas;\nV. analisar e homologar a proposta de plano estratégico do programa elaborada pela Comissão\nde Planejamento;\nVI. analisar e homologar a proposta de edital do processo seletivo elaborada pela Comissão de\nSeleção;\nVII. analisar e homologar a proposta de distribuição de bolsas de estudo elaborada pela Comissão\nde Bolsas;\nVIII. designar e alterar os orientadores e coorientadores de cada discente regular;\nIX. aprovar a oferta semestral de disciplinas e respectivos ministrantes;\nX. aprovar nomes dos membros das bancas de qualificaçã o e de defesa"
+    },
+    {
+      "id_chunk": "chunk_0104",
+      "id_documento": "doc_006",
+      "nome_arquivo": "Resolucao_04_2021_CONEPE_Normas_Academicas_Pos_Graduacao.pdf",
+      "paginas": [9],
+      "score": 3.0216,
+      "frequencias_termos": {
+        "bolsas": 2
+      },
+      "texto": "como por acompanhar o\npreenchimento da plataforma sucupira;\nII. Comissão de Supervisão Discente, responsável por deliberar so bre os requerimentos de\naproveitamento de estudos, de trancamento de vínculo , de prorrogação de prazo de\nconclusão e de outros requerimentos dos discentes e por elaborar um relatório anual sobre o\ndesempenho científico do corpo discentes;\nIII. Comissão de Avali ação Docente, responsável por elaborar um relatório anual sobre o\ndesempenho científico do corpo docente e por organizar o processo de credenciamento,\ndescredenciamento e recredenciamento;\nIV. Comissão de Bolsas, responsável pela distribuição de bolsas do programa, conforme normas\nvigentes das agências de fomento e regimento interno do programa;\nV. Comissão de Seleção, responsável p elo processo seletivo de ingresso de discentes no\nprograma, e,\nVI. Comissão de Reconhecimento, responsável pela análise acadêmica e em issão de parecer\nreferentes aos processos de reconhecimento de diplomas estrangeiros.\n\n§1º As comissões descritas nos itens I e IV serão permanentes, enquanto que as comissões\ndescritas nos itens II, III, V e VI serão constituídas mediante demanda do Programa.\n\n§2º O quantitativo, a forma de escolha, a composição e o tempo de mandato das comissões serão\nestabelecidos pelo regimento interno do programa, devendo ter, no mínimo, três"
+    },
+    {
+      "id_chunk": "chunk_0172",
+      "id_documento": "doc_007",
+      "nome_arquivo": "Resolucao_29_2022_CONEPE_Regimento_Interno_PROCC.pdf",
+      "paginas": [6],
+      "score": 2.9979,
+      "frequencias_termos": {
+        "bolsas": 2
+      },
+      "texto": "As atribuições do coordenador adjunto estão definidas nas Normas Acadêmicas\nda Pós-Graduação stricto sensu da UFS.\n\nSeção III\nDa Secretaria\n\nArt. 15. A secretaria do PROCC é o órgão de apoio da coordenação, responsável pelo controle e\nregistro das atividades acadêmicas e administrativas do programa.\n\nArt. 16. São atribuições da secretaria, em acréscimo àquelas estabelecidas nas Normas\nAcadêmicas da Pós-Graduação stricto sensu da UFS:\nI. auxiliar o Coordenador e o Colegiado do PR OCC na administração e gerenciamento dos\nCursos do Programa;\nII. auxiliar a Comissão de Bolsas em todos os aspectos referentes à solicitação, concessão e\nrenovação de bolsas de pós-graduação;\nIII. apoiar o Coordenador e Coordenador adjunto do Programa na utilização dos sistemas de\ninformação, inclusive na recuperação de informações, extração de relatórios e realização de\npesquisas diversas em sistemas externos ao programa por meio de páginas Web ou sistemas\nlegados de outras instituições, e,\nIV. manter atualizada a cole ção de leis, decretos, portarias, circulares e resoluções que\nregulamentam os Cursos de Pós-Graduação.\n\nCAPÍTULO III\nDO CORPO DOCENTE\n\nArt. 17. Constituem categorias docentes do PROCC:\nI. Permanentes;\nII. Colaboradores, e,\nIII. Visitantes.\n\nParágrafo único. Os docentes colaboradores, visitantes e permanentes que não fazem parte do\nColegiado do"
     }
   ]
 }
