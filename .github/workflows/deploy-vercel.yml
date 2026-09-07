@@ -21,14 +21,11 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: Clean and install dependencies (fix native bindings)
+      - name: Clean install dependencies
         run: |
-          rm -rf node_modules package-lock.json || true
+          rm -rf node_modules package-lock.json yarn.lock || true
+          npm cache clean --force
           npm install
-
-      - name: Rebuild native modules (fix native bindings)
-        run: |
-          npm rebuild --update-binary || true
 
       - name: Build
         run: npm run build
