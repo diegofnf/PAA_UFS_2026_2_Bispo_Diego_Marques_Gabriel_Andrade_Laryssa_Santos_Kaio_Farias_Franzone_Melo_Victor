@@ -3,7 +3,7 @@
   "buildCommand": "",
   "outputDirectory": "dist",
   "framework": "vite",
-  "env": [],
+  "env": {},
   "git": {
     "deploymentEnabled": false
   }
