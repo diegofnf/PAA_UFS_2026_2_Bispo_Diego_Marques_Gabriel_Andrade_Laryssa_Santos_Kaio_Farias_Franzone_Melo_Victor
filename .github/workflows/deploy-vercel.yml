@@ -12,21 +12,23 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '18.x'
 
-      - name: Install dependencies (ci if lockfile exists, otherwise install)
+      - name: Clean and install dependencies (fix native bindings)
         run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
+          rm -rf node_modules package-lock.json || true
+          npm install
+
+      - name: Rebuild native modules (fix native bindings)
+        run: |
+          npm rebuild --update-binary || true
 
       - name: Build
         run: npm run build
