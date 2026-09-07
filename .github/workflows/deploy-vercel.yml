@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - main
-  # opcional: habilita deploy manual na UI
-  # workflow_dispatch: {}
+  workflow_dispatch: {}
 
 permissions:
   contents: read
@@ -15,17 +14,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      - name: Install dependencies
-        run: npm ci
+
+      - name: Install dependencies (ci if lockfile exists, otherwise install)
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
       - name: Build
         run: npm run build
+
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          # usar npx evita instalar globalmente
           npx vercel --prod --confirm --token $VERCEL_TOKEN
