@@ -1,10 +1,5 @@
 {
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    }
-  ],
-  "routes": []
+  "name": "procc-recuperacao-documentos",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist"
 }
