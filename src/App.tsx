@@ -159,7 +159,7 @@ export function App() {
               UFS • PAA 2026.2 (Projeto e Análise de Algoritmos)
             </span>
             <p className="text-[11px] text-slate-500 mt-0.5">
-              Bispo Diego, Marques Gabriel, Andrade Laryssa, Santos Kaio, Franzone Melo Victor
+              Diego Bispo, Gabriel Marques, Laryssa Andrade, Kaio Santos, Victor Melo
             </p>
           </div>
 
