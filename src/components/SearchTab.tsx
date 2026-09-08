@@ -78,7 +78,7 @@ export const SearchTab: React.FC<SearchTabProps> = ({
         return (
           <mark
             key={index}
-            className="bg-amber-400/25 text-amber-300 font-semibold px-0.5 rounded border-b border-amber-400/50"
+            className="bg-amber-100 text-amber-900 font-semibold px-1 rounded border-b border-amber-300"
           >
             {parte}
           </mark>
@@ -95,7 +95,7 @@ export const SearchTab: React.FC<SearchTabProps> = ({
   return (
     <div className="space-y-6">
       {/* Search Input Box */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-5 shadow-xl">
+      <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
             <Search className="w-5 h-5" />
@@ -105,12 +105,12 @@ export const SearchTab: React.FC<SearchTabProps> = ({
             value={consulta}
             onChange={(e) => setConsulta(e.target.value)}
             placeholder="Digite termos para busca nos regulamentos (ex.: bolsas critérios mestrado, credenciamento...)"
-            className="w-full pl-12 pr-10 py-3.5 bg-slate-950 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 text-sm md:text-base font-normal shadow-inner"
+            className="w-full pl-12 pr-10 py-3.5 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm md:text-base font-normal shadow-2xs"
           />
           {consulta && (
             <button
               onClick={() => setConsulta('')}
-              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-200"
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600"
               title="Limpar consulta"
             >
               <X className="w-5 h-5" />
@@ -119,8 +119,8 @@ export const SearchTab: React.FC<SearchTabProps> = ({
         </div>
 
         {/* Quick Suggestion Chips */}
-        <div className="flex flex-wrap items-center gap-1.5 mt-3 pt-3 border-t border-slate-800/80 text-xs">
-          <span className="text-slate-400 flex items-center gap-1 mr-1">
+        <div className="flex flex-wrap items-center gap-1.5 mt-3 pt-3 border-t border-slate-100 text-xs">
+          <span className="text-slate-500 flex items-center gap-1 mr-1">
             <span>Sugestões:</span>
           </span>
           {sugestoes.map((sug) => (
@@ -129,8 +129,8 @@ export const SearchTab: React.FC<SearchTabProps> = ({
               onClick={() => setConsulta(sug)}
               className={`px-2.5 py-1 rounded-md transition-colors ${
                 consulta.toLowerCase() === sug.toLowerCase()
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                  : 'bg-slate-800/70 hover:bg-slate-800 text-slate-300 border border-slate-700/60'
+                  ? 'bg-sky-50 text-sky-700 border border-sky-300 font-medium'
+                  : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'
               }`}
             >
               {sug}
@@ -139,20 +139,20 @@ export const SearchTab: React.FC<SearchTabProps> = ({
         </div>
 
         {/* Search Engine Controls & Parameters */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4 pt-4 border-t border-slate-800 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4 pt-4 border-t border-slate-100 text-xs">
           {/* Boolean Mode */}
           <div>
-            <label className="block text-slate-400 mb-1.5 font-medium flex items-center gap-1">
-              <SlidersHorizontal className="w-3.5 h-3.5 text-cyan-400" />
+            <label className="text-slate-600 mb-1.5 font-medium flex items-center gap-1">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-sky-600" />
               Operador Booleano
             </label>
-            <div className="grid grid-cols-2 gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800">
+            <div className="grid grid-cols-2 gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
               <button
                 onClick={() => setModo('OU')}
                 className={`py-1.5 text-center rounded font-medium transition-all ${
                   modo === 'OU'
-                    ? 'bg-cyan-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-sky-600 text-white shadow-2xs'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
                 title="Recupera chunks que contenham pelo menos um dos termos"
               >
@@ -162,8 +162,8 @@ export const SearchTab: React.FC<SearchTabProps> = ({
                 onClick={() => setModo('E')}
                 className={`py-1.5 text-center rounded font-medium transition-all ${
                   modo === 'E'
-                    ? 'bg-cyan-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-sky-600 text-white shadow-2xs'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
                 title="Recupera apenas chunks que contenham todos os termos da consulta"
               >
@@ -174,17 +174,17 @@ export const SearchTab: React.FC<SearchTabProps> = ({
 
           {/* Ranking Metric */}
           <div>
-            <label className="block text-slate-400 mb-1.5 font-medium flex items-center gap-1">
-              <ArrowDownUp className="w-3.5 h-3.5 text-cyan-400" />
+            <label className="text-slate-600 mb-1.5 font-medium flex items-center gap-1">
+              <ArrowDownUp className="w-3.5 h-3.5 text-sky-600" />
               Métrica de Relevância
             </label>
-            <div className="grid grid-cols-2 gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800">
+            <div className="grid grid-cols-2 gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
               <button
                 onClick={() => setMetrica('tf_idf')}
                 className={`py-1.5 text-center rounded font-medium transition-all ${
                   metrica === 'tf_idf'
-                    ? 'bg-cyan-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-sky-600 text-white shadow-2xs'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
                 title="Ponderação TF-IDF normalizada pelo tamanho do chunk"
               >
@@ -194,8 +194,8 @@ export const SearchTab: React.FC<SearchTabProps> = ({
                 onClick={() => setMetrica('frequencia')}
                 className={`py-1.5 text-center rounded font-medium transition-all ${
                   metrica === 'frequencia'
-                    ? 'bg-cyan-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-sky-600 text-white shadow-2xs'
+                    : 'text-slate-600 hover:text-slate-900'
                 }`}
                 title="Soma de frequência bruta das palavras"
               >
@@ -206,13 +206,13 @@ export const SearchTab: React.FC<SearchTabProps> = ({
 
           {/* Top-K cut */}
           <div>
-            <label className="block text-slate-400 mb-1.5 font-medium">
+            <label className="block text-slate-600 mb-1.5 font-medium">
               Limite Top-K
             </label>
             <select
               value={k}
               onChange={(e) => setK(Number(e.target.value))}
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-500"
+              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
             >
               <option value={5}>Top 5 chunks</option>
               <option value={10}>Top 10 chunks</option>
@@ -224,13 +224,13 @@ export const SearchTab: React.FC<SearchTabProps> = ({
 
           {/* Document Filter */}
           <div>
-            <label className="block text-slate-400 mb-1.5 font-medium">
+            <label className="block text-slate-600 mb-1.5 font-medium">
               Filtrar por Documento
             </label>
             <select
               value={docFiltro}
               onChange={(e) => setDocFiltro(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-cyan-500 truncate"
+              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 truncate"
             >
               <option value="">Todos os 7 documentos</option>
               {documentos.map((doc) => (
@@ -245,33 +245,33 @@ export const SearchTab: React.FC<SearchTabProps> = ({
 
       {/* Algorithmic & Performance Execution Metrics (PAA Scope) */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <div className="bg-slate-900/70 border border-slate-800 p-3.5 rounded-xl">
-          <div className="text-slate-400 text-xs flex items-center gap-1.5">
-            <Clock className="w-3.5 h-3.5 text-cyan-400" />
+        <div className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-xs">
+          <div className="text-slate-500 text-xs flex items-center gap-1.5">
+            <Clock className="w-3.5 h-3.5 text-sky-600" />
             <span>Tempo Índice / Busca</span>
           </div>
-          <div className="text-lg font-bold text-white mt-1">
+          <div className="text-lg font-bold text-slate-900 mt-1">
             {searchResult.metricas.tempoBuscaMs.toFixed(2)}{' '}
-            <span className="text-xs font-normal text-slate-400">ms</span>
+            <span className="text-xs font-normal text-slate-500">ms</span>
           </div>
           <p className="text-[11px] text-slate-500 mt-0.5">Consulta O(1) por termo</p>
         </div>
 
-        <div className="bg-slate-900/70 border border-slate-800 p-3.5 rounded-xl">
-          <div className="text-slate-400 text-xs flex items-center gap-1.5">
-            <ArrowDownUp className="w-3.5 h-3.5 text-amber-400" />
+        <div className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-xs">
+          <div className="text-slate-500 text-xs flex items-center gap-1.5">
+            <ArrowDownUp className="w-3.5 h-3.5 text-amber-600" />
             <span>Tempo Merge Sort</span>
           </div>
-          <div className="text-lg font-bold text-white mt-1">
+          <div className="text-lg font-bold text-slate-900 mt-1">
             {searchResult.metricas.tempoOrdenacaoMs.toFixed(2)}{' '}
-            <span className="text-xs font-normal text-slate-400">ms</span>
+            <span className="text-xs font-normal text-slate-500">ms</span>
           </div>
           <p className="text-[11px] text-slate-500 mt-0.5">Algoritmo O(n log n)</p>
         </div>
 
-        <div className="bg-slate-900/70 border border-slate-800 p-3.5 rounded-xl">
-          <div className="text-slate-400 text-xs">Comparações no Merge Sort</div>
-          <div className="text-lg font-bold text-cyan-300 mt-1">
+        <div className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-xs">
+          <div className="text-slate-500 text-xs">Comparações no Merge Sort</div>
+          <div className="text-lg font-bold text-sky-700 mt-1">
             {searchResult.metricas.totalComparacoesMergeSort.toLocaleString('pt-BR')}
           </div>
           <p className="text-[11px] text-slate-500 mt-0.5">
@@ -281,11 +281,11 @@ export const SearchTab: React.FC<SearchTabProps> = ({
           </p>
         </div>
 
-        <div className="bg-slate-900/70 border border-slate-800 p-3.5 rounded-xl">
-          <div className="text-slate-400 text-xs">Candidatos / Retornados</div>
-          <div className="text-lg font-bold text-emerald-400 mt-1">
+        <div className="bg-white border border-slate-200 p-3.5 rounded-xl shadow-xs">
+          <div className="text-slate-500 text-xs">Candidatos / Retornados</div>
+          <div className="text-lg font-bold text-emerald-600 mt-1">
             {searchResult.resultados.length}{' '}
-            <span className="text-xs font-normal text-slate-400">
+            <span className="text-xs font-normal text-slate-500">
               de {searchResult.metricas.candidatosEncontrados}
             </span>
           </div>
@@ -297,8 +297,8 @@ export const SearchTab: React.FC<SearchTabProps> = ({
 
       {/* Query Terms Breakdown */}
       {searchResult.metricas.termosConsultados.length > 0 && indiceData && (
-        <div className="bg-slate-900/50 border border-slate-800/80 p-3 rounded-lg flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-slate-400 font-medium">Termos no Vocabulário:</span>
+        <div className="bg-slate-50 border border-slate-200 p-3 rounded-lg flex flex-wrap items-center gap-2 text-xs">
+          <span className="text-slate-600 font-medium">Termos no Vocabulário:</span>
           {searchResult.metricas.termosConsultados.map((termo) => {
             const info = indiceData.indice_invertido[termo];
             const presente = !!info;
@@ -307,17 +307,17 @@ export const SearchTab: React.FC<SearchTabProps> = ({
                 key={termo}
                 className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border ${
                   presente
-                    ? 'bg-cyan-950/60 text-cyan-300 border-cyan-800/70'
-                    : 'bg-rose-950/40 text-rose-300 border-rose-800/60'
+                    ? 'bg-sky-50 text-sky-800 border-sky-200'
+                    : 'bg-rose-50 text-rose-800 border-rose-200'
                 }`}
               >
                 <span className="font-semibold">{termo}</span>
                 {presente ? (
-                  <span className="text-[10px] text-cyan-400 bg-cyan-900/60 px-1.5 py-0.2 rounded">
+                  <span className="text-[10px] text-sky-700 bg-sky-100/70 px-1.5 py-0.2 rounded">
                     {info.chunks.length} chunks ({info.frequencia_total}x)
                   </span>
                 ) : (
-                  <span className="text-[10px] text-rose-400">não no índice</span>
+                  <span className="text-[10px] text-rose-600">não no índice</span>
                 )}
               </span>
             );
@@ -327,19 +327,19 @@ export const SearchTab: React.FC<SearchTabProps> = ({
 
       {/* Results Header */}
       <div className="flex items-center justify-between pt-2">
-        <h3 className="text-sm font-semibold text-slate-200">
+        <h3 className="text-sm font-semibold text-slate-800">
           Resultados Ordenados ({searchResult.resultados.length})
         </h3>
-        <span className="text-xs text-slate-400">
+        <span className="text-xs text-slate-500">
           Ordenação estável por Merge Sort
         </span>
       </div>
 
       {/* Results List */}
       {searchResult.resultados.length === 0 ? (
-        <div className="bg-slate-900/40 border border-slate-800/80 rounded-xl p-10 text-center text-slate-400">
-          <Search className="w-10 h-10 mx-auto text-slate-600 mb-3" />
-          <p className="font-medium text-slate-300">Nenhum chunk correspondente encontrado</p>
+        <div className="bg-white border border-slate-200 rounded-xl p-10 text-center text-slate-500 shadow-xs">
+          <Search className="w-10 h-10 mx-auto text-slate-400 mb-3" />
+          <p className="font-medium text-slate-800">Nenhum chunk correspondente encontrado</p>
           <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
             {modo === 'E'
               ? 'O modo "E (Interseção)" exige que todos os termos estejam presentes no mesmo chunk. Tente alternar para o modo "OU (União)".'
@@ -357,43 +357,43 @@ export const SearchTab: React.FC<SearchTabProps> = ({
             return (
               <div
                 key={chunk.id_chunk}
-                className="bg-slate-900/80 border border-slate-800 hover:border-slate-700/80 rounded-xl p-5 transition-all shadow-sm"
+                className="bg-white border border-slate-200 hover:border-sky-300 rounded-xl p-5 transition-all shadow-xs"
               >
                 {/* Header row */}
-                <div className="flex flex-wrap items-start justify-between gap-2 pb-3 border-b border-slate-800/70">
+                <div className="flex flex-wrap items-start justify-between gap-2 pb-3 border-b border-slate-100">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="bg-cyan-950 text-cyan-300 border border-cyan-800/70 text-xs px-2.5 py-0.5 rounded-full font-mono font-bold">
+                    <span className="bg-sky-50 text-sky-700 border border-sky-200 text-xs px-2.5 py-0.5 rounded-full font-mono font-bold">
                       #{idx + 1} • {chunk.id_chunk}
                     </span>
 
-                    <span className="text-xs text-slate-300 font-medium flex items-center gap-1">
-                      <FileText className="w-3.5 h-3.5 text-cyan-400" />
+                    <span className="text-xs text-slate-800 font-medium flex items-center gap-1">
+                      <FileText className="w-3.5 h-3.5 text-sky-600" />
                       {chunk.nome_arquivo}
                     </span>
 
                     {cruzouPagina ? (
-                      <span className="bg-amber-950/60 text-amber-300 border border-amber-800/70 text-[11px] px-2 py-0.5 rounded-full font-medium">
+                      <span className="bg-amber-50 text-amber-800 border border-amber-200 text-[11px] px-2 py-0.5 rounded-full font-medium">
                         Páginas [{chunk.paginas.join(', ')}] • Cruzou Página
                       </span>
                     ) : (
-                      <span className="bg-slate-800 text-slate-300 text-[11px] px-2 py-0.5 rounded-full font-medium">
+                      <span className="bg-slate-100 text-slate-700 border border-slate-200 text-[11px] px-2 py-0.5 rounded-full font-medium">
                         Página {chunk.paginas[0]}
                       </span>
                     )}
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <div className="bg-emerald-950/80 text-emerald-300 border border-emerald-800/70 text-xs px-2.5 py-1 rounded-lg font-mono font-semibold">
+                    <div className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs px-2.5 py-1 rounded-lg font-mono font-semibold">
                       Score: {item.score}
                     </div>
 
                     <button
                       onClick={() => copyToClipboard(chunk.texto, chunk.id_chunk)}
-                      className="p-1.5 text-slate-400 hover:text-slate-200 bg-slate-800/60 hover:bg-slate-800 rounded-lg transition-colors"
+                      className="p-1.5 text-slate-500 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg transition-colors"
                       title="Copiar texto do chunk"
                     >
                       {copiedId === chunk.id_chunk ? (
-                        <Check className="w-4 h-4 text-emerald-400" />
+                        <Check className="w-4 h-4 text-emerald-600" />
                       ) : (
                         <Copy className="w-4 h-4" />
                       )}
@@ -404,7 +404,7 @@ export const SearchTab: React.FC<SearchTabProps> = ({
                         href={doc.fonte_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 text-slate-400 hover:text-cyan-400 bg-slate-800/60 hover:bg-slate-800 rounded-lg transition-colors"
+                        className="p-1.5 text-slate-500 hover:text-sky-600 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg transition-colors"
                         title="Ver documento oficial no SIGAA"
                       >
                         <ExternalLink className="w-4 h-4" />
@@ -419,7 +419,7 @@ export const SearchTab: React.FC<SearchTabProps> = ({
                   {item.termosEncontrados.map((t) => (
                     <span
                       key={t.termo}
-                      className="bg-slate-800/90 text-cyan-300 px-2 py-0.5 rounded border border-slate-700/60 font-mono"
+                      className="bg-sky-50 text-sky-800 px-2 py-0.5 rounded border border-sky-200 font-mono"
                     >
                       {t.termo} ({t.frequencia}x)
                     </span>
@@ -430,7 +430,7 @@ export const SearchTab: React.FC<SearchTabProps> = ({
                 </div>
 
                 {/* Chunk Text */}
-                <div className="text-slate-300 text-sm leading-relaxed bg-slate-950/60 p-3.5 rounded-lg border border-slate-800/50 font-sans">
+                <div className="text-slate-800 text-sm leading-relaxed bg-slate-50/70 p-3.5 rounded-lg border border-slate-200 font-sans">
                   {isExpanded ? (
                     <p className="whitespace-pre-wrap">{highlightText(chunk.texto)}</p>
                   ) : (
@@ -441,10 +441,10 @@ export const SearchTab: React.FC<SearchTabProps> = ({
                 </div>
 
                 {/* Footer / Expand Button */}
-                <div className="mt-3 flex items-center justify-between text-xs text-slate-400">
+                <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
                   <button
                     onClick={() => setExpandedId(isExpanded ? null : chunk.id_chunk)}
-                    className="text-cyan-400 hover:text-cyan-300 font-medium transition-colors"
+                    className="text-sky-700 hover:text-sky-800 font-semibold transition-colors"
                   >
                     {isExpanded ? 'Recolher texto' : 'Exibir texto completo do chunk'}
                   </button>

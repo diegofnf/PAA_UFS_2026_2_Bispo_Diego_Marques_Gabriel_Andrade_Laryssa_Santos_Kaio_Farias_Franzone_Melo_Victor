@@ -17,7 +17,7 @@ import {
 import { Loader2, AlertCircle } from 'lucide-react';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<'search' | 'corpus' | 'chunks' | 'index' | 'pipeline'>('search');
+  const [activeTab, setActiveTab] = useState<'pipeline' | 'corpus' | 'chunks' | 'index' | 'search'>('pipeline');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -80,7 +80,7 @@ export function App() {
   }, [chunks]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 antialiased selection:bg-cyan-500 selection:text-white">
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased selection:bg-sky-500 selection:text-white">
       <Navbar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -92,8 +92,8 @@ export function App() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {loading ? (
           <div className="flex flex-col items-center justify-center min-h-[50vh] text-center">
-            <Loader2 className="w-10 h-10 text-cyan-400 animate-spin mb-4" />
-            <h3 className="text-lg font-semibold text-slate-200">
+            <Loader2 className="w-10 h-10 text-sky-600 animate-spin mb-4" />
+            <h3 className="text-lg font-semibold text-slate-800">
               Carregando Corpus e Índice Invertido...
             </h3>
             <p className="text-xs text-slate-500 mt-1 max-w-md">
@@ -101,12 +101,12 @@ export function App() {
             </p>
           </div>
         ) : error ? (
-          <div className="bg-rose-950/40 border border-rose-800 rounded-xl p-6 text-center max-w-lg mx-auto my-12">
-            <AlertCircle className="w-10 h-10 text-rose-400 mx-auto mb-3" />
-            <h3 className="text-base font-semibold text-white mb-1">
+          <div className="bg-rose-50 border border-rose-200 rounded-xl p-6 text-center max-w-lg mx-auto my-12 shadow-sm">
+            <AlertCircle className="w-10 h-10 text-rose-500 mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-rose-900 mb-1">
               Falha ao carregar artefatos
             </h3>
-            <p className="text-xs text-rose-300 mb-4">{error}</p>
+            <p className="text-xs text-rose-700 mb-4">{error}</p>
             <button
               onClick={() => window.location.reload()}
               className="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg transition-colors"
@@ -116,12 +116,11 @@ export function App() {
           </div>
         ) : (
           <div>
-            {activeTab === 'search' && (
-              <SearchTab
-                documentos={documentos}
-                chunks={chunks}
-                chunksMap={chunksMap}
-                indiceData={indiceData}
+            {activeTab === 'pipeline' && (
+              <PipelineTab
+                relatorioProcessamento={relatorioProcessamento}
+                relatorioChunking={relatorioChunking}
+                relatorioIndexacao={relatorioIndexacao}
               />
             )}
 
@@ -137,14 +136,20 @@ export function App() {
             )}
 
             {activeTab === 'index' && (
-              <IndexTab indiceData={indiceData} chunksMap={chunksMap} />
+              <IndexTab
+                indiceData={indiceData}
+                chunksMap={chunksMap}
+                chunks={chunks}
+                documentos={documentos}
+              />
             )}
 
-            {activeTab === 'pipeline' && (
-              <PipelineTab
-                relatorioProcessamento={relatorioProcessamento}
-                relatorioChunking={relatorioChunking}
-                relatorioIndexacao={relatorioIndexacao}
+            {activeTab === 'search' && (
+              <SearchTab
+                documentos={documentos}
+                chunks={chunks}
+                chunksMap={chunksMap}
+                indiceData={indiceData}
               />
             )}
           </div>
@@ -152,13 +157,13 @@ export function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-800/80 bg-slate-950/80 py-6 text-xs text-slate-400">
+      <footer className="border-t border-slate-200 bg-white py-6 text-xs text-slate-500 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div>
-            <span className="font-semibold text-slate-300">
+            <span className="font-semibold text-slate-800">
               UFS • PAA 2026.2 (Projeto e Análise de Algoritmos)
             </span>
-            <p className="text-[11px] text-slate-500 mt-0.5">
+            <p className="text-[11px] text-slate-600 mt-0.5">
               Diego Bispo, Gabriel Marques, Laryssa Andrade, Kaio Santos, Victor Melo
             </p>
           </div>

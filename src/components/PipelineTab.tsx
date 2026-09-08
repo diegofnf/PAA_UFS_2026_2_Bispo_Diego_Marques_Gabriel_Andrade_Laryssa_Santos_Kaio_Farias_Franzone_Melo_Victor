@@ -102,14 +102,14 @@ export const PipelineTab: React.FC<PipelineTabProps> = ({
   return (
     <div className="space-y-6">
       {/* Intro Box */}
-      <div className="bg-slate-900/80 border border-slate-800 p-5 rounded-xl">
+      <div className="bg-white border border-slate-200 p-5 rounded-xl shadow-xs">
         <div className="flex items-center gap-2 mb-2">
-          <GitBranch className="w-5 h-5 text-cyan-400" />
-          <h3 className="text-base font-semibold text-white">
+          <GitBranch className="w-5 h-5 text-sky-600" />
+          <h3 className="text-base font-semibold text-slate-900">
             Pipeline Integrado de Recuperação de Informação (PAA 2026.2)
           </h3>
         </div>
-        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-4xl">
+        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-4xl">
           Projeto da disciplina <strong>Projeto e Análise de Algoritmos (UFS)</strong> focado em
           recuperação de contexto, corretude e eficiência sobre regulamentos acadêmicos do PROCC/UFS.
           O pipeline processa PDFs, constrói índice invertido e ordena os melhores chunks via Merge Sort.
@@ -121,40 +121,40 @@ export const PipelineTab: React.FC<PipelineTabProps> = ({
         {etapas.map((etapa) => (
           <div
             key={etapa.numero}
-            className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 flex flex-col justify-between hover:border-slate-700 transition-all shadow-sm"
+            className="bg-white border border-slate-200 rounded-xl p-4 flex flex-col justify-between hover:border-sky-300 hover:shadow-md transition-all shadow-xs"
           >
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="h-7 w-7 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800 flex items-center justify-center font-bold text-xs">
+                <span className="h-7 w-7 rounded-lg bg-sky-50 text-sky-700 border border-sky-200 flex items-center justify-center font-bold text-xs">
                   {etapa.numero}
                 </span>
-                <span className="text-[11px] font-medium bg-emerald-950/80 text-emerald-400 border border-emerald-800/60 px-2 py-0.5 rounded-full flex items-center gap-1">
-                  <CheckCircle2 className="w-3 h-3" />
+                <span className="text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
                   {etapa.status}
                 </span>
               </div>
 
-              <h4 className="text-sm font-semibold text-white mb-1">{etapa.nome}</h4>
-              <p className="text-xs text-slate-400 leading-relaxed mb-3">
+              <h4 className="text-sm font-semibold text-slate-900 mb-1">{etapa.nome}</h4>
+              <p className="text-xs text-slate-600 leading-relaxed mb-3">
                 {etapa.descricao}
               </p>
 
-              <div className="space-y-1 bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/50 mb-3">
+              <div className="space-y-1 bg-slate-50 p-2.5 rounded-lg border border-slate-200/80 mb-3">
                 {etapa.metricas.map((m, idx) => (
-                  <div key={idx} className="text-[11px] text-slate-300 flex items-center gap-1.5">
-                    <span className="text-cyan-400">•</span>
+                  <div key={idx} className="text-[11px] text-slate-700 flex items-center gap-1.5">
+                    <span className="text-sky-600">•</span>
                     <span>{m}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-800/70 flex items-center justify-between text-[11px] text-slate-400">
-              <span className="font-mono text-slate-500 truncate max-w-[170px]" title={etapa.arquivo}>
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+              <span className="font-mono text-slate-600 truncate max-w-[170px]" title={etapa.arquivo}>
                 {etapa.arquivo}
               </span>
-              <span className="flex items-center gap-1 text-slate-300 font-mono">
-                <Clock className="w-3 h-3 text-cyan-400" />
+              <span className="flex items-center gap-1 text-slate-700 font-mono">
+                <Clock className="w-3 h-3 text-sky-600" />
                 {etapa.tempo}
               </span>
             </div>
@@ -163,26 +163,26 @@ export const PipelineTab: React.FC<PipelineTabProps> = ({
       </div>
 
       {/* Relatórios JSON Interativos */}
-      <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-5 shadow-lg">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-800">
+      <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-200">
           <div className="flex items-center gap-2">
-            <FileCode className="w-5 h-5 text-cyan-400" />
+            <FileCode className="w-5 h-5 text-sky-600" />
             <div>
-              <h3 className="text-sm font-semibold text-white">Relatórios Técnicos Estruturados (JSON)</h3>
-              <p className="text-xs text-slate-400">
+              <h3 className="text-sm font-semibold text-slate-900">Relatórios Técnicos Estruturados (JSON)</h3>
+              <p className="text-xs text-slate-500">
                 Artefatos estatísticos gerados pelas etapas do pipeline
               </p>
             </div>
           </div>
 
           {/* Report switcher */}
-          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 text-xs">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs">
             <button
               onClick={() => setSelectedReport('processamento')}
               className={`px-3 py-1.5 rounded transition-all ${
                 selectedReport === 'processamento'
-                  ? 'bg-cyan-600 text-white font-medium shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-sky-600 text-white font-medium shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               Etapa 1 (Processamento)
@@ -191,8 +191,8 @@ export const PipelineTab: React.FC<PipelineTabProps> = ({
               onClick={() => setSelectedReport('chunking')}
               className={`px-3 py-1.5 rounded transition-all ${
                 selectedReport === 'chunking'
-                  ? 'bg-cyan-600 text-white font-medium shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-sky-600 text-white font-medium shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               Etapa 2 (Chunking)
@@ -201,8 +201,8 @@ export const PipelineTab: React.FC<PipelineTabProps> = ({
               onClick={() => setSelectedReport('indexacao')}
               className={`px-3 py-1.5 rounded transition-all ${
                 selectedReport === 'indexacao'
-                  ? 'bg-cyan-600 text-white font-medium shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-sky-600 text-white font-medium shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               Etapa 3 (Indexação)
@@ -211,7 +211,7 @@ export const PipelineTab: React.FC<PipelineTabProps> = ({
         </div>
 
         {/* Code viewer */}
-        <div className="mt-4 bg-slate-950 p-4 rounded-lg border border-slate-800/80 font-mono text-xs overflow-x-auto max-h-96 text-cyan-300 leading-relaxed">
+        <div className="mt-4 bg-slate-900 p-4 rounded-lg border border-slate-800 font-mono text-xs overflow-x-auto max-h-96 text-sky-300 leading-relaxed shadow-inner">
           <pre>{getReportContent()}</pre>
         </div>
       </div>
