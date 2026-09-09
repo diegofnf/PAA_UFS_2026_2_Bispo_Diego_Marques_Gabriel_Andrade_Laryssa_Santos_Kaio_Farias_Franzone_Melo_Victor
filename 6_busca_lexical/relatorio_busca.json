@@ -1,6 +1,6 @@
 {
   "status_etapa": "concluido",
-  "arquivo_candidatos_gerado": "6_busca_lexical\\candidatos_busca.json",
+  "arquivo_candidatos_gerado": "6_busca_lexical/candidatos_busca.json",
   "consulta": "critérios para atribuição de bolsas",
   "k": 5,
   "configuracao": "indexada",
@@ -46,5 +46,5 @@
   },
   "total_candidatos": 54,
   "total_postings_consultadas": 61,
-  "tempo_busca_segundos": 0.010931
+  "tempo_busca_segundos": 0.002106
 }
