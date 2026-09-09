@@ -39,13 +39,13 @@ Os itens ainda não implementados ou não definidos estão marcados como **A PRO
 - `3_dados/`: JSONs gerados pelo pipeline com extração PyMuPDF e normalização.
 - `4_chunks/`: segmentação de texto com janelamento deslizante e sobreposição. chunks prontos para indexação (`chunks.json`).
 - `5_indexacao/`: índice invertido e relatório da indexação.
-- `6_busca_lexical/`: resultados da busca lexical e Top-k; **A PRODUZIR**.
+- `6_busca_lexical/`: candidatos com scores gerados (`candidatos_busca.json`).  Métricas da busca (`relatorio_busca.json`) e resultados Top-k pós-Merge Sort **A PRODUZIR**.
 - `7_resultados/`: tabelas, gráficos e demais resultados; **A PRODUZIR**.
 
 
 ## Dependências
 
-Python 3 e `PyMuPDF`.
+Python 3, `PyMuPDF` e `nltk`.
 
 ## Ambiente
 
@@ -54,7 +54,8 @@ Execução validada em Windows com Python 3. O script usa caminhos relativos ao 
 ## Instalação
 
 ```bash
-python -m pip install PyMuPDF
+python -m pip install PyMuPDF nltk
+python -c "import nltk; nltk.download('stopwords')"
 ```
 
 ## Execução
@@ -74,6 +75,25 @@ Etapa 3 — Construção do índice invertido:
 python 1_scripts/3_construir_indice_invertido.py
 ```
 
+Etapa 4 — Busca lexical e geração de candidatos (Okapi BM25 ou Simples):
+```bash
+# Execução padrão (busca indexada com Okapi BM25, gera arquivo candidatos_busca.json):
+python 1_scripts/4_buscar_e_ordenar.py
+
+# Personalizando a consulta e k:
+python 1_scripts/4_buscar_e_ordenar.py --consulta "critérios para atribuição de bolsas" --k 5
+
+# Ajuste fino de hiperparâmetros BM25 (k1 e b):
+python 1_scripts/4_buscar_e_ordenar.py --metrica bm25 --k1 1.2 --b 0.75
+
+# Indicando nome de arquivo customizado de saída:
+python 1_scripts/4_buscar_e_ordenar.py --saida-candidatos 6_busca_lexical/minha_busca.json --relatorio 6_busca_lexical/meu_relatorio.json
+
+# Execuções alternativas para comparação/benchmarking (gerando linear ou ambos):
+python 1_scripts/4_buscar_e_ordenar.py --modo linear
+python 1_scripts/4_buscar_e_ordenar.py --modo ambos
+```
+
 ## Parâmetros
 
 - `1_scripts/1_processar_documentos.py`:
@@ -91,6 +111,21 @@ python 1_scripts/3_construir_indice_invertido.py
   - `--entrada`: arquivo de chunks de entrada (padrão: `4_chunks/chunks.json`).
   - `--saida`: arquivo do índice invertido (padrão: `5_indexacao/indice_invertido.json`).
   - `--relatorio`: relatório da indexação (padrão: `5_indexacao/relatorio_indexacao.json`).
+
+- `1_scripts/4_buscar_e_ordenar.py`:
+  - `--consulta`: consulta textual a pesquisar (padrão: `"critérios para atribuição de bolsas"`).
+  - `--k`: quantidade de resultados desejados no Top-k (padrão: `5`).
+  - `--modo`: estratégia de recuperação: `indexada`, `linear` ou `ambos` (padrão: `indexada`).
+  - `--metrica`: função de pontuação de relevância: `bm25` (Okapi BM25) ou `simples` (contagem de frequências) (padrão: `bm25`).
+  - `--k1`: parâmetro $k_1$ do BM25 que calibra a saturação do TF (padrão: `1.5`).
+  - `--b`: parâmetro $b$ do BM25 que calibra a penalização pelo tamanho do documento (padrão: `0.75`).
+  - `--chunks`: caminho dos chunks de entrada (padrão: `4_chunks/chunks.json`).
+  - `--indice`: caminho do índice invertido (padrão: `5_indexacao/indice_invertido.json`).
+  - `--saida-candidatos`: caminho customizado para o arquivo de candidatos (padrão na busca indexada: `6_busca_lexical/candidatos_busca.json`).
+  - `--relatorio-busca`: caminho customizado para o relatório de métricas (padrão na busca indexada: `6_busca_lexical/relatorio_busca.json`).
+  - `--saida_candidatos_ordenados`: caminho customizado para o arquivo de candidatos ordenados (padrão: `6_busca_lexical/candidatos_ordenados.json`).
+  - `--saida_candidatos_top_k`: caminho customizado para o arquivo do Top-k (padrão: `6_busca_lexical/candidatos_topk.json`).
+  - `--relatorio-ordenacao`: caminho customizado para o relatório de ordenação (padrão: `6_busca_lexical/relatorio_ordenacao.json`).
 
 ## Reprodução
 

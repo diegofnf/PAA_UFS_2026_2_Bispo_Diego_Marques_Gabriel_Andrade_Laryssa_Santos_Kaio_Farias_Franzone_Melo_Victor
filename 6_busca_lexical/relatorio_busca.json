@@ -1,0 +1,50 @@
+{
+  "status_etapa": "concluido",
+  "arquivo_candidatos_gerado": "6_busca_lexical/candidatos_busca.json",
+  "consulta": "critérios para atribuição de bolsas",
+  "k": 5,
+  "configuracao": "indexada",
+  "metrica_score": "bm25",
+  "parametros_metrica": {
+    "metrica": "bm25",
+    "k1": 1.5,
+    "b": 0.75,
+    "avgdl": 204.7747,
+    "total_documentos_N": 182
+  },
+  "total_termos_vocabulario": 4061,
+  "tokens_consulta": [
+    "critérios",
+    "para",
+    "atribuição",
+    "de",
+    "bolsas"
+  ],
+  "stopwords_removidas": [
+    "para",
+    "de"
+  ],
+  "termos_apos_filtro_stopwords": [
+    "critérios",
+    "atribuição",
+    "bolsas"
+  ],
+  "termos_distintos_consulta": [
+    "critérios",
+    "atribuição",
+    "bolsas"
+  ],
+  "document_frequencies": {
+    "critérios": 36,
+    "atribuição": 3,
+    "bolsas": 22
+  },
+  "inverse_document_frequencies": {
+    "critérios": 1.6122,
+    "atribuição": 3.9567,
+    "bolsas": 2.096
+  },
+  "total_candidatos": 54,
+  "total_postings_consultadas": 61,
+  "tempo_busca_segundos": 0.002106
+}
