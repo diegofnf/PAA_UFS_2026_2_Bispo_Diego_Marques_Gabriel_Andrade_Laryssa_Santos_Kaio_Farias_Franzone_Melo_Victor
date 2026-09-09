@@ -122,7 +122,10 @@ python 1_scripts/4_buscar_e_ordenar.py --modo ambos
   - `--chunks`: caminho dos chunks de entrada (padrão: `4_chunks/chunks.json`).
   - `--indice`: caminho do índice invertido (padrão: `5_indexacao/indice_invertido.json`).
   - `--saida-candidatos`: caminho customizado para o arquivo de candidatos (padrão na busca indexada: `6_busca_lexical/candidatos_busca.json`).
-  - `--relatorio`: caminho customizado para o relatório de métricas (padrão na busca indexada: `6_busca_lexical/relatorio_busca.json`).
+  - `--relatorio-busca`: caminho customizado para o relatório de métricas (padrão na busca indexada: `6_busca_lexical/relatorio_busca.json`).
+  - `--saida_candidatos_ordenados`: caminho customizado para o arquivo de candidatos ordenados (padrão: `6_busca_lexical/candidatos_ordenados.json`).
+  - `--saida_candidatos_top_k`: caminho customizado para o arquivo do Top-k (padrão: `6_busca_lexical/candidatos_topk.json`).
+  - `--relatorio-ordenacao`: caminho customizado para o relatório de ordenação (padrão: `6_busca_lexical/relatorio_ordenacao.json`).
 
 ## Reprodução
 
