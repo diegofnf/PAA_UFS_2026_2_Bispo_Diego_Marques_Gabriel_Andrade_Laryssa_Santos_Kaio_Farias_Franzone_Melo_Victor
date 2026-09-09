@@ -29,6 +29,7 @@ import time
 import unicodedata
 from collections import Counter
 from pathlib import Path
+import tracemalloc
 
 import nltk
 from nltk.corpus import stopwords
@@ -469,19 +470,53 @@ def buscar_indexada(
 # 5. CONTRATOS E PONTOS DE EXTENSÃO — MERGE SORT E TOP-K
 # ==============================================================================
 
-def merge(esquerda: list[dict], direita: list[dict]) -> list[dict]:
+def merge(esquerda: list[dict], direita: list[dict], metricas: dict) -> list[dict]:
     """Procedimento de intercalação do Merge Sort.
     
     Critério determinístico obrigatório:
         1. Maior score primeiro (ordem decrescente de score);
         2. Em caso de empate no score, menor id_chunk primeiro (ordem lexicográfica crescente).
     """
-    raise NotImplementedError(
-        "Procedimento merge() a ser implementado na continuidade da etapa."
-    )
+    resultado = []
+    i = j = 0
+
+    while i < len(esquerda) and j < len(direita):
+        metricas["comparacoes_totais"] += 1
+        metricas["comparacoes_score"] += 1
+
+        if esquerda[i]["score"] > direita[j]["score"]:
+            resultado.append(esquerda[i])
+            i += 1
+        elif esquerda[i]["score"] < direita[j]["score"]:
+            resultado.append(direita[j])
+            j += 1
+        else:
+            metricas["empates_score"] += 1
+            metricas["comparacoes_id_chunk"] += 1
+
+            if esquerda[i]["id_chunk"] <= direita[j]["id_chunk"]:
+                resultado.append(esquerda[i])
+                i += 1
+            else:
+                resultado.append(direita[j])
+                j += 1
+
+        metricas["movimentacoes"] += 1
+    
+    while i < len(esquerda):
+        resultado.append(esquerda[i])
+        i += 1
+        metricas["movimentacoes"] += 1
+
+    while j < len(direita):
+        resultado.append(direita[j])
+        j += 1
+        metricas["movimentacoes"] += 1
+
+    return resultado
 
 
-def merge_sort(candidatos: list[dict]) -> list[dict]:
+def merge_sort(candidatos: list[dict], metricas: dict, profundidade: int = 1) -> list[dict]:
     """Ordenação dos candidatos via Merge Sort manual.
     
     Especificações teóricas:
@@ -490,9 +525,24 @@ def merge_sort(candidatos: list[dict]) -> list[dict]:
         - Espaço auxiliar: Θ(N)
         - É expressamente proibido o uso de sorted() ou list.sort() na versão final.
     """
-    raise NotImplementedError(
-        "Merge Sort manual a ser implementado na continuidade da etapa."
+
+    metricas["chamadas_recursivas"] += 1
+
+    metricas["profundidade_maxima"] = max(
+        metricas["profundidade_maxima"],
+        profundidade
     )
+
+    tamanho = len(candidatos)
+
+    if tamanho <= 1:
+        return candidatos
+
+    meio = tamanho // 2
+    esquerda = merge_sort(candidatos[:meio], metricas, profundidade + 1)
+    direita = merge_sort(candidatos[meio:], metricas, profundidade + 1)
+
+    return merge(esquerda, direita, metricas)
 
 
 def selecionar_topk(candidatos_ordenados: list[dict], k: int) -> list[dict]:
@@ -500,9 +550,8 @@ def selecionar_topk(candidatos_ordenados: list[dict], k: int) -> list[dict]:
     
     Se k > len(candidatos_ordenados), deve retornar todos os candidatos disponíveis.
     """
-    raise NotImplementedError(
-        "Seleção Top-k a ser implementada na continuidade da etapa."
-    )
+
+    return candidatos_ordenados[:k]
 
 
 # ==============================================================================
@@ -613,6 +662,99 @@ def executar_busca_modo(
 
     return candidatos, metricas
 
+def executar_ordenacao(
+    candidatos: list[dict], 
+    k: int,
+    caminho_candidatos_ordenados: str,
+    caminho_topk: str,
+    caminho_relatorio: str,
+) -> list[dict]:
+    """
+    Executa a ordenação dos candidatos utilizando Merge Sort e retorna o Top-k.
+
+    Parâmetros:
+    - candidatos: Lista de dicionários representando os candidatos.
+    - k: Número de resultados desejados para o Top-k.
+
+    Retorna:
+    - top_k: Lista dos Top-k candidatos ordenados.
+    """
+
+    metricas = {
+        "movimentacoes": 0,
+        "chamadas_recursivas": 0,
+        "profundidade_maxima": 0,
+        "empates_score": 0,
+        "comparacoes_score": 0,
+        "comparacoes_id_chunk": 0,
+        "comparacoes_totais": 0,
+    };
+
+    tracemalloc.start()
+    inicio = time.perf_counter()
+    candidatos_ordenados = merge_sort(candidatos, metricas)
+    fim = time.perf_counter()
+
+    _, memoria_pico = tracemalloc.get_traced_memory()
+    tracemalloc.stop()
+
+    metricas["tempo_execucao"] = fim - inicio
+    metricas["memoria_pico_bytes"] = memoria_pico
+
+    saida_candidatos_ordenados = {
+        "metadados": {
+            "etapa": "4_busca_lexical_candidatos",
+            "proxima_acao": "Top-k",
+            "tempo_ordenacao_segundos": metricas["tempo_execucao"],
+            "num_candidatos_ordenados": len(candidatos_ordenados),
+            "memoria_pico_bytes": metricas["memoria_pico_bytes"],
+            "num_movimentacoes": metricas.get("movimentacoes", 0),
+            "num_chamadas_recursivas": metricas.get("chamadas_recursivas", 0),
+            "profundidade_maxima": metricas.get("profundidade_maxima", 0),
+            "num_empates_score": metricas.get("empates_score", 0),
+            "num_comparacoes_score": metricas.get("comparacoes_score", 0),
+            "num_comparacoes_id_chunk": metricas.get("comparacoes_id_chunk", 0),
+            "num_comparacoes_totais": metricas.get("comparacoes_totais", 0)
+        },
+        "candidatos_ordenados": candidatos_ordenados,
+    }
+    salvar_artefato(caminho_candidatos_ordenados, saida_candidatos_ordenados)
+
+    top_k = selecionar_topk(candidatos_ordenados, k)
+    saida_topk = {
+        "metadados": {
+            "etapa": "4_busca_lexical_candidatos",
+            "proxima_acao": "Resultados",
+            "tempo_ordenacao_segundos": metricas["tempo_execucao"],
+            "num_top_k": len(top_k),
+        },
+        "top_k_candidatos": top_k,
+    }
+    salvar_artefato(caminho_topk, saida_topk)
+
+    salvar_artefato(caminho_relatorio, {
+        "status_etapa": "concluido",
+        "tempo_ordenacao_segundos": metricas["tempo_execucao"],
+        "num_candidatos_ordenados": len(candidatos_ordenados),
+        "num_top_k": len(top_k),
+        "k": k,
+        "memoria_pico_bytes": metricas["memoria_pico_bytes"],
+        "num_movimentacoes": metricas.get("movimentacoes", 0),
+        "num_chamadas_recursivas": metricas.get("chamadas_recursivas", 0),
+        "profundidade_maxima": metricas.get("profundidade_maxima", 0),
+        "num_empates_score": metricas.get("empates_score", 0),
+        "num_comparacoes_score": metricas.get("comparacoes_score", 0),
+        "num_comparacoes_id_chunk": metricas.get("comparacoes_id_chunk", 0),
+        "num_comparacoes_totais": metricas.get("comparacoes_totais", 0)
+    })
+
+    print("-" * 70)
+    print(f"Top-{k} candidatos ordenados gerados com sucesso.")
+    print(f"Arquivo de candidatos ordenados: {caminho_candidatos_ordenados}")
+    print(f"Arquivo de Top-{k}: {caminho_topk}")
+    print(f"Arquivo de relatório gerado: {caminho_relatorio}")
+
+    return top_k
 
 # ==============================================================================
 # 7. EXECUÇÃO PRINCIPAL (CLI)
@@ -677,10 +819,28 @@ def main():
         help="Caminho customizado para gravação dos candidatos (se omitido, deriva do modo).",
     )
     parser.add_argument(
-        "--relatorio",
+        "--relatorio-busca",
         type=Path,
         default=None,
         help="Caminho customizado para gravação do relatório (se omitido, deriva do modo).",
+    )
+    parser.add_argument(
+        "--saida_candidatos_ordenados",
+        type=Path,
+        default=None,
+        help="Caminho customizado para gravação dos candidatos ordenados (se omitido, deriva do modo).",
+    )
+    parser.add_argument(
+        "--saida_candidatos_top_k",
+        type=Path,
+        default=None,
+        help="Caminho customizado para gravação dos candidatos top k (se omitido, deriva do modo).",
+    )
+    parser.add_argument(
+        "--relatorio-ordenacao",
+        type=Path,
+        default=None,
+        help="Caminho customizado para gravação do relatório de ordenação (se omitido, deriva do modo).",
     )
     args = parser.parse_args()
 
@@ -723,8 +883,8 @@ def main():
 
     if args.modo == "indexada":
         caminho_cand = args.saida_candidatos or Path("6_busca_lexical/candidatos_busca.json")
-        caminho_rel = args.relatorio or Path("6_busca_lexical/relatorio_busca.json")
-        executar_busca_modo(
+        caminho_rel = args.relatorio_busca or Path("6_busca_lexical/relatorio_busca.json")
+        candidatos, metricas = executar_busca_modo(
             "indexada",
             args.consulta,
             args.k,
@@ -741,8 +901,8 @@ def main():
 
     elif args.modo == "linear":
         caminho_cand = args.saida_candidatos or Path("6_busca_lexical/candidatos_linear.json")
-        caminho_rel = args.relatorio or Path("6_busca_lexical/relatorio_busca_linear.json")
-        executar_busca_modo(
+        caminho_rel = args.relatorio_busca or Path("6_busca_lexical/relatorio_busca_linear.json")
+        candidatos, metricas = executar_busca_modo(
             "linear",
             args.consulta,
             args.k,
@@ -762,7 +922,7 @@ def main():
         caminho_rel_lin = Path("6_busca_lexical/relatorio_busca_linear.json")
         caminho_cand_idx = Path("6_busca_lexical/candidatos_indexada.json")
         caminho_rel_idx = Path("6_busca_lexical/relatorio_busca_indexada.json")
-        executar_busca_modo(
+        candidatos, metricas = executar_busca_modo(
             "linear",
             args.consulta,
             args.k,
@@ -796,6 +956,16 @@ def main():
     print("aplicação do Merge Sort manual e geração dos Top-k.")
     print("=" * 70)
 
+    caminho_candidatos_ordenados = args.saida_candidatos_ordenados or Path("6_busca_lexical/candidatos_ordenados.json")
+    caminho_topk = args.saida_candidatos_top_k or Path("6_busca_lexical/candidatos_topk.json")
+    caminho_relatorio = args.relatorio_ordenacao or Path("6_busca_lexical/relatorio_ordenacao.json")
+    executar_ordenacao(
+        candidatos,
+        args.k,
+        caminho_candidatos_ordenados,
+        caminho_topk,
+        caminho_relatorio,
+    )
 
 if __name__ == "__main__":
     main()
